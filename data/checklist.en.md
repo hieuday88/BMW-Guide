@@ -8,7 +8,6 @@
 - [Boss] Erlang Shen — tutorial fight, infinite health
 - [Item] Coconut Wine — drink unlocked from the start of the game @item:2001 @item:2002 @item:2003 @item:2004 @item:2005 @item:2006
 - [Item] Medicine Gourd — starting gourd, upgraded later @equip:18001 @equip:18002 @equip:18003 @equip:18004 @equip:18005 @equip:18006
-- [Item] Trailblazer's Scarlet Gourd — pre-order bonus, claim it at a shrine; otherwise the horse NPC at New Thunderclap Temple (Chapter 3) gives it @equip:18009
 - [Item] Willow Wood Staff — starting weapon @equip:15005
 
 ### Front Hills @shrine:1003
@@ -42,7 +41,7 @@
 - [Meditation] Meditation cushion in the rock cave — where you meet Ma Tianba @meditation:1007
 
 ### Snake Trail @shrine:1005
-- [NPC] Keeper of the Gourd (Yuan Shoucheng) — go up the stairs @card:100002
+- [NPC] Keeper of the Gourd (Yuan Shoucheng) — go up the stairs
 - [Item] Gourd
 - [Quest] Capture the Yaoguai spirits — get the Gourd; from now on defeated chiefs drop their spirits
 - [Boss] Wandering Wight — go back to Outside the Forest; you only get its spirit once you have the Gourd
@@ -246,7 +245,7 @@
 
 ### Yellow Wind Formation (end of chapter)
 - [Meditation] Meditation Spot 6 — through the large temple gate below the valley @meditation:2003
-- [NPC] Keeper of the Gourd (Yuan Shoucheng) — exhaust all dialogue @card:100002
+- [NPC] Keeper of the Gourd (Yuan Shoucheng) — exhaust all dialogue
 - [Tip] Recommended level 36+, upgrade your gourd, buy defensive pills
 - [Boss] Yellow Wind Sage — chapter final boss, the whirlwind behind the Storehouse @card:203005
 - [Item] Ear Hears Anger — relic, reward after the Yellow Wind Sage @item:4092
@@ -488,6 +487,7 @@
 - [Item] Closed-Eye Chan — helmet, dropped by the blind monk @equip:17007
 - [Item] Light Body Powder — wine and pill formula, small box in front of the Buddha statue @item:1107
 - [NPC] Ma Tianbai — 3rd time, behind the pillar
+- [Item] Trailblazer's Scarlet Gourd — given by Ma Tianba (3rd meeting, behind the pillar); pre-order owners can claim it at a shrine from Chapter 1 @equip:18009
 - [Quest] Horse Head, Horse Face 3
 - [Quest] Talk to the fox 1 @card:300008
 - [Boss] Non-Void — left rear hall, fox 2 @card:300001
@@ -746,7 +746,7 @@
 - [Secret] Talk — hidden area 4
 
 ### Valley Entrance @shrine:5005
-- [NPC] Horse Guai — trapped in a cart @card:501021
+- [NPC] Horse Guai — trapped in a cart, Journal entry added after finishing Chapter 5 @card:501021
 - [Quest] Pull the rope of the fourth Five Element Cart — lava pool on the right
 - [Spell] Dark Thunder — reward for rescuing the Horse Guai @item:5008
 - [Tip] Dark Thunder: you may need to come back after finishing Chapter 6
@@ -762,7 +762,7 @@
 ### Rakshasa Palace @shrine:5006
 - [Boss] Earth Rakshasa @card:501025
 - [Item] Three-Tail Worm 1 — smash the glowing jar
-- [NPC] Keeper of the Gate — immortal gourd @card:100002
+- [NPC] Keeper of the Gate — immortal gourd
 - [Item] Supreme Gourd @item:18010
 - [Tip] You need the Buddha's Right Hand and Left Hand from Chapter 4 to upgrade
 - [NPC] Shen Monkey — upgrades the gourd @card:100003
@@ -778,7 +778,7 @@
 - [Item] Slumbering Beetle Husk — soak, after the Yin-Yang Fish @item:2317
 - [Item] Loong Balm — drink, next to the throne in the hall after the Yin-Yang Fish @item:2012
 - [Item] Yin-Yang Robe @equip:17008
-- [NPC] Princess Iron Fan @card:500002
+- [NPC] Princess Iron Fan — Journal entry added after finishing Chapter 5 @card:500002
 - [Boss] Crimson-Silver Cart — hidden area 5
 - [Spirit] Top Takes Bottom - Bottom Takes Top — steel ball on the way out, after the hidden area @soul:8032
 
@@ -792,7 +792,7 @@
 - [Item] Yangsui Pearl @equip:16020
 
 ### Cooling Slope @shrine:5009
-- [NPC] Ping Ping @card:500001
+- [NPC] Ping Ping — Journal entry added after finishing Chapter 5 @card:500001
 - [Boss] Mother of Flamlings — bring 4 Flame Ores to the red circle to summon her @card:502014
 - [Spirit] Mother of Flamlings — interact with the red circle on the ground @soul:8039
 - [Tip] Bring 4 Flame Ores to the red lava spot to summon her
@@ -823,7 +823,7 @@
 - [Boss] Flint Vanguard — turn left after the ball breaks the fence @card:502008
 - [Item] Staff of Blazing Karma — craft from 3 Samadhi Fire Crystals (Flint Chief, Flint Vanguard, Mother of Flamlings) @equip:15011
 - [Spirit] Flint Vanguard @soul:8037
-- [NPC] Bull Demon King — mural scene @card:500003
+- [NPC] Bull Demon King — mural scene, Journal entry added after finishing Chapter 5 @card:500003
 - [Story] Mural scene, enter the Red Boy fight
 - [Boss] Red Boy — final boss of the chapter @card:503003
 - [Tip] Prepare your strongest weapon and armor before entering
@@ -906,3 +906,4 @@
 - [Tip] Use the Fan to break his shield; break his crowd control, an extra phase every 25% health
 - [Tip] Bring plenty of mana-restoring water and lightning resistance; save mana to dodge in the air
 - [Quest] Return to Peak of Innocence and fight the Great Sage — final good ending
+- [NPC] Yuan Shoucheng — the game adds him to the Journal once every other entry is filled @card:100002

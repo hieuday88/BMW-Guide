@@ -8,7 +8,6 @@
 - [Boss] Nhị Lang Thần — trận hướng dẫn, máu vô hạn
 - [Vật phẩm] Rượu Dừa — rượu mở khóa từ đầu game @item:2001 @item:2002 @item:2003 @item:2004 @item:2005 @item:2006
 - [Vật phẩm] Lão Hồ Lô — hồ lô khởi đầu, nâng cấp sau @equip:18001 @equip:18002 @equip:18003 @equip:18004 @equip:18005 @equip:18006
-- [Vật phẩm] Tranh Tiên Hồng Hồ Lô — quà đặt trước, nhận ở miếu; không có thì nhận từ NPC ngựa ở Tiểu Lôi Âm Tự (chương 3) @equip:18009
 - [Vật phẩm] Liễu Mộc Côn — vũ khí khởi đầu @equip:15005
 
 ### Trước Núi @shrine:1003
@@ -42,7 +41,7 @@
 - [Thiền] Bồ đoàn trong hang đá — nơi gặp Mã Thiên Bá @meditation:1007
 
 ### Xà Kính @shrine:1005
-- [NPC] Viên Thủ Thành — lên cầu thang @card:100002
+- [NPC] Viên Thủ Thành — lên cầu thang
 - [Vật phẩm] Hồ Lô
 - [Nhiệm vụ] Thu phục yêu hồn — nhận Hồ Lô, từ giờ hạ đầu mục mới nhận được tinh phách
 - [Boss] U Hồn — quay lại Bìa Rừng để đánh; phải có Hồ Lô rồi mới nhận được tinh phách
@@ -246,7 +245,7 @@
 
 ### Hoàng Phong Trận (cuối chương)
 - [Thiền] Điểm Thiền 6 — qua cổng miếu lớn dưới thung lũng @meditation:2003
-- [NPC] Viên Thủ Thành — nói chuyện hết thoại @card:100002
+- [NPC] Viên Thủ Thành — nói chuyện hết thoại
 - [Mẹo] Đề xuất cấp 36+, nâng hồ lô, mua đan phòng thủ
 - [Boss] Hoàng Phong Đại Thánh — boss cuối chương, lốc xoáy sau Hầm Chứa @card:203005
 - [Vật phẩm] Tai Nghe Phẫn Nộ — Lục Căn, thưởng sau Hoàng Phong Đại Thánh @item:4092
@@ -488,6 +487,7 @@
 - [Vật phẩm] Bế Nhãn Thiền — mũ, rơi từ hòa thượng mù @equip:17007
 - [Vật phẩm] Khinh Thân Tán — rượu và đan phương, hộp nhỏ trước tượng Phật @item:1107
 - [NPC] Mã Thiên Bá — lần 3, sau cột
+- [Vật phẩm] Tranh Tiên Hồng Hồ Lô — Mã Thiên Bá tặng (lần 3, sau cột); bản có quà đặt trước thì nhận ở miếu từ chương 1 @equip:18009
 - [Nhiệm vụ] Đầu Ngựa Mặt Ngựa 3
 - [Nhiệm vụ] Nói chuyện cáo 1 @card:300008
 - [Boss] Bất Không — hậu điện trái, cáo 2 @card:300001
@@ -746,7 +746,7 @@
 - [Ẩn] Nói chuyện — map ẩn 4
 
 ### Cốc Khẩu @shrine:5005
-- [NPC] Mã Thiên Bá — kẹt trong chiến xa @card:501021
+- [NPC] Mã Thiên Bá — kẹt trong chiến xa, Journal ghi sau khi xong chương 5 @card:501021
 - [Nhiệm vụ] Kéo dây Ngũ Hành Chiến Xa thứ tư — hồ dung nham bên phải
 - [Phép] Ảm Lôi — thưởng giải cứu Mã Thiên Bá @item:5008
 - [Mẹo] Ám Lôi: có thể phải quay lại sau khi qua chương 6
@@ -762,7 +762,7 @@
 ### La Sát Cung @shrine:5006
 - [Boss] Địa La Sát @card:501025
 - [Vật phẩm] Tam Đông Trùng 1 — đập bình phát sáng
-- [NPC] Viên Thủ Thành — hồ lô tiên @card:100002
+- [NPC] Viên Thủ Thành — hồ lô tiên
 - [Vật phẩm] Thượng Thanh Bảo Hồ Lô @item:18010
 - [Mẹo] Cần Phật Hữu Thủ và Phật Tả Thủ từ chương 4 để nâng cấp
 - [NPC] Thân Hầu — nâng cấp hồ lô @card:100003
@@ -778,7 +778,7 @@
 - [Vật phẩm] Khạp Thụy Trùng Thuế — ngâm rượu, sau Âm Dương Ngư @item:2317
 - [Vật phẩm] Long Cao — rượu, cạnh ngai vàng trong điện sau Âm Dương Ngư @item:2012
 - [Vật phẩm] Âm Dương Pháp Y @equip:17008
-- [NPC] Thiết Phiến Công Chúa @card:500002
+- [NPC] Thiết Phiến Công Chúa — Journal ghi sau khi xong chương 5 @card:500002
 - [Boss] Hồng Ngân Chiến Xa — map ẩn 5
 - [Tinh phách] Hưng Hồng Hiên - Hiên Hồng Hưng — quả cầu thép trên đường ra, sau map ẩn @soul:8032
 
@@ -792,7 +792,7 @@
 - [Vật phẩm] Dương Toại Châu @equip:16020
 
 ### Thanh Lương Pha @shrine:5009
-- [NPC] Bình Bình @card:500001
+- [NPC] Bình Bình — Journal ghi sau khi xong chương 5 @card:500001
 - [Boss] Hỏa Linh Nguyên Mẫu — mang 4 Hỏa Quáng tới vòng đỏ để triệu hồi @card:502014
 - [Tinh phách] Hỏa Linh Nguyên Mẫu — tương tác vòng đỏ dưới đất @soul:8039
 - [Mẹo] Mang 4 Hỏa Quáng đến điểm dung nham đỏ để triệu hồi
@@ -823,7 +823,7 @@
 - [Boss] Toại Tiên Phong — rẽ trái sau khi quả cầu phá rào @card:502008
 - [Vật phẩm] Nghiệp Hỏa Trượng — chế từ 3 Tam Muội Hỏa Tinh (tinh phách Toại Thống Lĩnh, Toại Tiên Phong, Hỏa Linh Nguyên Mẫu) @equip:15011
 - [Tinh phách] Toại Tiên Phong @soul:8037
-- [NPC] Ngưu Ma Vương — cảnh bích họa @card:500003
+- [NPC] Ngưu Ma Vương — cảnh bích họa, Journal ghi sau khi xong chương 5 @card:500003
 - [Cốt truyện] Cảnh bích họa, vào trận Hồng Hài Nhi
 - [Boss] Hồng Hài Nhi — boss cuối chương @card:503003
 - [Mẹo] Chuẩn bị vũ khí và giáp mạnh nhất trước khi vào
@@ -906,3 +906,4 @@
 - [Mẹo] Dùng Quạt phá khiên; chiêu vỡ khống chế, thêm giai đoạn mỗi 25% máu
 - [Mẹo] Mang nhiều nước hồi khí, kháng sét; giữ mana để né trên không
 - [Nhiệm vụ] Quay lại Thiên Chân Đỉnh đánh Tề Thiên — good ending cuối
+- [NPC] Viên Thủ Thành — game tự thêm vào Journal sau khi có đủ mọi mục khác @card:100002
