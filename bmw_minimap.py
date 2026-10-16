@@ -119,21 +119,24 @@ class Minimap:
                 if [c[0] for c in chests] != [c[0] for c in self.chests]:
                     self.chests = chests
                     self.bump()
-                self.check_npcs([a for a in actors if a[0].startswith(NPC_PREFIXES)])
+                npcs = [a for a in actors if a[0].startswith(NPC_PREFIXES) and not a[0].startswith('Unit_Player')]
+                pickups = [a for a in actors if 'TreasureBox' in a[0] or 'SceneItem' in a[0]]
+                self.check_absent({'renwu': (npcs, NPC_RADIUS), 'baoxiang': (pickups, CHEST_RADIUS), 'cailiao': (pickups, CHEST_RADIUS)})
             except Exception:
                 pass
             time.sleep(ACTOR_SCAN_S)
 
-    def check_npcs(self, npcs):
-        """Hides an NPC point after several scans with the player close by and no NPC actor standing there."""
+    def check_absent(self, rules):
+        """Hides NPC/chest/pickup points after several scans with the player close by and nothing standing there."""
         pos, level = self.pos, self.current_level()
-        if not pos or not level:
+        if not pos or not level or not (pos[0] or pos[1]):
             return
         for i, cat, wx, wy, wz, *_ in self.points.get(level, []):
             pid = f'{level}:{i}'
-            if cat != 'renwu' or pid in self.hidden or math.dist(pos[:2], (wx, wy)) > NPC_NEAR:
+            if cat not in rules or pid in self.hidden or math.dist(pos[:2], (wx, wy)) > NPC_NEAR:
                 continue
-            present = any(math.dist((wx, wy), n[1:3]) <= NPC_RADIUS for n in npcs)
+            actors, radius = rules[cat]
+            present = any(math.dist((wx, wy), n[1:3]) <= radius for n in actors)
             self.npc_misses[pid] = 0 if present else self.npc_misses.get(pid, 0) + 1
             if self.npc_misses[pid] >= NPC_MISSES:
                 self.remember(pid)
