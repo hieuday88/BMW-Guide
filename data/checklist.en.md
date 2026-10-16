@@ -47,7 +47,7 @@
 - [Boss] Wandering Wight — go back to Outside the Forest; you only get its spirit once you have the Gourd
 - [Tip] Defeat the Wandering Wight BEFORE Elder Jinchi, otherwise it disappears for good
 - [Tip] Circle around the tree to dodge the shockwave
-- [Spirit] Wandering Wight — only drops once you have the Gourd (Capture the Yaoguai spirits step above) @soul:8113
+- [Spirit] Wandering Wight — only drops once you have the Gourd (Capture the Yaoguai spirits step above) @soul:8013
 - [Item] Cat's Eye Beads — dropped when the Wandering Wight is defeated
 - [Boss] Baw-Li-Guhh-Lang — frog yaoguai, frog hunt 1 @card:202001
 - [Tip] Strike the head head-on with spells and heavy attacks
@@ -178,7 +178,7 @@
 - [Meditation] Meditation Spot 3 — walk along the old house, near the arena @meditation:2001
 - [Quest] Follow the sand slope down to the Yellow Wind Formation
 
-### Yellow Wind Formation
+### Yellow Wind Formation @shrine:2010
 - [Boss] Gore-Eye Daoist — next to the small cave @card:202004
 - [Spirit] Gore-Eye Daoist @soul:8015
 - [Spell] Pluck of Many — the headless musician near the shrine @item:5301
@@ -196,7 +196,7 @@
 - [Item] Licorice Seed — right of the road, left of the shrine @item:6012
 - [Item] Lotus Jade — bought at the shrine, feed it to the pig (hidden map 4)
 
-### Crouching Tiger Temple
+### Crouching Tiger Temple @shrine:2012 @shrine:2016 @shrine:2017
 - [NPC] Doggo (Xu Gou) — final meeting next to the cellar @card:200004
 - [Spirit] Tiger Elder — cellar @soul:8066
 - [Item] Tiger Relic Soak — jar on the pedestal in the cellar
@@ -228,7 +228,7 @@
 - [Item] Snout Mask — reward after the Yellow-Robed Squire
 - [Secret] Enter the Kingdom of Sahali through the big gate, follow the pig
 
-### Sandgate Pass @shrine:2503
+### Sandgate Pass @shrine:2503 @shrine:2501 @shrine:2502
 - [Boss] Tiger Vanguard — secret version, hidden map 6 @card:203007
 - [Item] Tiger Head Plaque @equip:16004
 - [Boss] Sidequel Boss — end of the hidden map
@@ -251,7 +251,7 @@
 
 ### Frost-Clad Path @shrine:3002
 - [Story] Start the chapter at Snowhill Path and head downhill to the Frost-Clad Path
-- [Meditation] Frost-Clad Path Land God Shrine — choose your Qi Vessel, upgrade your drink ingredients
+- [Tip] Frost-Clad Path Land God Shrine — choose your Qi Vessel, upgrade your drink ingredients
 - [Boss] Macaque Chief — 1st fight, he flees at half health
 - [Tip] No need to kill him; Pluck of Many and Immobilize are enough
 - [NPC] Shen Monkey — buys and sells items, upgrades drink ingredients
@@ -273,9 +273,9 @@
 - [Tip] Use the Wind Tamer to knock it down, then Immobilize it
 - [Item] Silver Star Mist Horn — received upon entering the Pagoda Realm @item:3916
 
-### Pagoda Realm
+### Pagoda Realm @shrine:3010
 - [Story] Fall into the Pagoda Realm; floor 1 has sealed prison cells
-- [NPC] Third Prince — 1st conversation, cell 1
+- [NPC] Third Prince — 1st conversation, cell 1 @card:300006
 - [Tip] The red-eye state costs health but boosts damage; use it to hunt the Lantern Warden
 
 ### Lower Pagoda @shrine:3005 @shrine:3027
@@ -317,12 +317,11 @@
 - [Tip] Hit the right leg to make him fall, then smash the golden core on his head
 - [Item] Divine Soul - First Aspect — cell 2 @item:4021
 - [Item] Luojia Fragrant Vine 1 — pond near the shrine
-- [Meditation] Meditation spot — near the shrine
 
 ### Snow-Veiled Trail @shrine:3011
 - [Story] Follow the fireflies to the shrine, pick up the Taiyi Purple Gold Pill
 - [Tip] Pick up the Taiyi Purple Gold Pill before fighting the tentacle monster behind the wooden fence
-- [Meditation] Under the tree — after defeating the frost-clad man
+- [Meditation] Pagoda Realm - Ice Mountain — under the tree, after defeating the frost-clad man @meditation:3002
 - [Item] Pearl Tree — end of the upper path
 - [Secret] Pagoda Tower — ice wall behind the bridge, Erlang Shen
 - [Tip] The Pagoda Tower needs Spell Binder and the hidden bosses; leave it for last
@@ -350,7 +349,7 @@
 - [Item] Yaoshan Claw — chest behind Cyan Loong @item:3917
 - [Item] Twelve-Layer Loong Glue — wine in Cyan Loong's chest @item:2306
 - [Item] Fine Gold Thread — dropped after defeating Cyan Loong @item:3953
-- [Item] Flying Loong Staff — forged from the Yaoshan Claw
+- [Item] Flying Loong Staff — forged from the Yaoshan Claw @equip:15015
 
 ### North Shore of the Bitter Lake @shrine:3009 @shrine:3014
 - [Quest] Rescue the Green-Capped Martialist, 1st time, at the small shrine
@@ -362,7 +361,7 @@
 - [Item] Turtle Tear — after the Apramana Bat fight @item:2303
 - [Item] Blue Bridge Wind and Moon — wine, gold cup across the lake @item:2009
 - [Item] Bronze Buddha Pendant — dropped by the Wolf Dharma Protector, low drop rate @equip:16033
-- [NPC] Chen Loong — seashore, Ruyi Scroll 1
+- [NPC] Chen Loong — seashore, Ruyi Scroll 1 @card:300007
 - [Tip] With Bajie holding aggro, Chen Loong is much easier
 
 ### Ruyi Scroll
@@ -409,7 +408,7 @@
 - [Boss] Non-Able — climb the stairs, turn left @card:302007
 - [Spirit] Non-Able — absorb after defeating it @soul:8026
 - [Tip] Save your spells for phase 2; dodge the glowing Vajra Fist
-- [Item] Thunder Fire Seal — dropped by the mage in the small white tower
+- [Item] Thunder Fire Seal — dropped by the mage in the small white tower @equip:16034
 - [Spirit] Stinky Fragrance Guest — near the waterfall @soul:8077
 - [Tip] Surround the Stinky Fragrance Guest with Pluck of Many and Immobilize
 
@@ -444,7 +443,7 @@
 - [Item] Divine Soul - Third Aspect — interact with Void-Illusion's corpse @item:4023
 - [Item] Soft-Shell Treasure Skull — helmet, dropped by an elite near the Three-Winter Worm @equip:17003
 
-### New Thunderclap Temple
+### New Thunderclap Temple @shrine:3026
 - [Boss] Captain Kalpa-Wave — in front of the temple gate @card:302002
 - [Tip] Keep attacking the legs, he is easy to stagger; summon the little monkeys to keep going
 - [Item] Divine Soul - Second Aspect — cell 6 @item:4022
@@ -455,7 +454,7 @@
 - [Quest] Rat Captain not dead — other branch
 
 ### Temple Entrance @shrine:3024
-- [Meditation] Temple Entrance shrine — activate it before entering the temple
+- [Tip] Temple Entrance shrine — activate it before entering the temple
 - [Boss] Monk From The Sea — tentacle from the well @card:301002
 - [Tip] Rush forward and hit its head from atop the well
 - [Spell] Ivory Frost — transform into a tentacle man @item:5016
@@ -467,7 +466,7 @@
 - [Boss] Non-Pure — small room left of the shrine, Chief @card:302010
 - [Spirit] Non-Pure — small room left of the shrine @soul:8024
 - [Tip] Keep your distance and dodge the spinning attack; easier when fighting the swarm
-- [Meditation] Meditation spot near Non-Pure
+- [Meditation] Thunderclap Temple - Buddha Hall — inside the Buddha hall, near Non-Pure @meditation:3005
 - [Item] Thunder Tally — curio, table behind the Buddha statue in the central hall @equip:16009
 - [Item] Nine-Turn Golden Pill — next to the Wolf Dharma Protector, bamboo forest
 - [Item] Closed-Eye Chan — helmet, dropped by the blind monk @equip:17007
@@ -479,11 +478,11 @@
 - [Tip] Transform into the fox and approach; he thinks the white fox has come for revenge
 - [Spirit] Non-Void — absorb after defeating him @soul:8020
 - [Item] White Fox Cry — final fox, extends transformation duration @equip:16011
-- [Meditation] Mahavira Hall shrine — activate it before Yellowbrow
+- [Tip] Mahavira Hall shrine — activate it before Yellowbrow
 - [Story] Enter the Mahavira Hall, meet Yellowbrow disguised as Maitreya
 - [Tip] Use Spell Binder before opening the door into the hall
 - [Boss] Yellowbrow — phase 1, at the end you are sucked into the bag
-- [Boss] Macaque Chief — 3rd fight, inside the bag with Bajie
+- [Boss] Macaque Chief — 3rd fight, inside the bag with Bajie @card:302009
 - [Tip] Entering the fight fully restores your gourd and health
 - [Boss] Yellowbrow — final phase, full-body lightning must be interrupted with pokes @card:303004
 - [Tip] Poke to interrupt the lightning summon; hit his back when he raises his hand
@@ -504,7 +503,7 @@
 - [Item] Essence Decoction Formula — buy from Xu Dog
 - [Item] Tonifying Decoction Formula — buy from Xu Dog
 
-### Village of Lanxi @shrine:4001
+### Village of Lanxi @shrine:4001 @shrine:4003
 - [Story] The Destined One and Bajie head to Webbed Hollow
 - [Item] Memory-Woven Hollow Chart — buy at the shop @item:1804
 - [Boss] Second Sister — Estate of the Zhu, Chief @card:403001
@@ -631,7 +630,7 @@
 - [Item] Crane Immortal — completed painting
 - [Secret] Venom Daoist 2 — path opposite the shrine, turn left
 - [Tip] You must win the 1st fight at the Pool of Shattered Jade to trigger it
-- [Boss] Venom Daoist 2 — two phases
+- [Boss] Venom Daoist 2 — two phases @card:402011
 - [Secret] Touch the mural to enter Purple Cloud Mountain
 
 ### Valley of Blooms @shrine:8002
@@ -698,6 +697,7 @@
 - [Secret] Hidden area 2
 
 ### Camp of Seasons @shrine:5002
+- [Meditation] Camp of Seasons - Stone Statue @meditation:5002
 - [Quest] Grab the coffin, climb the stairs, pick up the medicine at the hut
 
 ### Height of Ember @shrine:5003
@@ -740,6 +740,7 @@
 - [Quest] Final horse-face quest
 
 ### Emerald Hall @shrine:5011
+- [Meditation] Emerald Hall - Buddha Seat @meditation:5001
 - [Boss] Keeper of Flaming Mountains @card:503002
 - [Boss] Yin-Yang Fish — fought together with the Keeper, defense scene @card:503001
 - [Item] Yin-Yang Robe @equip:17008
@@ -748,6 +749,7 @@
 - [Spirit] Top Takes Bottom - Bottom Takes Top — steel ball on the way out, after the hidden area @soul:8032
 
 ### Ashen Pass III @shrine:5010
+- [Meditation] Ashen Pass III - Cliff @meditation:5003
 - [Quest] Avoid the spiked bridge, follow the little fox to open Fallen Furnace Crater
 - [Spirit] Nine-Capped Lingzhi Guai — pick up the middle mushroom to trigger it @soul:8092
 - [Tip] Pull the big red mushroom on the right of the shrine to trigger the hidden boss
@@ -765,6 +767,7 @@
 - [Secret] Talk to the Stalwart, open the seal to Bishui Cave
 
 ### Purge Pit @shrine:7002
+- [Meditation] Purge Pit - Screen @meditation:5004
 - [Secret] Bishui Cave — hidden area 7
 - [Boss] Top Takes Bottom, Bottom Takes Top @card:502005
 - [Tip] Can be done after the chapter, return by teleporting
