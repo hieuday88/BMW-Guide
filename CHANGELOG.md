@@ -1,12 +1,27 @@
 # Changelog
 
-## Unreleased
-- Tray icon shows the app is running; left-click shows / hides it, right-click opens a menu with Quit.
-- The overlay never steals focus from the game; the mouse passes through it by default and the backtick key (`) toggles clicking the overlay.
-- Directions follow the roads and valleys painted on the map (A* on a cost grid built from the map images), with walking distance and a turn hint for the next stretch.
-- Chapter-2 dragon content (Red Loong, Boshen Censer, Unrequited Benevolence) is listed only in Chapter 2.
-- Every boss, chief and spirit point on the minimap has its Vietnamese name.
-- Celestial pills are guidance only; items that get used up or handed over stay ticked.
+## v1.3.0
+
+### Playing comfort
+- The overlay never steals focus from the game: by default the mouse passes straight through it (🔒). Press the backtick key (`) to click the overlay (🖱) and press it again to lock.
+- Tray icon next to the clock shows the app is running. Left-click shows / hides it; right-click opens show/hide, mouse lock, minimap and Quit.
+
+### Directions
+- Routes follow the roads and valleys painted on the map (A* on cost grids built from the map images) instead of a straight line through mountains.
+- Shows the walking distance and a turn hint for the next stretch (e.g. "→ right"); the route updates when you stray.
+- Checklist lines can point to map locations in other chapters (e.g. the Red Loong from Chapter 2).
+
+### Minimap
+- Every boss, chief and spirit point has its Vietnamese name, and most hide once the save shows them defeated or collected.
+- Empty pickup points (celestial pills, vines, wine worms, curios) disappear when you stand nearby and nothing is there.
+
+### Checklist
+- Content is listed in the chapter where you can actually do it: the Red Loong, Boshen Censer and Unrequited Benevolence moved to Chapter 2; the Wandering Wight now follows the Gourd step with clear notes.
+- Items that get used up or handed over stay ticked; celestial pills are guidance only because the save does not record eating them.
+- The Black Wind Mountain Land God ticks once you have Immobilize.
+
+### Quality
+- `smoke_test.py` checks the checklists, assets, save decoding, routing, map lookups and a live app run.
 
 ## v1.2.0
 
