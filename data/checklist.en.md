@@ -12,7 +12,7 @@
 
 ### Front Hills @shrine:1003
 - [Story] Arrive at Black Wind Mountain — chapter start, Forest of Wolves
-- [NPC] Black Wind Mountain Land God — teaches the spell during the Bullguard fight @card:100000
+- [NPC] Black Wind Mountain Land God — teaches the spell during the Bullguard fight @item:5101
 - [Boss] Bullguard — first boss, rewards the Immobilize spell @card:102004
 - [Tip] Heavy attacks stagger it; Immobilize unlocks at half health
 - [Spell] Immobilize @item:5101

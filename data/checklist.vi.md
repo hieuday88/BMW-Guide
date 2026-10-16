@@ -12,7 +12,7 @@
 
 ### Trước Núi @shrine:1003
 - [Cốt truyện] Đến Hắc Phong Sơn — bắt đầu chương, rừng Thương Lang
-- [NPC] Hắc Phong Sơn Thổ Địa — dạy phép giữa trận Cổ Hộ Viện @card:100000
+- [NPC] Hắc Phong Sơn Thổ Địa — dạy phép giữa trận Cổ Hộ Viện @item:5101
 - [Boss] Cổ Hộ Viện — boss đầu, thưởng Định Thân Pháp @card:102004
 - [Mẹo] Đòn nặng làm nó choáng; nửa máu mở Định Thân
 - [Phép] Định Thân Pháp @item:5101
