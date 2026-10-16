@@ -1,5 +1,21 @@
 # Changelog
 
+## v1.3.1
+
+### Minimap
+- Opened chests are matched to the save by each chest's own GUID, so chests that share an actor name in different areas no longer hide each other.
+- A chest only counts as opened when the save marks it opened; chests you only touched stay on the map.
+- A failed memory read no longer looks like an empty spot, so pickups and chests are not hidden by mistake.
+- Materials dropped by a boss or chief hide once that boss is defeated; pills, curios and other pickups inside opened chests hide too.
+- Standing near a point shows its name and distance (e.g. "📍 Bích Ngẫu Kim Đan · 2 m"), and nearby icons are drawn above the player arrow.
+- Points that only had generic labels (chests, pills, NPCs, meditation spots) now have full Vietnamese names.
+
+### Checklist
+- Spirits stay ticked after you upgrade them (every upgrade tier has its own id in the save).
+- Ids were checked against the official localization: added the six missing meditation spots (Chapters 3 and 5), missing shrines and several boss, NPC and item ids.
+- Meditation lines guide you to the actual cushion on the map and tick from the save.
+- The starting gourd uses its official name, Lão Hồ Lô.
+
 ## v1.3.0
 
 ### Playing comfort
