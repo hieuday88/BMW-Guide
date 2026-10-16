@@ -35,14 +35,6 @@
 - [Vật phẩm] Miêu Tình Bảo Xuyến — U Hồn rơi
 - [Vật phẩm] Bích Ngẫu Kim Đan — kim đan Lâm Ngoại
 
-### Xích Mộc Gian @shrine:1013
-- [Ẩn] Long Trảo Lâm sau thác — quay lại sau Chương 2
-- [Vật phẩm] Phi Long Lân Phiến — lấy ở Chương 2, mở thác @item:4011
-- [Mẹo] Phá tường Hoàng Phong Lĩnh bằng U Hồn hoặc đá để lấy
-- [Boss] Xích Nhiêm Long — boss ẩn, vua yêu hệ sét @card:103007
-- [Mẹo] Dễ hơn nhiều nếu quay lại với đồ Chương 4
-- [Vật phẩm] Bác Sơn Lô — rơi từ Xích Nhiêm Long @equip:16028
-
 ### Quan Âm Thiền Viện @shrine:1004
 - [Cốt truyện] Quan Âm Thiền Viện — thiền viện hoang tàn bị yêu chiếm
 - [Boss] Linh Hư Tử — vua yêu đầu tiên @card:103001
@@ -106,7 +98,6 @@
 - [Vật phẩm] Nhãn Khán Hỷ — thưởng sau Hắc Hùng Tinh
 - [Vật phẩm] Liệt Hỏa Ô Kim — rơi, đổi Thú Côn Hùng Bi @item:3902
 - [Vật phẩm] Thú Côn - Hùng Bi — chế tạo từ Liệt Hỏa Ô Kim @equip:15004
-- [Vật phẩm] Bất Cầu Nhân — mua ở miếu sau Chương 2 @equip:16029
 - [Cốt truyện] Hỏa chiếu hắc vân — kết chương, sang Chương 2
 
 ---
@@ -145,8 +136,9 @@
 ### Bìa Rừng @shrine:1002
 - [Ẩn] Về Chương 1, dùng Long Lân leo thác ngoài rừng
 - [Boss] Xích Nhiêm Long — sau thác nước, nhà rồng 1 @card:103007
+- [Mẹo] Dễ hơn nhiều nếu quay lại với đồ Chương 4
 - [Vật phẩm] Bác Sơn Lô — bảo vật rơi từ Xích Nhiêm Long @equip:16028
-- [Mẹo] Bất Cầu Nhân mua ở miếu Chương 1 sau Chương 2
+- [Vật phẩm] Bất Cầu Nhân — mua ở miếu Chương 1 sau Chương 2 @equip:16029
 
 ### Tàng Phong Sơn Ao @shrine:2011
 - [Nhiệm vụ] Phật Mục Châu: mắt phật 1

@@ -255,7 +255,10 @@ class Minimap:
                 wanted.add(('item' if cat == 'equip' else 'equip', gid))
         name = _norm(re.split(r'\s+[—–]\s+|\s+\d+$', text)[0])
         found = []
-        for level in CHAPTER_LEVELS.get(chapter, ()):
+        own = CHAPTER_LEVELS.get(chapter, ())
+        for level in [*own, *(lv for lv in self.points if lv not in own)]:
+            if found and level not in own:
+                break
             for pt in self.points.get(level, []):
                 ref = self.point_ids.get(f'{level}:{pt[0]}')
                 by_id = ref is not None and (ref[0], ref[1]) in wanted

@@ -35,14 +35,6 @@
 - [Item] Cat's Eye Beads — dropped by the Wandering Wight
 - [Item] Jade Lotus Root Pill — pill found in Outside the Forest
 
-### Red Wood Grove @shrine:1013
-- [Secret] Loong Claw Forest behind the waterfall — return after Chapter 2
-- [Item] Loong Scales — obtained in Chapter 2, opens the waterfall @item:4011
-- [Tip] Break the wall in Yellow Wind Ridge with the Wandering Wight or a rock to get it
-- [Boss] Red Loong — hidden boss, lightning king of the monsters @card:103007
-- [Tip] Much easier if you return with Chapter 4 gear
-- [Item] Boshen Censer — dropped by the Red Loong @equip:16028
-
 ### Guanyin Temple @shrine:1004
 - [Story] Guanyin Temple — a ruined temple overrun by monsters
 - [Boss] Lingxuzi — the first Yaoguai King @card:103001
@@ -106,7 +98,6 @@
 - [Item] Eye of Joy — reward after the Black Bear Guai
 - [Item] Fiery Black Gold — dropped, exchanged for the Beast Staff - Bear @item:3902
 - [Item] Beast Staff - Bear — crafted from the Fiery Black Gold @equip:15004
-- [Item] Unrequited Benevolence — bought at the shrine after Chapter 2 @equip:16029
 - [Story] Black Cloud, Red Fire — chapter finale, on to Chapter 2
 
 ---
@@ -145,8 +136,9 @@
 ### Outside the Forest @shrine:1002
 - [Secret] Return to Chapter 1, use the Loong Scales to climb the waterfall outside the forest
 - [Boss] Red Loong — behind the waterfall, Loong house 1 @card:103007
+- [Tip] Much easier if you return with Chapter 4 gear
 - [Item] Boshen Censer — treasure dropped by the Red Loong @equip:16028
-- [Tip] Buy the Unrequited Benevolence at the Chapter 1 shrine after Chapter 2
+- [Item] Unrequited Benevolence — bought at a Chapter 1 shrine after Chapter 2 @equip:16029
 
 ### Squall Hideout @shrine:2011
 - [Quest] Buddha's Eye Bead: eye 1
