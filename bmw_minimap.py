@@ -220,7 +220,7 @@ class Minimap:
                 return gid in self.owned['soul']
             if src in ('card', 'equip') or unique:
                 return gid in self.owned[src]
-        if cat in CHEST_CATS and self.chests:
+        if cat in PICKUP_CATS and self.chests:
             near = min(self.chests, key=lambda c: math.dist((wx, wy, wz), c[1:]))
             if math.dist((wx, wy, wz), near[1:]) <= CHEST_RADIUS and near[0] in self.opened:
                 self.remember(pid)
