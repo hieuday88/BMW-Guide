@@ -19,10 +19,11 @@
 - **Finds your save automatically** (Steam, Epic or standalone installs). You can also pick a save file manually from ⚙.
 - **Vietnamese / English:** switch under ⚙ → Language.
 - **Compact mode (F10):** shows only the next 3 steps and their tips, taking up very little screen space.
-- **Minimap (F11):** a live map around your character with a facing arrow.
+- **Minimap (F11):** a live map around your character, right above the checklist, with a facing arrow.
   - Shows chests, Luojia Fragrant Vines, Awaken Wine Worms, bosses, chiefs, spirits, meditation spots, shrines, NPCs…
   - Finished points disappear: activated shrines are hidden straight from the save. Chests, bosses, spirits and items are hidden when the save records you just opened/defeated/picked them up nearby (counted from when the app is running; earlier pickups stay visible).
-  - Scroll on the map to zoom, drag to move it.
+  - Scroll on the map to zoom; hover a point to see its name.
+  - **Click a checklist line or area title** to jump the map there, with a red target ring, a direction line and the distance (a straight line, not terrain-aware pathing). Lines without their own point jump to the area's shrine. Click the map to follow your character again.
   - The app only **reads** game memory for your position. It injects no DLL and writes nothing.
 
 ## Install

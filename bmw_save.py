@@ -86,17 +86,23 @@ def _actor(guid):
 
 
 def _actors(ecs):
-    """Returns names of activated map symbols and interacted world objects (opened chests, used shrines)."""
+    """Returns actor names of map symbols the player has activated (shrines, banners)."""
     names = set()
     for entry in _subs(_first(ecs, 2, 4), 1):
         key = _first(entry, 1)
         if key:
             names.add(_actor(key.decode('utf-8', 'replace')))
+    return names
+
+
+def _opened(ecs):
+    """Returns actor names whose persistent interaction state is set (opened chests, activated objects)."""
+    names = set()
     for level in _subs(ecs, 3):
         for buc in _subs(level, 2):
-            if _subs(buc, 5):
-                guid = _first(buc, 1)
-                names.add(_actor(guid.decode('utf-8', 'replace')))
+            for interact in _subs(buc, 5):
+                if (_ints(interact, 1) or [0])[0] >= 1:
+                    names.add(_actor(_first(buc, 1).decode('utf-8', 'replace')))
     return names
 
 
@@ -122,6 +128,7 @@ def read_progress(path):
         'wine': _ids(_subs(bag, 5)),
         'shrine': _ids(_subs(_first(data, ECS, 2, 3), 2)),
         'actors': _actors(_first(data, ECS)),
+        'opened': _opened(_first(data, ECS)),
         'map_id': (_ints(_first(data, ECS, 2, 2), 6) or [0])[0],
         'meditation': _ids(_subs(progress, 11)),
         'spell': set(_ints(progress, 3)),

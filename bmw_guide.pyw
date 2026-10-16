@@ -36,12 +36,12 @@ TIP_TAGS = {'Mẹo', 'Tip'}
 TOKEN = re.compile(r'\s*@(\w+):(\d+)')
 
 UI = {
-    'vi': {'map': 'Bản đồ (F11)', 'map_wait': 'Đang chờ game…\nMở game ở chế độ Borderless', 'map_none': 'Chưa có bản đồ cho khu này',
+    'vi': {'map': 'Bản đồ (F11)', 'map_wait': 'Đang chờ game…\nMở game ở chế độ Borderless', 'map_none': 'Chưa có bản đồ cho khu này', 'map_other': 'ở khu khác', 'map_nopos': 'Mục này chưa có vị trí trên map',
            'title': '悟空  F9 ẩn · F10 gọn · F11 map', 'lang': 'Ngôn ngữ', 'pick': 'Chọn file save…', 'auto': 'Tự tìm save',
            'reload': 'Tải lại checklist', 'quit': 'Thoát', 'hide': 'Ẩn mục đã xong', 'nosave': 'Chưa tìm thấy save — ⚙ để chọn',
            'searching': 'Đang tìm save…', 'save': 'Save', 'manual': 'chọn tay', 'autolbl': 'tự động',
            'chapter_done': 'Xong chương này ✓', 'badsave': 'Không đọc được save', 'missing': 'Thiếu file checklist'},
-    'en': {'map': 'Minimap (F11)', 'map_wait': 'Waiting for the game…\nRun it in Borderless mode', 'map_none': 'No map for this area',
+    'en': {'map': 'Minimap (F11)', 'map_wait': 'Waiting for the game…\nRun it in Borderless mode', 'map_none': 'No map for this area', 'map_other': 'in another area', 'map_nopos': 'No map location for this entry',
            'title': '悟空  F9 hide · F10 compact · F11 map', 'lang': 'Language', 'pick': 'Choose save file…', 'auto': 'Find save automatically',
            'reload': 'Reload checklist', 'quit': 'Quit', 'hide': 'Hide completed', 'nosave': 'No save found — use ⚙ to pick one',
            'searching': 'Searching for save…', 'save': 'Save', 'manual': 'manual', 'autolbl': 'auto',
@@ -105,6 +105,7 @@ class Overlay:
         self.root.overrideredirect(True)
         self.root.attributes('-topmost', True, '-alpha', ALPHA)
         self.root.configure(bg=BG)
+        self.root.attributes('-transparentcolor', bmw_minimap.KEY)
         if ICON.exists():
             self.root.iconbitmap(str(ICON))
         x, y = self.state.get('pos', (40, 80))
@@ -115,7 +116,9 @@ class Overlay:
         self.build_chrome()
         self.root.after(50, self.round_corners)
         self.reload()
-        self.minimap = bmw_minimap.Minimap(self.root, BUNDLE / 'assets', self.state, self.save_state, self.t)
+        self.minimap = bmw_minimap.Minimap(self.map_frame, BUNDLE / 'assets', self.state, self.save_state, self.t,
+                                           lambda: self.lang, WIDTH)
+        self.apply_mode()
         self.start_hotkey_thread()
         self.start_save_search()
         self.root.after(500, self.poll_save)
@@ -169,6 +172,9 @@ class Overlay:
         self.hide_btn.pack(side='right')
         self.flat_button(bar, '⚙', self.open_menu, padx=4).pack(side='right')
 
+        self.map_frame = tk.Frame(self.root, bg=bmw_minimap.KEY)
+        if self.state.get('map_visible', True):
+            self.map_frame.pack(fill='x', after=bar)
         self.mini = tk.Frame(self.root, bg=BG)
         self.full = tk.Frame(self.root, bg=BG)
         self.full.pack(fill='both', expand=True)
@@ -203,7 +209,7 @@ class Overlay:
                                  command=lambda c=code: self.set_lang(c))
         m.add_cascade(label=self.t('lang'), menu=lang)
         m.add_separator()
-        m.add_command(label=self.t('map'), command=lambda: self.minimap.toggle())
+        m.add_command(label=self.t('map'), command=self.toggle_map)
         m.add_separator()
         m.add_command(label=self.t('pick'), command=self.pick_save)
         m.add_command(label=self.t('auto'), command=self.use_auto_save)
@@ -280,7 +286,7 @@ class Overlay:
     def apply_progress(self, progress):
         """Marks every checklist item whose @category:id token is present in the save."""
         if hasattr(self, 'minimap'):
-            self.minimap.update_from_save(progress)
+            self.minimap.update_from_save(progress, str(self.save_file))
         owned = {(cat, i) for cat, ids in progress.items() if isinstance(ids, set) for i in ids}
         self.shrines = {i for cat, i in owned if cat == 'shrine'}
         loose = progress['item'] | progress['equip'] | progress['spell'] | progress['wine']
@@ -301,7 +307,24 @@ class Overlay:
     def drag(self, e):
         self.root.geometry(f'+{e.x_root - self.drag_off[0]}+{e.y_root - self.drag_off[1]}')
 
+    def toggle_map(self):
+        """Shows or hides the round minimap above the checklist."""
+        visible = not self.state.get('map_visible', True)
+        self.state['map_visible'] = visible
+        self.save_state()
+        if visible:
+            self.map_frame.pack(fill='x', after=self.bar_frame)
+        else:
+            self.map_frame.pack_forget()
+        self.apply_mode()
+
+    def map_height(self):
+        return self.minimap.h if self.state.get('map_visible', True) and hasattr(self, 'minimap') else 0
+
     def on_wheel(self, e):
+        if hasattr(self, 'minimap') and e.widget is self.minimap.canvas:
+            self.minimap.zoom_by(1 if e.delta > 0 else -1)
+            return
         """Eases the list toward the wheel target instead of jumping."""
         top, bottom = self.canvas.yview()
         span = bottom - top
@@ -375,16 +398,18 @@ class Overlay:
             smark = tk.Label(head, bg=BG, font=(FONT, 8))
             if sec_name.tokens:
                 smark.pack(side='left')
-            tk.Label(head, text=sec_name, bg=BG, fg=GOLD, font=(FONT, 9, 'bold')).pack(side='left')
+            title = tk.Label(head, text=sec_name, bg=BG, fg=GOLD, font=(FONT, 9, 'bold'), cursor='hand2')
+            title.pack(side='left')
             count = tk.Label(head, bg=BG, fg=DIM, font=(FONT, 7))
             count.pack(side='right', padx=4)
             rows_frame = tk.Frame(box, bg=BG)
             sec = {'items': [it for it in items if it[1] not in TIP_TAGS and it[3]], 'count': count, 'arrow': arrow,
                    'rows': rows_frame, 'head': head, 'open': None, 'smark': smark, 'shrine': sec_name.tokens}
-            for w in (head, arrow, *head.winfo_children()):
+            for w in (head, arrow, smark, count):
                 w.bind('<Button-1>', lambda e, s=sec: self.set_open(s, not s['open']))
+            title.bind('<Button-1>', lambda e, n=sec_name: self.focus_on(n.tokens, n, shrine=True))
             for item in items:
-                self.add_row(rows_frame, item, hide)
+                self.add_row(rows_frame, item, hide, sec_name)
                 self.order.append((sec_name, item))
             self.sections.append(sec)
             self.set_open(sec, any(not self.is_done(it[0]) for it in sec['items']) or not sec['items'])
@@ -398,7 +423,7 @@ class Overlay:
         else:
             sec['rows'].pack_forget()
 
-    def add_row(self, parent, item, hide):
+    def add_row(self, parent, item, hide, area=None):
         key, tag, text, tokens = item
         row = tk.Frame(parent, bg=BG, cursor='hand2')
         row.pack(fill='x', pady=0)
@@ -408,14 +433,16 @@ class Overlay:
             row.configure(cursor='')
             return
         if not tokens:
-            row.configure(cursor='')
-            tk.Label(row, text='·', bg=BG, fg=DIM, font=(FONT, 9), width=2).pack(side='left', anchor='n')
+            parts = [tk.Label(row, text='·', bg=BG, fg=DIM, font=(FONT, 9), width=2)]
             if tag:
-                tk.Label(row, text=tag, bg=BG, fg=DIM, font=(FONT, 7)).pack(side='left', anchor='n', pady=2)
-            tk.Label(row, text=text, bg=BG, fg=DIM, font=(FONT, 9), anchor='w', justify='left',
-                     wraplength=WIDTH - 110).pack(side='left', fill='x', anchor='n')
+                parts.append(tk.Label(row, text=tag, bg=BG, fg=DIM, font=(FONT, 7)))
+            parts.append(tk.Label(row, text=text, bg=BG, fg=DIM, font=(FONT, 9), anchor='w', justify='left',
+                                  wraplength=WIDTH - 110))
+            for w in parts:
+                w.pack(side='left', anchor='n', fill='x' if w is parts[-1] else None, pady=2 if w is parts[1] and tag else 0)
+            for w in (row, *parts):
+                w.bind('<Button-1>', lambda e, t=tokens, x=text: self.focus_on(t, x, area=area))
             return
-        row.configure(cursor='')
         mark = tk.Label(row, bg=BG, font=(FONT, 9), width=2)
         mark.pack(side='left', anchor='n')
         tag_lbl = tk.Label(row, text=tag, bg=BG, font=(FONT, 7, 'bold')) if tag else None
@@ -426,10 +453,23 @@ class Overlay:
         widgets = [w for w in (row, mark, tag_lbl, lbl) if w]
         self.rows[key] = {'row': row, 'mark': mark, 'tag_lbl': tag_lbl, 'tag': tag, 'lbl': lbl, 'widgets': widgets, 'hover': False}
         for w in widgets:
+            w.bind('<Button-1>', lambda e, t=tokens, x=text: self.focus_on(t, x, area=area))
             w.bind('<Enter>', lambda e, k=key: self.hover(k, True))
             w.bind('<Leave>', lambda e, k=key: self.hover(k, False))
         if hide and self.is_done(key):
             row.pack_forget()
+
+    def focus_on(self, tokens, text, shrine=False, area=None):
+        """Jumps the minimap to where a checklist line can be found, falling back to its area's shrine."""
+        found = self.minimap.locate(self.state['ch'], tokens, str(text), shrine)
+        if not found and area is not None:
+            found = self.minimap.locate(self.state['ch'], area.tokens, str(area), True)
+        if self.minimap.focus(found):
+            if not self.state.get('map_visible', True):
+                self.toggle_map()
+            return
+        self.save_lbl.configure(text=f" {self.t('map_nopos')}")
+        self.root.after(2500, lambda: self.save_lbl.configure(text=f' {self.save_status}'))
 
     def hover(self, key, on):
         self.rows[key]['hover'] = on
@@ -509,7 +549,7 @@ class Overlay:
         if not shown:
             tk.Label(self.mini, text=self.t('chapter_done'), bg=BG, fg=GOLD, font=(FONT, 9)).pack(pady=4)
         self.root.update_idletasks()
-        h = self.bar_frame.winfo_reqheight() + self.mini.winfo_reqheight() + 6
+        h = self.bar_frame.winfo_reqheight() + self.map_height() + self.mini.winfo_reqheight() + 6
         self.root.geometry(f'{WIDTH}x{h}')
 
     def apply_mode(self):
@@ -520,7 +560,7 @@ class Overlay:
         else:
             self.mini.pack_forget()
             self.full.pack(fill='both', expand=True)
-            self.root.geometry(f'{WIDTH}x{HEIGHT}')
+            self.root.geometry(f'{WIDTH}x{HEIGHT + self.map_height()}')
 
     def toggle_compact(self):
         self.state['compact'] = not self.state.get('compact', False)
@@ -546,8 +586,6 @@ class Overlay:
         """Re-asserts topmost because borderless-fullscreen games sometimes steal it."""
         if self.visible:
             self.root.attributes('-topmost', True)
-        if hasattr(self, 'minimap'):
-            self.minimap.keep_on_top()
         self.root.after(2000, self.keep_on_top)
 
     def start_hotkey_thread(self):
@@ -566,7 +604,7 @@ class Overlay:
 
     def poll_hotkey(self):
         """Handles hotkey presses on the Tk thread, since Tk is not thread-safe."""
-        for hk_id, action in ((1, self.toggle), (2, self.toggle_compact), (3, lambda: self.minimap.toggle())):
+        for hk_id, action in ((1, self.toggle), (2, self.toggle_compact), (3, self.toggle_map)):
             if self.hotkey_pressed[hk_id].is_set():
                 self.hotkey_pressed[hk_id].clear()
                 action()

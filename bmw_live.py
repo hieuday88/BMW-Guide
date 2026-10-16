@@ -8,6 +8,10 @@ import threading
 
 EXE = 'b1-Win64-Shipping.exe'
 KNOWN_GWORLD_RVAS = (0x1D5DDCA0, 492713840)  # repack build, Steam build (Dumper-7 dump from jaskang/wukong-minimap)
+KNOWN_GNAMES_RVAS = (0x1D3DCB40, 0x1D3DFCC0)
+WORLD_LEVELS = 328
+LEVEL_ACTORS = 0x98
+UOBJECT_NAME = 0x18
 UWORLD_GAME_INSTANCE = 400
 GAME_INSTANCE_LOCAL_PLAYERS = 56
 PLAYER_CONTROLLER = 48
@@ -77,7 +81,9 @@ class LiveReader:
         self.handle = None
         self.base = None
         self.gworld = None
+        self.gnames = None
         self.scanning = False
+        self.names = {}
 
     def _attach(self):
         pid = _find_pid()
@@ -93,6 +99,73 @@ class LiveReader:
             self.scanning = True
             threading.Thread(target=self._scan_gworld, daemon=True).start()
         return True
+
+    def _is_gnames(self, addr):
+        try:
+            block = self._ptr(addr + 0x10)
+            return self._heap(block) and self._read(block, 6)[2:6] == b'None'
+        except OSError:
+            return False
+
+    def _find_gnames(self):
+        """Locates FNamePool near its known offsets (the first entry of block 0 is always 'None')."""
+        for rva in KNOWN_GNAMES_RVAS:
+            if self._is_gnames(self.base + rva):
+                return self.base + rva
+        for rva in KNOWN_GNAMES_RVAS:
+            start = self.base + rva - 0x200000
+            try:
+                chunk = self._read(start, 0x400000)
+            except OSError:
+                continue
+            values = array.array('Q', chunk)
+            for i, v in enumerate(values):
+                if self._heap(v) and i >= 2 and self._is_gnames(start + (i - 2) * 8):
+                    return start + (i - 2) * 8
+        return None
+
+    def _fname(self, index, number):
+        if index not in self.names:
+            block = self._ptr(self.gnames + 0x10 + (index >> 16) * 8)
+            entry = block + (index & 0xFFFF) * 2
+            header = struct.unpack('<H', self._read(entry, 2))[0]
+            length, wide = header >> 6, header & 1
+            raw = self._read(entry + 2, length * (2 if wide else 1))
+            self.names[index] = raw.decode('utf-16le' if wide else 'latin-1')
+        name = self.names[index]
+        return f'{name}_{number - 1}' if number else name
+
+    def loaded_actors(self, needle):
+        """Returns [(name, x, y, z)] for loaded actors whose name contains needle; used to place save objects on the map."""
+        if self.handle is None or self.gworld is None:
+            return []
+        if self.gnames is None:
+            self.gnames = self._find_gnames()
+            if self.gnames is None:
+                return []
+        out = []
+        try:
+            world = self._ptr(self.gworld)
+            levels, count = struct.unpack('<Qi', self._read(world + WORLD_LEVELS, 12))
+            level_ptrs = struct.unpack(f'<{count}Q', self._read(levels, 8 * count)) if 0 < count < 5000 else ()
+        except OSError:
+            return []
+        for level in level_ptrs:
+            try:
+                actors, n = struct.unpack('<Qi', self._read(level + LEVEL_ACTORS, 12))
+                ptrs = struct.unpack(f'<{n}Q', self._read(actors, 8 * n)) if 0 < n < 200000 else ()
+            except OSError:
+                continue
+            for actor in ptrs:
+                try:
+                    name = self._fname(*struct.unpack('<ii', self._read(actor + UOBJECT_NAME, 8)))
+                    if needle not in name:
+                        continue
+                    root = self._ptr(actor + ACTOR_ROOT)
+                    out.append((name, *struct.unpack('<3d', self._read(root + SCENE_LOCATION, 24))))
+                except (OSError, struct.error, UnicodeDecodeError):
+                    continue
+        return out
 
     def _heap(self, v):
         return 0x10000 < v < 0x7FFFFFFFFFFF and not (self.base <= v < self.base + 0x40000000) and not v & 7
