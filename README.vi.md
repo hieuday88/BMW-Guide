@@ -19,6 +19,7 @@
 - **Tự tìm file save** trên máy (Steam, Epic, bản cài riêng). Bạn cũng có thể chọn bằng tay trong ⚙.
 - **Song ngữ Việt / Anh:** đổi trong ⚙ → Ngôn ngữ.
 - **Chế độ gọn (F10):** chỉ hiện 3 bước tiếp theo kèm mẹo, chiếm rất ít chỗ.
+- **Icon ở khay hệ thống** (cạnh đồng hồ) cho biết app đang chạy. Bấm trái để ẩn/hiện app; bấm phải để mở menu: ẩn/hiện, khoá chuột, bản đồ, thoát.
 - **Minimap (F11):** bản đồ quanh nhân vật nằm ngay trên checklist, có mũi tên hướng nhìn, cập nhật theo thời gian thực.
   - Hiện rương, Lạc Già Hương Đằng, Tam Đông Trùng, boss, đầu mục, tinh phách, điểm thiền, miếu, NPC…
   - Điểm đã xong tự ẩn theo save: miếu đã mở, boss/đầu mục đã hạ, tinh phách và vật phẩm có tên riêng đã có, rương đã mở. Điểm rương, vật phẩm và NPC cũng tự xoá khi bạn đứng gần mà không còn gì ở đó.

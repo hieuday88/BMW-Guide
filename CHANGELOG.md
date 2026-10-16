@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Tray icon shows the app is running; left-click shows / hides it, right-click opens a menu with Quit.
 - The overlay never steals focus from the game; the mouse passes through it by default and the backtick key (`) toggles clicking the overlay.
 - Directions follow the roads and valleys painted on the map (A* on a cost grid built from the map images), with walking distance and a turn hint for the next stretch.
 - Chapter-2 dragon content (Red Loong, Boshen Censer, Unrequited Benevolence) is listed only in Chapter 2.

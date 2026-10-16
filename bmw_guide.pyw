@@ -13,6 +13,7 @@ from tkinter import filedialog
 
 import bmw_minimap
 import bmw_save
+import bmw_tray
 
 HERE = Path(sys.executable if getattr(sys, 'frozen', False) else __file__).resolve().parent
 BUNDLE = Path(getattr(sys, '_MEIPASS', HERE))
@@ -37,12 +38,12 @@ TIP_TAGS = {'Mẹo', 'Tip'}
 TOKEN = re.compile(r'\s*@(\w+):(\d+)')
 
 UI = {
-    'vi': {'map': 'Bản đồ (F11)', 'map_wait': 'Đang chờ game…\nMở game ở chế độ Borderless', 'map_none': 'Chưa có bản đồ cho khu này', 'map_other': 'ở khu khác', 'map_nopos': 'Mục này chưa có vị trí trên map',
+    'vi': {'map': 'Bản đồ (F11)', 'map_wait': 'Đang chờ game…\nMở game ở chế độ Borderless', 'map_none': 'Chưa có bản đồ cho khu này', 'map_other': 'ở khu khác', 'tray_toggle': 'Ẩn / hiện (F9)', 'tray_mouse': 'Khoá / mở chuột (`)', 'map_nopos': 'Mục này chưa có vị trí trên map',
            'title': '` chuột · F9 ẩn · F10 gọn · F11 map', 'lang': 'Ngôn ngữ', 'pick': 'Chọn file save…', 'auto': 'Tự tìm save',
            'reload': 'Tải lại checklist', 'quit': 'Thoát', 'hide': 'Ẩn mục đã xong', 'nosave': 'Chưa tìm thấy save — ⚙ để chọn',
            'searching': 'Đang tìm save…', 'save': 'Save', 'manual': 'chọn tay', 'autolbl': 'tự động',
            'chapter_done': 'Xong chương này ✓', 'badsave': 'Không đọc được save', 'missing': 'Thiếu file checklist'},
-    'en': {'map': 'Minimap (F11)', 'map_wait': 'Waiting for the game…\nRun it in Borderless mode', 'map_none': 'No map for this area', 'map_other': 'in another area', 'map_nopos': 'No map location for this entry',
+    'en': {'map': 'Minimap (F11)', 'map_wait': 'Waiting for the game…\nRun it in Borderless mode', 'map_none': 'No map for this area', 'map_other': 'in another area', 'tray_toggle': 'Show / hide (F9)', 'tray_mouse': 'Lock / unlock mouse (`)', 'map_nopos': 'No map location for this entry',
            'title': '` mouse · F9 hide · F10 compact · F11 map', 'lang': 'Language', 'pick': 'Choose save file…', 'auto': 'Find save automatically',
            'reload': 'Reload checklist', 'quit': 'Quit', 'hide': 'Hide completed', 'nosave': 'No save found — use ⚙ to pick one',
            'searching': 'Searching for save…', 'save': 'Save', 'manual': 'manual', 'autolbl': 'auto',
@@ -122,6 +123,7 @@ class Overlay:
                                            lambda: self.lang, WIDTH)
         self.apply_mode()
         self.start_hotkey_thread()
+        self.tray = bmw_tray.Tray(ICON, 'BMW Guide', self.tray_menu())
         self.start_save_search()
         self.root.after(500, self.poll_save)
         self.root.after(2000, self.keep_on_top)
@@ -245,6 +247,7 @@ class Overlay:
         self.lang = self.state['lang'] = code
         self.save_state()
         self.reload()
+        self.tray.set_menu(self.tray_menu())
 
     def pick_save(self):
         start = self.save_file.parent if self.save_file else Path.home()
@@ -646,10 +649,19 @@ class Overlay:
             if self.hotkey_pressed[hk_id].is_set():
                 self.hotkey_pressed[hk_id].clear()
                 action()
+        actions = {'toggle': self.toggle, 'mouse': self.toggle_mouse, 'map': self.toggle_map, 'quit': self.quit}
+        while hasattr(self, 'tray') and not self.tray.events.empty():
+            actions[self.tray.events.get()]()
         self.root.after(50, self.poll_hotkey)
+
+    def tray_menu(self):
+        return [(self.t('tray_toggle'), 'toggle'), (self.t('tray_mouse'), 'mouse'), (self.t('map'), 'map'),
+                (None, None), (self.t('quit'), 'quit')]
 
     def quit(self):
         self.save_state()
+        if hasattr(self, 'tray'):
+            self.tray.close()
         self.root.destroy()
 
 

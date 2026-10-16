@@ -17,6 +17,7 @@
 - **Finds your save automatically** (Steam, Epic or standalone installs), or pick a save file under ⚙.
 - **Vietnamese / English**, switch under ⚙ → Language.
 - **Compact mode (F10)** shows only the next 3 steps and their tips.
+- **Tray icon.** A BMW icon in the system tray (next to the clock) shows the app is running. Left-click to show / hide it; right-click for show / hide, mouse lock, minimap and Quit.
 
 ### Minimap (F11)
 - A live map around your character, built into the overlay above the checklist, at 60 fps with a green facing arrow.
