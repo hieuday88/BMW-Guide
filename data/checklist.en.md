@@ -6,7 +6,7 @@
 - [Item] Wind Chime — Digital Deluxe curio, claim it at a shrine @equip:16008
 - [Story] Prologue — The Destined One begins the Great Sage's journey anew
 - [Boss] Erlang Shen — tutorial fight, infinite health
-- [Item] Coconut Wine — drink unlocked from the start of the game @item:2001
+- [Item] Coconut Wine — drink unlocked from the start of the game @item:2001 @item:2002 @item:2003 @item:2004 @item:2005 @item:2006
 - [Item] Medicine Gourd — starting gourd, upgraded later @equip:18001 @equip:18002 @equip:18003 @equip:18004 @equip:18005 @equip:18006
 - [Item] Trailblazer's Scarlet Gourd — pre-order bonus, claim it at a shrine; otherwise the horse NPC at New Thunderclap Temple (Chapter 3) gives it @equip:18009
 - [Item] Willow Wood Staff — starting weapon @equip:15005
@@ -79,6 +79,7 @@
 - [Tip] Bring the Fireproof Mantle for the Black Bear Guai's second phase
 
 ### Inside the Cave @shrine:1006
+- [Item] Jade Lotus Seed — water lily in the pond of the Black Wind Cave boss arena @item:6001
 - [Story] Enter Black Wind Cave — held by the Black Wind King
 - [Meditation] Meditation cushion on the cliff — in front of the Inside the Cave shrine @meditation:1004
 - [Boss] Black Wind King — rewards Cloud Step @card:103004
@@ -112,10 +113,10 @@
 ### Village Entrance @shrine:2002
 - [NPC] Doggo (Xu Gou) — first meeting, hands over the pill recipe @card:200004
 - [Boss] Lang-Li-Guhh-Baw — big pit next to the small bridge, frog hunt 2 @card:202006
-- [Item] Evil Repelling Pill — reward after Lang-Li-Guhh-Baw
+- [Item] Evil Repelling Medicament — recipe, reward after Lang-Li-Guhh-Baw
 - [Meditation] Meditation Spot 1 — jump down next to the bridge, turn left through the cave @meditation:2002
 - [Item] Lambbrew Drink — on the altar next to the shrine @item:2010
-- [Item] Goat Skull Soak, Laurel Buds Soak — wine soaks, in a chest/tree near the start of the village
+- [Item] Laurel Buds — soak, container guarded by a rat shaman near the start of the village @item:2310
 
 ### Sandgate Village
 - [Spirit] Rat Archer — main village gate @soul:8069
@@ -139,6 +140,7 @@
 - [Boss] Red Loong — behind the waterfall, Loong house 1 @card:103007
 - [Tip] Much easier if you return with Chapter 4 gear
 - [Item] Boshen Censer — treasure dropped by the Red Loong @equip:16028
+- [Item] Loongwreathe Staff — upgrade the Twin Serpents Staff after the Red Loong, needs Loong Scales @equip:15010
 - [Item] Unrequited Benevolence — bought at a Chapter 1 shrine after Chapter 2 @equip:16029
 
 ### Squall Hideout @shrine:2011
@@ -156,6 +158,7 @@
 - [Spell] Azure Dust @item:5004
 - [Item] Sobering Stone — hidden map 2, bought from Man-in-Stone @item:4003
 - [Item] Iron Pellet Soak — bought from Man-in-Stone @item:2316
+- [Item] Steel Ginseng — soak, random harvest from ginseng plants around Fright Cliff @item:2326
 - [Item] Golden Flower Hairpin — bought for 12,800 Will after the quest @equip:16006
 
 ### Rockrest Flat @shrine:2009
@@ -198,10 +201,11 @@
 - [Item] Lotus Jade — bought at the shrine, feed it to the pig (hidden map 4)
 
 ### Crouching Tiger Temple @shrine:2012 @shrine:2016 @shrine:2017
+- [Item] Copper Pill — soak, golden container on the path ahead @item:2318
 - [NPC] Doggo (Xu Gou) — final meeting next to the cellar @card:200004
 - [Spirit] Tiger Elder — cellar @soul:8066
 - [Item] Tiger Relic Soak — jar on the pedestal in the cellar @item:2309
-- [Item] Longevity Decoction — bought from Doggo for 2,700 Will
+- [Item] Longevity Decoction — recipe, bought from Xu Dog for 2,700 Will
 
 ### Windrest Bridge @shrine:2006
 - [Spirit] Rat Guard — three on the gate @soul:8064
@@ -233,6 +237,8 @@
 - [Boss] Tiger Vanguard — secret version, hidden map 6 @card:203007
 - [Item] Tiger Head Plaque @equip:16004
 - [Boss] Fuban — end of the hidden map @card:213001
+- [Item] Adept-Spine Shooting Fuban Staff — New Game+ only, needs 4 Sky-Piercing Horns (Fuban, the Scorpionlord, finishing Chapter 4, Fuban in NG+) @equip:15018
+- [Item] Goat Skull — soak, random harvest from licorice in the Sahali desert @item:2327
 - [Item] Wind-Fixing Pearl — reward from Fuban @item:19002
 - [Tip] The Wind-Fixing Pearl counters the Yellow Wind Sage's invisibility move
 - [Meditation] Meditation Spot 5 — cliff edge overlooking the Buddha valley @meditation:2006
@@ -244,6 +250,7 @@
 - [Tip] Recommended level 36+, upgrade your gourd, buy defensive pills
 - [Boss] Yellow Wind Sage — chapter final boss, the whirlwind behind the Storehouse @card:203005
 - [Item] Ear Hears Anger — relic, reward after the Yellow Wind Sage @item:4092
+- [Item] Rat Sage Staff — craft after defeating the Yellow Wind Sage @equip:15009
 - [Story] Bodhisattva Lingji — chapter-ending scene @card:200005
 - [Tip] After Chapter 2: buy the Precious Lotus Jade Gourd and Three-Winter Worm from Shen Monkey
 
@@ -270,7 +277,7 @@
 - [Meditation] Mirrormere - Snow Tree — viewing platform left of the lake, rest before heading down to the lake @meditation:3001
 - [Item] Dragon-Binding Whisker — under the tree across the lake @item:2304
 - [Spell] Immobilize — the Dragon-Binding Whisker extends its duration
-- [Item] Giao Pear and seeds — tree at the end of the right bank
+- [Item] Giao Pear and seeds — tree at the end of the right bank @item:6007
 - [Tip] Clear both banks first, then go to the shrine in the middle of the lake
 - [Boss] Kang-Jin Loong — falls into the Pagoda Realm once defeated @card:303001
 - [Tip] Use the Wind Tamer to knock it down, then Immobilize it
@@ -330,6 +337,7 @@
 - [Tip] The Pagoda Tower needs Spell Binder and the hidden bosses; leave it for last
 
 ### Warding Temple @shrine:3012
+- [Item] Golden Lotus Seed — farm the worm-like enemy (Earth Lotus Guai); also on Turtle Island @item:6018
 - [Boss] Macaque Chief — 2nd fight, rescue the Gourd Immortal
 - [Spell] Ring of Fire — taught by the Great Immortal @item:5102
 - [Boss] Quasi Recluse — around the Warding Temple, hard, freezing fan @card:301008
@@ -365,6 +373,7 @@
 - [Item] Blue Bridge Wind and Moon — wine, gold cup across the lake @item:2009
 - [Item] Bronze Buddha Pendant — dropped by the Wolf Dharma Protector, low drop rate @equip:16033
 - [NPC] Chen Loong — seashore, Ruyi Scroll 1 @card:300007
+- [Item] Graceful Orchid — soak, Chen Loong gives it after you bring 15 seeds @item:2324
 - [Tip] With Bajie holding aggro, Chen Loong is much easier
 
 ### Ruyi Scroll
@@ -376,7 +385,7 @@
 - [NPC] Yin Tiger — forging, upgrades, sells materials
 - [Boss] Yin Tiger — backyard, very hard optional fight @card:300005
 - [Tip] Do Melon Field and get Spell Binder before challenging Yin Tiger
-- [Item] Third curio group slot — unlocked after challenging Yin Tiger
+- [Tip] Third curio group slot — unlocked after challenging Yin Tiger
 - [Spell] Ebon Flow — transform into Yin Tiger, defeat him once to get it @item:5014
 
 ### Precept Corridor @shrine:3015
@@ -400,6 +409,7 @@
 - [Meditation] Mindfulness Cliff - Stone Path — meditation spot right behind Non-White @meditation:3004
 
 ### Forest of Felicity @shrine:3019
+- [Item] Gentian Seed — plants by the lake and past the lightning mage @item:6017
 - [Quest] Little Fox — interact with the fox corpse at the mountain gate
 - [Tip] Hold off on turning in the fox quest, explore the whole area first
 - [Secret] Secret tunnel next to the shrine — leads to Lang-Li-Guhh-Lang
@@ -416,12 +426,15 @@
 - [Tip] Surround the Stinky Fragrance Guest with Pluck of Many and Immobilize
 
 ### Towers of Karma @shrine:3023
+- [Item] Jade Essence — drink, corner behind a stone pillar near the shrine @item:2021
+- [Item] Tree Pearl Seed — round white-fruited trees near the shrine and by the lake @item:6006
 - [Quest] Reach the Towers of Karma shrine
 - [Quest] Rescue the Green-Capped Martialist, 2nd time — use Ring of Fire
 - [Tip] Swap in Ring of Fire at the shrine before going to rescue
 - [Boss] Old Ginseng Guai — pulls up trees, Chief @card:302016
 - [Spirit] Old Ginseng Guai — pulls up trees @soul:8040
 - [Item] Mountain Treasure Hairpin — dropped by Old Ginseng Guai @equip:17004
+- [Item] Millennium Ginseng Seed — dropped by the Old Ginseng Guai @item:6016
 - [Item] Jade Nectar — wine on the table near the tower @item:2019
 - [Item] Beast Buddha — curio, monster next to the shrine, farmable @equip:16032
 - [Quest] Rescue the young man — melon 1, Green-Capped Martialist 2nd time
@@ -489,6 +502,7 @@
 - [Tip] Entering the fight fully restores your gourd and health
 - [Boss] Yellowbrow — final phase, full-body lightning must be interrupted with pokes @card:303004
 - [Item] Nose Smells Love — relic, reward after Yellowbrow @item:4093
+- [Item] Spikeshaft Staff — craft after finishing Chapter 3 @equip:15012
 - [Tip] Poke to interrupt the lightning summon; hit his back when he raises his hand
 - [Story] Yellowbrow falls into the frozen lake, the real Maitreya fishes him out, end of chapter
 - [NPC] Keeper of the New West — added to the Journal when the chapter ends @card:300002
@@ -510,6 +524,7 @@
 - [Item] Tonifying Decoction Formula — buy from Xu Dog
 
 ### Village of Lanxi @shrine:4001 @shrine:4003
+- [Item] Fragrant Jade Flower Seed — pink flower bushes around the Estate of the Zhu @item:6004
 - [Story] The Destined One and Bajie head to Webbed Hollow
 - [Item] Memory-Woven Hollow Chart — buy at the shop @item:1804
 - [Boss] Second Sister — Estate of the Zhu, Chief @card:403001
@@ -525,7 +540,7 @@
 - [Item] Anti-Miasma Medicine, Longevity Decoction — chest near the spawn point
 - [Item] Cuo Jin-Yin Belt Hook — large chest on the left @equip:16018
 - [Item] Goji Shoots Soak — chest behind the wall, to the east @item:2319
-- [Item] Spine in the Sack — smash the cocoon on the south path
+- [Item] Spine in the Sack — curio, smash the cocoon on the south path @equip:16036
 - [Spirit] Beetle Captain @soul:8078
 - [Spirit] Sharp-Claw Cocoon — path to the right of the shrine
 - [Spirit] Scorpion Prince — path to the right of the shrine @soul:8030
@@ -687,6 +702,7 @@
 - [NPC] Hong Yi @card:100001
 - [Item] Golden Glowing Eye @item:3907
 - [Item] Tongue Tastes Longing — relic, reward after the Hundred-Eyed Daoist Master @item:4094
+- [Item] Visionary Centipede Staff — upgrade the Chitin Staff after finishing Chapter 4 @equip:15007
 - [Story] The Qi Vessel escapes, completing Chapter 4
 
 ---
@@ -710,6 +726,7 @@
 - [Secret] Hidden area 2
 
 ### Camp of Seasons @shrine:5002
+- [Item] Mount Lingtai Seedlings — soak, golden turtle container on the main path @item:2305
 - [Meditation] Camp of Seasons - Stone Statue @meditation:5002
 - [Quest] Grab the coffin, climb the stairs, pick up the medicine at the hut
 
@@ -758,6 +775,8 @@
 - [Meditation] Emerald Hall - Buddha Seat @meditation:5001
 - [Boss] Keeper of Flaming Mountains @card:503002
 - [Boss] Yin-Yang Fish — fought together with the Keeper, defense scene @card:503001
+- [Item] Slumbering Beetle Husk — soak, after the Yin-Yang Fish @item:2317
+- [Item] Loong Balm — drink, next to the throne in the hall after the Yin-Yang Fish @item:2012
 - [Item] Yin-Yang Robe @equip:17008
 - [NPC] Princess Iron Fan @card:500002
 - [Boss] Crimson-Silver Cart — hidden area 5
@@ -793,6 +812,8 @@
 
 ### Corridor of Fire and Ice @shrine:7004
 - [Boss] Bishui Golden-Eyed Beast — hidden area 9 @card:703001
+- [Item] Dark Iron Staff — New Game+ only, upgrade the Staff of Blazing Karma with the Bull King's Iron Horn @equip:15016
+- [Item] Bishui Beast Staff — upgrade the Rat Sage Staff after the Bishui Golden-Eyed Beast @equip:15019
 - [Tip] The Bishui Golden-Eyed Beast is fast and aggressive, keep your distance
 - [Item] Daoist's Basket of Fire and Water @equip:16021
 - [Item] Three-Tail Worm 2 — glowing jar on the left after defeating the boss
@@ -800,6 +821,7 @@
 
 ### Fallen Furnace Crater @shrine:5008
 - [Boss] Flint Vanguard — turn left after the ball breaks the fence @card:502008
+- [Item] Staff of Blazing Karma — craft from 3 Samadhi Fire Crystals (Flint Chief, Flint Vanguard, Mother of Flamlings) @equip:15011
 - [Spirit] Flint Vanguard @soul:8037
 - [NPC] Bull Demon King — mural scene @card:500003
 - [Story] Mural scene, enter the Red Boy fight
@@ -815,6 +837,9 @@
 ## Chapter 6 - Unfinished
 
 ### Prologue
+- [Item] Guanyin's Willow Leaf — soak, New Game+ only, buy from Shen Monkey @item:2301
+- [Item] Flower Primes — soak, buy from Shen Monkey @item:2302
+- [Item] A Thousand Days Inebriation — drink, buy from Shen Monkey @item:2020
 - [Quest] Note: two endings can be unlocked (the normal ending and the true ending)
 - [Quest] Collect the Great Sage's armor set (4 pieces from bosses), then receive the Ruyi Jingu Bang
 - [Tip] The first 3 armor bosses can be fought in any order; the 4th boss requires all 3
