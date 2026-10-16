@@ -19,6 +19,7 @@ NPC_RADIUS = 1200
 NPC_NEAR = 3000
 NPC_MISSES = 3
 CHEST_CATS = {'baoxiang', 'cailiao'}
+PICKUP_CATS = CHEST_CATS | {'xiandan', 'luojia', 'sandongchong', 'zhenwan', 'hulu', 'jiushi', 'yaojin', 'bianhua'}
 ICON_SUBSAMPLE = 10
 HOVER_PX = 14
 MAP_LEVELS = {10: 'HFS01_PersistentLevel', 11: 'HFS01_Old_GYCY_YKX_PersistentLevel', 20: 'HFM02_PersistentLevel',
@@ -125,7 +126,9 @@ class Minimap:
                     self.bump()
                 npcs = [a for a in actors if a[0].startswith(NPC_PREFIXES) and not a[0].startswith('Unit_Player')]
                 pickups = [a for a in actors if 'TreasureBox' in a[0] or 'SceneItem' in a[0]]
-                self.check_absent({'renwu': (npcs, NPC_RADIUS), 'baoxiang': (pickups, CHEST_RADIUS), 'cailiao': (pickups, CHEST_RADIUS)})
+                rules = {cat: (pickups, CHEST_RADIUS) for cat in PICKUP_CATS}
+                rules['renwu'] = (npcs, NPC_RADIUS)
+                self.check_absent(rules)
             except Exception:
                 pass
             time.sleep(ACTOR_SCAN_S)
