@@ -47,7 +47,7 @@
 - [Boss] Wandering Wight — go back to Outside the Forest; you only get its spirit once you have the Gourd
 - [Tip] Defeat the Wandering Wight BEFORE Elder Jinchi, otherwise it disappears for good
 - [Tip] Circle around the tree to dodge the shockwave
-- [Spirit] Wandering Wight — only drops once you have the Gourd (Capture the Yaoguai spirits step above) @soul:8013
+- [Spirit] Wandering Wight — only drops once you have the Gourd (Capture the Yaoguai spirits step above) @soul:8113
 - [Item] Cat's Eye Beads — dropped when the Wandering Wight is defeated
 - [Boss] Baw-Li-Guhh-Lang — frog yaoguai, frog hunt 1 @card:202001
 - [Tip] Strike the head head-on with spells and heavy attacks

@@ -47,7 +47,7 @@
 - [Boss] U Hồn — quay lại Bìa Rừng để đánh; phải có Hồ Lô rồi mới nhận được tinh phách
 - [Mẹo] Hạ U Hồn TRƯỚC khi đánh Kim Trì Trưởng Lão, nếu không U Hồn biến mất vĩnh viễn
 - [Mẹo] Vòng quanh cây né sóng xung kích
-- [Tinh phách] U Hồn — chỉ rơi khi đã có Hồ Lô (bước Thu phục yêu hồn ở trên) @soul:8013
+- [Tinh phách] U Hồn — chỉ rơi khi đã có Hồ Lô (bước Thu phục yêu hồn ở trên) @soul:8113
 - [Vật phẩm] Miêu Tình Bảo Xuyến — U Hồn rơi khi bị hạ
 - [Boss] Ba Lý Cá Lãng — ếch yêu, chuỗi đánh ếch 1 @card:202001
 - [Mẹo] Đánh vào đầu từ chính diện bằng phép và đòn nặng

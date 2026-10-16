@@ -90,7 +90,7 @@ class Minimap:
         self.images = {}
         self.hidden = set(state.setdefault('map_hidden', []))
         self.actors, self.opened = set(), set()
-        self.owned = {'card': set(), 'item': set(), 'equip': set(), 'soul': set()}
+        self.owned = {'card': set(), 'item': set(), 'equip': set(), 'soul': set(), 'meditation': set()}
         self.chests = []
         self.npc_misses = {}
         self.map_id = 0
@@ -173,7 +173,7 @@ class Minimap:
             self.save_state()
             self.prev = None
         self.actors, self.opened = progress['actors'], progress['opened']
-        self.owned = {k: progress[k] for k in ('card', 'item', 'equip', 'soul')}
+        self.owned = {k: progress[k] for k in ('card', 'item', 'equip', 'soul', 'meditation')}
         self.map_id = progress.get('map_id', 0)
         self.bump()
         prev, self.prev = self.prev, progress
@@ -267,7 +267,7 @@ class Minimap:
         """Finds map points for a checklist line by game id, then by name, within the chapter's levels."""
         wanted = set()
         for cat, gid in tokens:
-            wanted.add(({'soul': 'item', 'equip': 'equip', 'card': 'card'}.get(cat, 'item'), gid))
+            wanted.add(({'soul': 'item', 'equip': 'equip', 'card': 'card', 'meditation': 'meditation'}.get(cat, 'item'), gid))
             if cat in ('item', 'equip'):
                 wanted.add(('item' if cat == 'equip' else 'equip', gid))
         name = _norm(re.split(r'\s+[—–]\s+|\s+\d+$', text)[0])
