@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.3.2
+
+### Checklist
+- Every line was checked against the official Vietnamese localization: names now match the game, and 393 lines tick from the save (up from about 320).
+- Added the missing Journal entries, including the spider sisters, Hong Yi, Crane Immortal, Mandrill Chief, Fuban and several Chapter 5 chiefs.
+- Added the six relics, the missing curios and gourds, staffs with how to craft or upgrade them, drinks, soaks and seeds.
+- Added the six missing meditation spots and the missing shrines.
+- Spirits, gourds and Coconut Wine stay ticked after you upgrade them.
+
+### Minimap
+- All meditation spots guide you to the actual cushion and hide once you have meditated there.
+- Spirit points use their base ids, so they hide once you own the spirit.
+
 ## v1.3.1
 
 ### Minimap
