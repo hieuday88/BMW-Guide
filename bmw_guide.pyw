@@ -1,0 +1,569 @@
+"""BMW Guide: always-on-top Black Myth: Wukong progression checklist that auto-ticks from the save file."""
+import ctypes
+import ctypes.wintypes as wt
+import json
+import re
+import threading
+import time
+import tkinter as tk
+from pathlib import Path
+from tkinter import filedialog
+
+import bmw_save
+
+HERE = Path(__file__).resolve().parent
+DATA = HERE / 'data'
+ICON = HERE / 'assets' / 'BMW.ico'
+STATE_PATH = HERE / 'bmw_state.json'
+HOTKEYS = {1: 0x78, 2: 0x79}  # F9 show/hide, F10 compact/full
+MINI_COUNT = 3
+SAVE_POLL_MS = 3000
+ALPHA = 0.9
+WIDTH, HEIGHT = 300, 520
+FONT = 'Segoe UI'
+
+BG, PANEL, HOVER, LINE = '#121010', '#1c1814', '#262019', '#2e2720'
+TEXT, DIM, GOLD, DONE, NEXT_BG, AUTO = '#e6dccb', '#857a6a', '#d9a441', '#544c41', '#2a2217', '#4fae9b'
+TAG_COLORS = {'Boss': '#e0664f', 'Tinh phách': '#a58be6', 'Spirit': '#a58be6', 'Vật phẩm': '#5fb3d9', 'Item': '#5fb3d9',
+              'Phép': '#7fd17f', 'Spell': '#7fd17f', 'Nhiệm vụ': '#d9a441', 'Quest': '#d9a441', 'Ẩn': '#d97fb8',
+              'Secret': '#d97fb8', 'NPC': '#c9c0ae', 'Thiền': '#6fc7b8', 'Meditation': '#6fc7b8',
+              'Cốt truyện': '#f2e6c9', 'Story': '#f2e6c9'}
+TIP_TAGS = {'Mẹo', 'Tip'}
+TOKEN = re.compile(r'\s*@(\w+):(\d+)')
+
+UI = {
+    'vi': {'title': '悟空  F9 ẩn · F10 gọn', 'lang': 'Ngôn ngữ', 'pick': 'Chọn file save…', 'auto': 'Tự tìm save',
+           'reload': 'Tải lại checklist', 'quit': 'Thoát', 'hide': 'Ẩn mục đã xong', 'nosave': 'Chưa tìm thấy save — ⚙ để chọn',
+           'searching': 'Đang tìm save…', 'save': 'Save', 'manual': 'chọn tay', 'autolbl': 'tự động',
+           'chapter_done': 'Xong chương này ✓', 'badsave': 'Không đọc được save', 'missing': 'Thiếu file checklist'},
+    'en': {'title': '悟空  F9 hide · F10 compact', 'lang': 'Language', 'pick': 'Choose save file…', 'auto': 'Find save automatically',
+           'reload': 'Reload checklist', 'quit': 'Quit', 'hide': 'Hide completed', 'nosave': 'No save found — use ⚙ to pick one',
+           'searching': 'Searching for save…', 'save': 'Save', 'manual': 'manual', 'autolbl': 'auto',
+           'chapter_done': 'Chapter complete ✓', 'badsave': 'Could not read save', 'missing': 'Checklist file missing'},
+}
+
+
+def parse(md):
+    """Parses a checklist into [(chapter, [(section, [(key, tag, text, tokens)])])] with language-independent keys."""
+    chapters, sections, items = [], None, None
+    for raw in md.splitlines():
+        line = raw.strip()
+        if line.startswith('## '):
+            sections = []
+            chapters.append((line[3:].strip(), sections))
+            items = None
+        elif line.startswith('### ') and sections is not None:
+            items = []
+            sections.append((line[4:].strip(), items))
+        elif items is not None:
+            m = re.match(r'^(?:\d+\.|-)\s+(.+)', line)
+            if not m:
+                continue
+            text = m.group(1)
+            tokens = {(c, int(i)) for c, i in TOKEN.findall(text)}
+            text = TOKEN.sub('', text).replace('~~', '').replace('`', '').strip()
+            tag = ''
+            t = re.match(r'^\[([^\]]+)\]\s*(.*)', text)
+            if t:
+                tag, text = t.group(1), t.group(2)
+            key = f'{len(chapters) - 1}.{len(sections) - 1}.{len(items)}'
+            items.append((key, tag, text, tokens))
+    return chapters
+
+
+class Overlay:
+    """Borderless topmost checklist window with global hotkeys and save-file auto-ticking."""
+
+    def __init__(self):
+        self.state = self.load_state()
+        self.state.setdefault('done', {})
+        self.state.setdefault('undone', {})
+        self.lang = self.state.get('lang', 'vi')
+        self.auto = set()
+        self.save_file = None
+        self.save_mtime = None
+        self.save_status = ''
+        self.found_saves = None
+        self.last_chapter = None
+        self.root = tk.Tk()
+        self.root.title('BMW Guide')
+        self.root.overrideredirect(True)
+        self.root.attributes('-topmost', True, '-alpha', ALPHA)
+        self.root.configure(bg=BG)
+        if ICON.exists():
+            self.root.iconbitmap(str(ICON))
+        x, y = self.state.get('pos', (40, 80))
+        self.root.geometry(f'{WIDTH}x{HEIGHT}+{x}+{y}')
+        self.visible = True
+        self.scroll_target = 0.0
+        self.scroll_anim = None
+        self.build_chrome()
+        self.root.after(50, self.round_corners)
+        self.reload()
+        self.start_hotkey_thread()
+        self.start_save_search()
+        self.root.after(500, self.poll_save)
+        self.root.after(2000, self.keep_on_top)
+
+    def t(self, key):
+        return UI[self.lang][key]
+
+    def load_state(self):
+        try:
+            return json.loads(STATE_PATH.read_text(encoding='utf-8'))
+        except (OSError, ValueError):
+            return {}
+
+    def save_state(self):
+        self.state['pos'] = (self.root.winfo_x(), self.root.winfo_y())
+        STATE_PATH.write_text(json.dumps(self.state, ensure_ascii=False), encoding='utf-8')
+
+    def round_corners(self):
+        """Asks Windows 11 DWM to round the borderless window's corners."""
+        try:
+            hwnd = ctypes.windll.user32.GetParent(self.root.winfo_id())
+            pref = ctypes.c_int(2)
+            ctypes.windll.dwmapi.DwmSetWindowAttribute(hwnd, 33, ctypes.byref(pref), ctypes.sizeof(pref))
+        except (AttributeError, OSError):
+            pass
+
+    def flat_button(self, parent, text, command, fg=DIM, bg=PANEL, **kw):
+        b = tk.Label(parent, text=text, bg=bg, fg=fg, font=(FONT, 8), cursor='hand2', **kw)
+        b.bind('<Button-1>', lambda e: command())
+        b.bind('<Enter>', lambda e: b.configure(fg=TEXT))
+        b.bind('<Leave>', lambda e: b.configure(fg=b.base_fg))
+        b.base_fg = fg
+        return b
+
+    def build_chrome(self):
+        """Creates the drag bar, settings menu, chapter tabs, progress bar, list body and save status."""
+        self.bar_frame = bar = tk.Frame(self.root, bg=PANEL)
+        bar.pack(fill='x')
+        self.title_lbl = tk.Label(bar, bg=PANEL, fg=DIM, font=(FONT, 8))
+        self.title_lbl.pack(side='left', padx=8, pady=3)
+        for w in (bar, self.title_lbl):
+            w.bind('<ButtonPress-1>', self.start_drag)
+            w.bind('<B1-Motion>', self.drag)
+            w.bind('<ButtonRelease-1>', lambda e: self.save_state())
+        self.flat_button(bar, '✕', self.quit, padx=6).pack(side='right')
+        self.flat_button(bar, '—', self.toggle, padx=4).pack(side='right')
+        self.flat_button(bar, '▭', self.toggle_compact, padx=4).pack(side='right')
+        self.hide_btn = self.flat_button(bar, '', self.toggle_hide_done, padx=4)
+        self.hide_btn.pack(side='right')
+        self.flat_button(bar, '⚙', self.open_menu, padx=4).pack(side='right')
+
+        self.mini = tk.Frame(self.root, bg=BG)
+        self.full = tk.Frame(self.root, bg=BG)
+        self.full.pack(fill='both', expand=True)
+        self.tabs = tk.Frame(self.full, bg=BG)
+        self.tabs.pack(fill='x', padx=6, pady=(6, 2))
+        head = tk.Frame(self.full, bg=BG)
+        head.pack(fill='x', padx=8)
+        self.chapter_lbl = tk.Label(head, bg=BG, fg=TEXT, font=(FONT, 10, 'bold'), anchor='w')
+        self.chapter_lbl.pack(side='left')
+        self.stat = tk.Label(head, bg=BG, fg=GOLD, font=(FONT, 8, 'bold'))
+        self.stat.pack(side='right')
+        self.bar = tk.Canvas(self.full, height=3, bg=LINE, highlightthickness=0)
+        self.bar.pack(fill='x', padx=8, pady=(2, 4))
+        self.bar_fill = self.bar.create_rectangle(0, 0, 0, 3, fill=GOLD, width=0)
+        self.save_lbl = tk.Label(self.full, bg=PANEL, fg=DIM, font=(FONT, 7), anchor='w', cursor='hand2')
+        self.save_lbl.pack(side='bottom', fill='x')
+        self.save_lbl.bind('<Button-1>', lambda e: self.open_menu())
+        self.canvas = tk.Canvas(self.full, bg=BG, highlightthickness=0)
+        self.canvas.pack(fill='both', expand=True)
+        self.body = tk.Frame(self.canvas, bg=BG)
+        self.body_id = self.canvas.create_window(0, 0, window=self.body, anchor='nw')
+        self.body.bind('<Configure>', lambda e: self.canvas.configure(scrollregion=self.canvas.bbox('all')))
+        self.canvas.bind('<Configure>', lambda e: self.canvas.itemconfigure(self.body_id, width=e.width))
+        self.root.bind_all('<MouseWheel>', self.on_wheel)
+
+    def open_menu(self):
+        """Shows the settings popup: language, save file selection, reload, quit."""
+        m = tk.Menu(self.root, tearoff=0, bg=PANEL, fg=TEXT, activebackground=GOLD, activeforeground=BG, bd=0)
+        lang = tk.Menu(m, tearoff=0, bg=PANEL, fg=TEXT, activebackground=GOLD, activeforeground=BG)
+        for code, label in (('vi', 'Tiếng Việt'), ('en', 'English')):
+            lang.add_radiobutton(label=label, value=code, variable=tk.StringVar(value=self.lang),
+                                 command=lambda c=code: self.set_lang(c))
+        m.add_cascade(label=self.t('lang'), menu=lang)
+        m.add_separator()
+        m.add_command(label=self.t('pick'), command=self.pick_save)
+        m.add_command(label=self.t('auto'), command=self.use_auto_save)
+        m.add_command(label=self.t('reload'), command=self.reload)
+        m.add_separator()
+        m.add_command(label=self.t('quit'), command=self.quit)
+        m.tk_popup(self.root.winfo_pointerx(), self.root.winfo_pointery())
+
+    def set_lang(self, code):
+        self.lang = self.state['lang'] = code
+        self.save_state()
+        self.reload()
+
+    def pick_save(self):
+        start = self.save_file.parent if self.save_file else Path.home()
+        path = filedialog.askopenfilename(parent=self.root, initialdir=str(start), title=self.t('pick'),
+                                          filetypes=[('Black Myth save', 'ArchiveSaveFile.*.sav'), ('*.sav', '*.sav')])
+        self.root.attributes('-topmost', True)
+        if path:
+            self.state['save_path'] = path
+            self.save_state()
+            self.save_mtime = None
+            self.poll_save(reschedule=False)
+
+    def use_auto_save(self):
+        self.state.pop('save_path', None)
+        self.save_state()
+        self.save_mtime = None
+        self.start_save_search()
+
+    def start_save_search(self):
+        """Searches drives for save files on a background thread."""
+        self.found_saves = None
+        self.save_status = self.t('searching')
+
+        def work():
+            try:
+                self.found_saves = bmw_save.find_saves()
+            except OSError:
+                self.found_saves = []
+        threading.Thread(target=work, daemon=True).start()
+
+    def current_save(self):
+        manual = self.state.get('save_path')
+        if manual:
+            return Path(manual), True
+        if self.found_saves:
+            newest = max(self.found_saves, key=lambda f: f.stat().st_mtime if f.exists() else 0)
+            return newest, False
+        return None, False
+
+    def poll_save(self, reschedule=True):
+        """Re-reads the save only when its modification time changes."""
+        path, manual = self.current_save()
+        if path is None:
+            if self.found_saves is not None:
+                self.save_status = self.t('nosave')
+        else:
+            try:
+                mtime = path.stat().st_mtime
+                if path != self.save_file or mtime != self.save_mtime:
+                    progress = bmw_save.read_progress(path)
+                    self.save_file, self.save_mtime = path, mtime
+                    self.apply_progress(progress)
+                stamp = time.strftime('%H:%M', time.localtime(self.save_mtime))
+                mode = self.t('manual') if manual else self.t('autolbl')
+                self.save_status = f'💾 {path.name} · {stamp} · {mode}'
+            except (OSError, ValueError, IndexError):
+                self.save_status = self.t('badsave')
+        self.save_lbl.configure(text=f' {self.save_status}')
+        if reschedule:
+            self.root.after(SAVE_POLL_MS, self.poll_save)
+
+    def apply_progress(self, progress):
+        """Marks every checklist item whose @category:id token is present in the save."""
+        owned = {(cat, i) for cat, ids in progress.items() if isinstance(ids, set) for i in ids}
+        loose = progress['item'] | progress['equip'] | progress['spell'] | progress['wine']
+        owned |= {(cat, i) for cat in ('item', 'equip') for i in loose}
+        self.auto = {key for _, sections in self.chapters for _, items in sections
+                     for key, _, _, tokens in items if tokens & owned}
+        chapter = progress.get('chapter', 0) // 10 - 1
+        if chapter != self.last_chapter and 0 <= chapter < len(self.chapters):
+            self.last_chapter = chapter
+            if self.state.get('follow_save', True):
+                self.select(chapter)
+                return
+        self.refresh()
+
+    def start_drag(self, e):
+        self.drag_off = (e.x_root - self.root.winfo_x(), e.y_root - self.root.winfo_y())
+
+    def drag(self, e):
+        self.root.geometry(f'+{e.x_root - self.drag_off[0]}+{e.y_root - self.drag_off[1]}')
+
+    def on_wheel(self, e):
+        """Eases the list toward the wheel target instead of jumping."""
+        top, bottom = self.canvas.yview()
+        span = bottom - top
+        if span >= 1:
+            return
+        if self.scroll_anim is None:
+            self.scroll_target = top
+        self.scroll_target = min(max(self.scroll_target - e.delta / 120 * span * 0.25, 0), 1 - span)
+        if self.scroll_anim is None:
+            self.animate_scroll()
+
+    def animate_scroll(self):
+        top = self.canvas.yview()[0]
+        step = (self.scroll_target - top) * 0.3
+        if abs(step) < 0.0005:
+            self.canvas.yview_moveto(self.scroll_target)
+            self.scroll_anim = None
+            return
+        self.canvas.yview_moveto(top + step)
+        self.scroll_anim = self.root.after(12, self.animate_scroll)
+
+    def reload(self):
+        """Re-reads the checklist for the current language and redraws everything."""
+        self.title_lbl.configure(text=self.t('title'))
+        path = DATA / f'checklist.{self.lang}.md'
+        try:
+            self.chapters = parse(path.read_text(encoding='utf-8'))
+        except OSError:
+            self.chapters = [(f"{self.t('missing')}: {path.name}", [])]
+        for w in self.tabs.winfo_children():
+            w.destroy()
+        for i, (name, _) in enumerate(self.chapters):
+            short = re.sub(r'^\D*?(\d+).*', r'\1', name)
+            tab = tk.Label(self.tabs, text=short, font=(FONT, 9, 'bold'), width=3, pady=1, cursor='hand2')
+            tab.bind('<Button-1>', lambda e, i=i: self.select(i))
+            tab.pack(side='left', padx=1, expand=True, fill='x')
+        if self.save_file:
+            self.save_mtime = None
+        self.select(min(self.state.get('ch', 0), len(self.chapters) - 1))
+        self.apply_mode()
+
+    def select(self, i):
+        self.state['ch'] = i
+        for j, tab in enumerate(self.tabs.winfo_children()):
+            tab.configure(bg=GOLD if j == i else PANEL, fg=BG if j == i else DIM)
+        self.render()
+        self.canvas.yview_moveto(0)
+        self.scroll_target = 0.0
+
+    def is_done(self, key):
+        return key in self.state['done'] or (key in self.auto and key not in self.state['undone'])
+
+    def render(self):
+        """Builds the active chapter's sections and rows once; later ticks update in place."""
+        for w in self.body.winfo_children():
+            w.destroy()
+        hide = self.state.get('hide', False)
+        self.hide_btn.configure(text='◐' if hide else '○')
+        self.hide_btn.base_fg = GOLD if hide else DIM
+        self.hide_btn.configure(fg=self.hide_btn.base_fg)
+        name, sections = self.chapters[self.state['ch']]
+        self.chapter_lbl.configure(text=re.sub(r'^\D*\d+\s*-?\s*', '', name) or name)
+        self.rows, self.sections, self.order = {}, [], []
+        for sec_name, items in sections:
+            box = tk.Frame(self.body, bg=BG)
+            box.pack(fill='x', padx=4, pady=(4, 0))
+            head = tk.Frame(box, bg=BG, cursor='hand2')
+            head.pack(fill='x')
+            arrow = tk.Label(head, bg=BG, fg=DIM, font=(FONT, 7))
+            arrow.pack(side='left', padx=(2, 4))
+            tk.Label(head, text=sec_name, bg=BG, fg=GOLD, font=(FONT, 9, 'bold')).pack(side='left')
+            count = tk.Label(head, bg=BG, fg=DIM, font=(FONT, 7))
+            count.pack(side='right', padx=4)
+            rows_frame = tk.Frame(box, bg=BG)
+            sec = {'items': [it for it in items if it[1] not in TIP_TAGS], 'count': count, 'arrow': arrow,
+                   'rows': rows_frame, 'head': head, 'open': None}
+            for w in (head, arrow, *head.winfo_children()):
+                w.bind('<Button-1>', lambda e, s=sec: self.set_open(s, not s['open']))
+            for item in items:
+                self.add_row(rows_frame, item, hide)
+                self.order.append((sec_name, item))
+            self.sections.append(sec)
+            self.set_open(sec, any(not self.is_done(it[0]) for it in sec['items']) or not sec['items'])
+        self.refresh()
+
+    def set_open(self, sec, is_open):
+        sec['open'] = is_open
+        sec['arrow'].configure(text='▼' if is_open else '▶')
+        if is_open:
+            sec['rows'].pack(fill='x', after=sec['head'])
+        else:
+            sec['rows'].pack_forget()
+
+    def add_row(self, parent, item, hide):
+        key, tag, text, _ = item
+        row = tk.Frame(parent, bg=BG, cursor='hand2')
+        row.pack(fill='x', pady=0)
+        if tag in TIP_TAGS:
+            tk.Label(row, text=f'💡 {text}', bg=BG, fg=DIM, font=(FONT, 8, 'italic'), anchor='w', justify='left',
+                     wraplength=WIDTH - 40).pack(side='left', fill='x', padx=(22, 4))
+            row.configure(cursor='')
+            return
+        mark = tk.Label(row, bg=BG, font=(FONT, 9), width=2)
+        mark.pack(side='left', anchor='n')
+        tag_lbl = tk.Label(row, text=tag, bg=BG, font=(FONT, 7, 'bold')) if tag else None
+        if tag_lbl:
+            tag_lbl.pack(side='left', anchor='n', pady=2)
+        lbl = tk.Label(row, text=text, bg=BG, anchor='w', justify='left', wraplength=WIDTH - 110)
+        lbl.pack(side='left', fill='x', anchor='n')
+        widgets = [w for w in (row, mark, tag_lbl, lbl) if w]
+        self.rows[key] = {'row': row, 'mark': mark, 'tag_lbl': tag_lbl, 'tag': tag, 'lbl': lbl, 'widgets': widgets, 'hover': False}
+        for w in widgets:
+            w.bind('<Button-1>', lambda e, k=key: self.flip(k))
+            w.bind('<Enter>', lambda e, k=key: self.hover(k, True))
+            w.bind('<Leave>', lambda e, k=key: self.hover(k, False))
+        if hide and self.is_done(key):
+            row.pack_forget()
+
+    def hover(self, key, on):
+        self.rows[key]['hover'] = on
+        self.style_row(key)
+
+    def flip(self, key):
+        """Toggles an item; unticking an auto-ticked item stores a manual override."""
+        done, undone = self.state['done'], self.state['undone']
+        if self.is_done(key):
+            done.pop(key, None)
+            if key in self.auto:
+                undone[key] = 1
+        else:
+            done[key] = 1
+            undone.pop(key, None)
+            if self.state.get('hide') and key in self.rows:
+                self.rows[key]['row'].pack_forget()
+        self.save_state()
+        self.refresh()
+
+    def style_row(self, key):
+        r = self.rows[key]
+        is_done = self.is_done(key)
+        is_auto = is_done and key in self.auto and key not in self.state['done']
+        bg = HOVER if r['hover'] else NEXT_BG if key == self.next_id else BG
+        for w in r['widgets']:
+            w.configure(bg=bg)
+        r['mark'].configure(text='◆' if is_done else '◇', fg=AUTO if is_auto else DONE if is_done else GOLD)
+        if r['tag_lbl']:
+            r['tag_lbl'].configure(fg=DONE if is_done else TAG_COLORS.get(r['tag'], DIM))
+        r['lbl'].configure(fg=DONE if is_done else TEXT, font=(FONT, 9, 'overstrike') if is_done else (FONT, 9))
+
+    def refresh(self):
+        """Updates row styles, the next-step highlight, section counters and the progress bar."""
+        if not hasattr(self, 'rows'):
+            return
+        self.next_id = next((k for k in self.rows if not self.is_done(k)), None)
+        for key in self.rows:
+            self.style_row(key)
+        total = finished = 0
+        for sec in self.sections:
+            n = sum(1 for it in sec['items'] if self.is_done(it[0]))
+            total += len(sec['items'])
+            finished += n
+            full = n == len(sec['items']) and n > 0
+            sec['count'].configure(text=f'{n}/{len(sec["items"])}', fg=GOLD if full else DIM)
+        self.stat.configure(text=f'{finished}/{total}')
+        self.root.update_idletasks()
+        w = self.bar.winfo_width()
+        self.bar.coords(self.bar_fill, 0, 0, w * finished / total if total else 0, 3)
+        self.progress = f'{finished}/{total}'
+        if self.state.get('compact'):
+            self.render_mini()
+
+    def render_mini(self):
+        """Shows only the next few unticked steps, plus the tips that follow the first one."""
+        for w in self.mini.winfo_children():
+            w.destroy()
+        name = self.chapters[self.state['ch']][0]
+        top = tk.Frame(self.mini, bg=BG)
+        top.pack(fill='x', padx=8, pady=(4, 0))
+        tk.Label(top, text=re.sub(r'\s*-.*', '', name), bg=BG, fg=DIM, font=(FONT, 8)).pack(side='left')
+        tk.Label(top, text=self.progress, bg=BG, fg=GOLD, font=(FONT, 8, 'bold')).pack(side='right')
+        shown, last_sec, tips_for_first = 0, None, True
+        for sec_name, (key, tag, text, _) in self.order:
+            if tag in TIP_TAGS:
+                if shown == 1 and tips_for_first:
+                    tk.Label(self.mini, text=f'💡 {text}', bg=BG, fg=DIM, font=(FONT, 8, 'italic'), anchor='w',
+                             justify='left', wraplength=WIDTH - 40).pack(fill='x', padx=(26, 6))
+                continue
+            if shown == 1:
+                tips_for_first = False
+            if self.is_done(key):
+                continue
+            if shown == MINI_COUNT:
+                break
+            if sec_name != last_sec:
+                tk.Label(self.mini, text=sec_name, bg=BG, fg=GOLD, font=(FONT, 8, 'bold'), anchor='w').pack(fill='x', padx=8, pady=(3, 0))
+                last_sec = sec_name
+            row = tk.Frame(self.mini, bg=NEXT_BG if shown == 0 else BG, cursor='hand2')
+            row.pack(fill='x', padx=4)
+            parts = [tk.Label(row, text='◇', fg=GOLD, font=(FONT, 9), width=2)]
+            if tag:
+                parts.append(tk.Label(row, text=tag, fg=TAG_COLORS.get(tag, DIM), font=(FONT, 7, 'bold')))
+            parts.append(tk.Label(row, text=text, fg=TEXT, font=(FONT, 9), anchor='w', justify='left', wraplength=WIDTH - 110))
+            for w in parts:
+                w.configure(bg=row['bg'])
+                w.pack(side='left', anchor='n', pady=1 if w is parts[-1] else 0)
+            for w in (row, *parts):
+                w.bind('<Button-1>', lambda e, k=key: self.flip(k))
+            shown += 1
+        if not shown:
+            tk.Label(self.mini, text=self.t('chapter_done'), bg=BG, fg=GOLD, font=(FONT, 9)).pack(pady=4)
+        self.root.update_idletasks()
+        h = self.bar_frame.winfo_reqheight() + self.mini.winfo_reqheight() + 6
+        self.root.geometry(f'{WIDTH}x{h}')
+
+    def apply_mode(self):
+        if self.state.get('compact'):
+            self.full.pack_forget()
+            self.mini.pack(fill='x')
+            self.render_mini()
+        else:
+            self.mini.pack_forget()
+            self.full.pack(fill='both', expand=True)
+            self.root.geometry(f'{WIDTH}x{HEIGHT}')
+
+    def toggle_compact(self):
+        self.state['compact'] = not self.state.get('compact', False)
+        self.save_state()
+        self.apply_mode()
+
+    def toggle_hide_done(self):
+        self.state['hide'] = not self.state.get('hide', False)
+        self.save_state()
+        y = self.canvas.yview()[0]
+        self.render()
+        self.canvas.yview_moveto(y)
+
+    def toggle(self):
+        self.visible = not self.visible
+        if self.visible:
+            self.root.deiconify()
+            self.root.attributes('-topmost', True)
+        else:
+            self.root.withdraw()
+
+    def keep_on_top(self):
+        """Re-asserts topmost because borderless-fullscreen games sometimes steal it."""
+        if self.visible:
+            self.root.attributes('-topmost', True)
+        self.root.after(2000, self.keep_on_top)
+
+    def start_hotkey_thread(self):
+        """Registers global hotkeys on a background thread and forwards presses to Tk."""
+        def loop():
+            user32 = ctypes.windll.user32
+            for hk_id, vk in HOTKEYS.items():
+                user32.RegisterHotKey(None, hk_id, 0x4000, vk)  # MOD_NOREPEAT
+            msg = wt.MSG()
+            while user32.GetMessageW(ctypes.byref(msg), None, 0, 0) != 0:
+                if msg.message == 0x0312:  # WM_HOTKEY
+                    self.hotkey_pressed[msg.wParam].set()
+        self.hotkey_pressed = {hk_id: threading.Event() for hk_id in HOTKEYS}
+        threading.Thread(target=loop, daemon=True).start()
+        self.poll_hotkey()
+
+    def poll_hotkey(self):
+        """Handles hotkey presses on the Tk thread, since Tk is not thread-safe."""
+        for hk_id, action in ((1, self.toggle), (2, self.toggle_compact)):
+            if self.hotkey_pressed[hk_id].is_set():
+                self.hotkey_pressed[hk_id].clear()
+                action()
+        self.root.after(50, self.poll_hotkey)
+
+    def quit(self):
+        self.save_state()
+        self.root.destroy()
+
+
+def single_instance():
+    """Returns False if another BMW Guide is already running."""
+    ctypes.windll.kernel32.CreateMutexW(None, False, 'BMWGuideOverlayMutex')
+    return ctypes.windll.kernel32.GetLastError() != 183  # ERROR_ALREADY_EXISTS
+
+
+if __name__ == '__main__':
+    ctypes.windll.shcore.SetProcessDpiAwareness(1)
+    if single_instance():
+        Overlay().root.mainloop()
