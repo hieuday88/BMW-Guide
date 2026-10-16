@@ -28,11 +28,6 @@
 - [Mẹo] Định Thân rồi combo nhanh; lăn nhiều lần dập lửa
 - [Phép] Xích Triều
 - [Nhiệm vụ] Chuông 1 — gõ chuông sau lưng Quảng Trí
-- [Boss] U Hồn — tùy chọn, phải hạ trước Kim Trì
-- [Mẹo] Làm trước khi hạ Kim Trì, nếu không U Hồn biến mất
-- [Mẹo] Vòng quanh cây né sóng xung kích
-- [Tinh phách] U Hồn @soul:8013
-- [Vật phẩm] Miêu Tình Bảo Xuyến — U Hồn rơi
 - [Vật phẩm] Bích Ngẫu Kim Đan — kim đan Lâm Ngoại
 
 ### Quan Âm Thiền Viện @shrine:1004
@@ -48,7 +43,12 @@
 ### Xà Kính @shrine:1005
 - [NPC] Viên Thủ Thành — lên cầu thang @card:100002
 - [Vật phẩm] Hồ Lô
-- [Nhiệm vụ] Thu phục yêu hồn
+- [Nhiệm vụ] Thu phục yêu hồn — nhận Hồ Lô, từ giờ hạ đầu mục mới nhận được tinh phách
+- [Boss] U Hồn — quay lại Bìa Rừng để đánh; phải có Hồ Lô rồi mới nhận được tinh phách
+- [Mẹo] Hạ U Hồn TRƯỚC khi đánh Kim Trì Trưởng Lão, nếu không U Hồn biến mất vĩnh viễn
+- [Mẹo] Vòng quanh cây né sóng xung kích
+- [Tinh phách] U Hồn — chỉ rơi khi đã có Hồ Lô (bước Thu phục yêu hồn ở trên) @soul:8013
+- [Vật phẩm] Miêu Tình Bảo Xuyến — U Hồn rơi khi bị hạ
 - [Boss] Ba Lý Cá Lãng — ếch yêu, chuỗi đánh ếch 1 @card:202001
 - [Mẹo] Đánh vào đầu từ chính diện bằng phép và đòn nặng
 - [Tinh phách] Ba Lý Cá Lãng @soul:8012

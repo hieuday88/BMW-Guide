@@ -28,11 +28,6 @@
 - [Tip] Immobilize, then a quick combo; roll repeatedly to put out the fire
 - [Spell] Red Tides
 - [Quest] Bell 1 — ring the bell behind Guangzhi
-- [Boss] Wandering Wight — optional, defeat before Elder Jinchi
-- [Tip] Do it before defeating Elder Jinchi, otherwise the Wandering Wight disappears
-- [Tip] Circle around the tree to dodge the shockwave
-- [Spirit] Wandering Wight @soul:8013
-- [Item] Cat's Eye Beads — dropped by the Wandering Wight
 - [Item] Jade Lotus Root Pill — pill found in Outside the Forest
 
 ### Guanyin Temple @shrine:1004
@@ -48,7 +43,12 @@
 ### Snake Trail @shrine:1005
 - [NPC] Keeper of the Gourd (Yuan Shoucheng) — go up the stairs @card:100002
 - [Item] Gourd
-- [Quest] Capture the Yaoguai spirits
+- [Quest] Capture the Yaoguai spirits — get the Gourd; from now on defeated chiefs drop their spirits
+- [Boss] Wandering Wight — go back to Outside the Forest; you only get its spirit once you have the Gourd
+- [Tip] Defeat the Wandering Wight BEFORE Elder Jinchi, otherwise it disappears for good
+- [Tip] Circle around the tree to dodge the shockwave
+- [Spirit] Wandering Wight — only drops once you have the Gourd (Capture the Yaoguai spirits step above) @soul:8013
+- [Item] Cat's Eye Beads — dropped when the Wandering Wight is defeated
 - [Boss] Baw-Li-Guhh-Lang — frog yaoguai, frog hunt 1 @card:202001
 - [Tip] Strike the head head-on with spells and heavy attacks
 - [Spirit] Baw-Li-Guhh-Lang @soul:8012
