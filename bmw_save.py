@@ -10,6 +10,7 @@ DIR_HINTS = ('black', 'wukong', 'steam', 'epic', 'game', 'b1')
 
 # Protobuf field paths inside FUStBEDArchivesData -> RoleData(1) -> RoleCs(1).
 BAG, ACTOR, COLLECTION, CHAPTER = 2, 3, 8, 11
+ECS = 6  # PersistentECSData -> BPCData(2) -> BPCRebirthPointData(3) -> ActivedRebirthPointList(2)
 
 
 def _varint(b, i):
@@ -86,7 +87,7 @@ def decrypt_payload(raw):
 
 
 def read_progress(path):
-    """Returns {'card','item','equip','soul','wine','meditation','spell': set[int], 'chapter': int}."""
+    """Returns {'card','item','equip','soul','wine','shrine','meditation','spell': set[int], 'chapter': int}."""
     data = decrypt_payload(Path(path).read_bytes())
     role = _first(data, 1, 1)
     bag = _first(role, BAG)
@@ -98,6 +99,7 @@ def read_progress(path):
         'equip': _ids(equips) | {x for m in equips for x in _ints(m, 5)},
         'soul': _ids(_subs(bag, 7)),
         'wine': _ids(_subs(bag, 5)),
+        'shrine': _ids(_subs(_first(data, ECS, 2, 3), 2)),
         'meditation': _ids(_subs(progress, 11)),
         'spell': set(_ints(progress, 3)),
         'chapter': (_ints(_first(role, CHAPTER), 1) or [0])[0],

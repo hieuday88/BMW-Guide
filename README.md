@@ -11,22 +11,28 @@
 
 - **Overlay luôn nổi trên game.** Cửa sổ trong suốt, bo góc, kéo thả được. Game cần để chế độ *Borderless / Windowed*.
 - **Theo tiến trình game.** 6 chương xếp theo thứ tự miếu Thổ Địa, gồm boss, tinh phách, vật phẩm, phép, nhiệm vụ, khu ẩn, điểm thiền và mẹo.
-- **Tự tick từ file save.** App đọc save của game (đã giải mã) và tự đánh dấu boss đã gặp trong Du Ký, vật phẩm, trang bị, tinh phách, phép và điểm thiền.
+- **Tick hoàn toàn theo file save, không tick tay.** App đọc save của game và tự đánh dấu:
+  - boss/quái đã gặp trong Du Ký, vật phẩm, trang bị, tinh phách, phép, điểm thiền;
+  - miếu Thổ Địa đã mở (⛩ cạnh tên khu).
   - App chỉ đọc lại khi file save thay đổi, nên gần như không tốn CPU.
-  - Mục tự tick có dấu ◆ màu xanh. Bạn vẫn tick hoặc bỏ tick tay được, và app nhớ lựa chọn của bạn.
+  - Dòng mờ có dấu `·` là hướng dẫn mà save không ghi lại (cốt truyện, nhiệm vụ, vật phẩm đã dùng hết…), không tính vào tiến độ.
 - **Tự tìm file save** trên máy (Steam, Epic, bản cài riêng). Bạn cũng có thể chọn bằng tay trong ⚙.
 - **Song ngữ Việt / Anh:** đổi trong ⚙ → Ngôn ngữ.
 - **Chế độ gọn (F10):** chỉ hiện 3 bước tiếp theo kèm mẹo, chiếm rất ít chỗ.
 
 ## Cài đặt
 
+**Cách nhanh:** tải `BMW_Guide.exe` ở mục [Releases](https://github.com/hieuday88/BMW-Guide/releases) rồi bấm đúp để chạy. Không cần cài gì thêm.
+
+**Chạy từ mã nguồn:**
 1. Cài [Python 3.10+](https://www.python.org/downloads/) (nhớ chọn *Add to PATH*). App không cần thư viện ngoài.
 2. Tải repo này về: **Code → Download ZIP**, rồi giải nén.
 3. Chạy file tạo shortcut. Lệnh này tạo shortcut **BMW Guide** trên Desktop và Start Menu, với phím tắt **Ctrl+Alt+B**:
    ```powershell
    powershell -ExecutionPolicy Bypass -File install_shortcut.ps1
    ```
-4. Mở game và chuyển sang **Borderless / Windowed**. Sau đó mở BMW Guide.
+
+Khi chơi, chuyển game sang **Borderless / Windowed**.
 
 ## Phím tắt
 
@@ -46,7 +52,7 @@ Dữ liệu nằm ở `data/checklist.vi.md` và `data/checklist.en.md`, mỗi d
 - [Boss] Cổ Hộ Viện — boss đầu, thưởng Định Thân Pháp @card:102004
 ```
 
-Mã `@loại:id` ở cuối dòng là ID trong game, dùng để tự tick. Các loại: `card` (Du Ký), `item`, `equip`, `soul` (tinh phách), `meditation`. Hai file phải giữ cùng thứ tự dòng.
+Mã `@loại:id` ở cuối dòng là ID trong game, dùng để tự tick. Các loại: `card` (Du Ký), `item`, `equip`, `soul` (tinh phách), `meditation`, `shrine` (gắn trên tiêu đề khu). Dòng không có mã sẽ hiện dạng hướng dẫn. Hai file phải giữ cùng thứ tự dòng. Bản exe đọc thư mục `data/` cạnh file exe nếu có, nên bạn sửa được checklist mà không cần build lại.
 
 ## Ghi chú
 

@@ -2,7 +2,7 @@
 
 ## Chương 1 - Hỏa Chiếu Hắc Vân
 
-### Mở đầu
+### Mở đầu @shrine:1301 @shrine:1302
 - [Cốt truyện] Mở đầu — Thiên Mệnh Nhân tái nhập hành trình Đại Thánh
 - [Boss] Nhị Lang Thần — trận hướng dẫn, máu vô hạn
 - [Vật phẩm] Rượu Dừa — rượu mở khóa từ đầu game @item:2001
@@ -10,7 +10,7 @@
 - [Vật phẩm] Tranh Tiên Hồng Hồ Lô — thưởng đặt trước, nhận ở miếu @item:18009
 - [Vật phẩm] Liễu Mộc Côn — vũ khí khởi đầu @equip:15005
 
-### Trước Núi
+### Trước Núi @shrine:1003
 - [Cốt truyện] Đến Hắc Phong Sơn — bắt đầu chương, rừng Thương Lang
 - [NPC] Hắc Phong Sơn Thổ Địa — dạy phép giữa trận Cổ Hộ Viện @card:100000
 - [Boss] Cổ Hộ Viện — boss đầu, thưởng Định Thân Pháp @card:102004
@@ -23,7 +23,7 @@
 - [Vật phẩm] Đồng Vân Bổng — vũ khí chế tạo ở miếu @equip:15001
 - [Vật phẩm] Hành Giả Giới Cô — mão, chế tạo lần đầu
 
-### Bìa Rừng
+### Bìa Rừng @shrine:1002
 - [Boss] Quảng Trí — nhánh trái, thưởng Xích Triều @card:102001
 - [Mẹo] Định Thân rồi combo nhanh; lăn nhiều lần dập lửa
 - [Phép] Xích Triều
@@ -35,7 +35,7 @@
 - [Vật phẩm] Miêu Tình Bảo Xuyến — U Hồn rơi
 - [Vật phẩm] Bích Ngẫu Kim Đan — kim đan Lâm Ngoại @item:1003
 
-### Xích Mộc Gian
+### Xích Mộc Gian @shrine:1013
 - [Ẩn] Long Trảo Lâm sau thác — quay lại sau Chương 2
 - [Vật phẩm] Phi Long Lân Phiến — lấy ở Chương 2, mở thác @item:4011
 - [Mẹo] Phá tường Hoàng Phong Lĩnh bằng U Hồn hoặc đá để lấy
@@ -43,17 +43,17 @@
 - [Mẹo] Dễ hơn nhiều nếu quay lại với đồ Chương 4
 - [Vật phẩm] Bác Sơn Lô — rơi từ Xích Nhiêm Long @equip:16028
 
-### Quan Âm Thiền Viện
+### Quan Âm Thiền Viện @shrine:1004
 - [Cốt truyện] Quan Âm Thiền Viện — thiền viện hoang tàn bị yêu chiếm
 - [Boss] Linh Hư Tử — vua yêu đầu tiên @card:103001
 - [Mẹo] Mở bằng Định Thân; hồi máu từng đợt hai lần
 
-### Sau Núi
+### Sau Núi @shrine:1011
 - [NPC] Mã Thiên Bá — hang trái cầu thang, nói hết thoại
 - [Nhiệm vụ] Đầu ngựa mặt ngựa — chuỗi thoại Mã Diện
 - [Thiền] Bồ đoàn trong hang đá — nơi gặp Mã Thiên Bá @meditation:1007
 
-### Xà Kính
+### Xà Kính @shrine:1005
 - [NPC] Viên Thủ Thành — lên cầu thang @card:100002
 - [Vật phẩm] Hồ Lô
 - [Nhiệm vụ] Thu phục yêu hồn
@@ -65,7 +65,7 @@
 - [Tinh phách] Quảng Mưu @soul:8011
 - [Nhiệm vụ] Chuông 2 — bậc thang cạnh Quảng Mưu
 
-### Bạch Vụ Trạch
+### Bạch Vụ Trạch @shrine:1010
 - [Vật phẩm] Lạc Già Hương Đằng — nâng cấp Hồ Lô
 - [NPC] Thân Hầu — nâng Hồ Lô, bán Dao Trì Liên Tử @card:100003
 - [Nhiệm vụ] Cứu Thân Hầu — hạ Xà yêu trước khi đánh Bạch Y
@@ -78,14 +78,14 @@
 - [Vật phẩm] Lân Côn - Song Xà — chế tạo từ Ngọc Thùy Nha @equip:15003
 - [Nhiệm vụ] Chuông 3 — dịch chuyển vào Cựu Quan Âm Thiền Viện
 
-### Cựu Quan Âm Thiền Viện - Chính Điện
+### Cựu Quan Âm Thiền Viện - Chính Điện @shrine:1009
 - [Ẩn] Khu ẩn Cựu Quan Âm Thiền Viện — sau khi gõ đủ 3 chuông
 - [Boss] Kim Trì Trưởng Lão — tùy chọn, phải hạ U Hồn trước @card:103006
 - [Mẹo] Diệt lâu la trước khi hắn hút máu hồi
 - [Vật phẩm] Tịch Hỏa Tráo — pháp bảo, lấy xác treo cây gần chuông 3 @item:19001
 - [Mẹo] Mang Tị Hỏa Tráo cho giai đoạn hai Hắc Hùng Tinh
 
-### Trong Hang
+### Trong Hang @shrine:1006
 - [Cốt truyện] Vào Hắc Phong Động — nơi Hắc Phong Đại Vương chiếm giữ
 - [Thiền] Bồ đoàn vách đá — trước miếu Động Nội @meditation:1004
 - [Boss] Hắc Phong Đại Vương — thưởng Tụ Hình Tán Khí @card:103004
@@ -95,12 +95,12 @@
 - [Vật phẩm] Tam Đông Trùng — đập chum sáng góc sân trái
 - [Vật phẩm] Thái Ất Tử Kim Đan — kim đan trong Hắc Phong Động @item:1004
 
-### Ngoài Hang
+### Ngoài Hang @shrine:1012
 - [Boss] Lang Thích Khách @card:101009
 - [Tinh phách] Lang Thích Khách @soul:8061
 - [Vật phẩm] Cửu Chuyển Kim Đan — kim đan gần Lang Thích Khách @item:1005
 
-### Kiến Đế Phong
+### Kiến Đế Phong @shrine:1008
 - [Boss] Hắc Hùng Tinh — boss cuối chương @card:103005
 - [Mẹo] Triệu tinh phách Quảng Mưu; giai đoạn hai giữ khoảng cách
 - [Vật phẩm] Nhãn Khán Hỷ — thưởng sau Hắc Hùng Tinh
@@ -117,7 +117,7 @@
 - [Cốt truyện] Mở đầu chương, đi xuống Sa Môn Thôn
 - [Mẹo] Mở khu ẩn sớm, đỡ phải quay lại tốn thời gian
 
-### Cửa Thôn
+### Cửa Thôn @shrine:2002
 - [NPC] Tuất Cẩu — gặp lần 1, giao đan phương @card:200004
 - [Boss] Lãng Lý Cá Ba — hố lớn cạnh cầu nhỏ, chuỗi đánh ếch 2 @card:202006
 - [Vật phẩm] Đan Tị Tà (Evil Repelling Medicament) — thưởng sau Lãng Lý Cá Ba
@@ -134,7 +134,7 @@
 - [Tinh phách] Sa Nhị Lang @soul:8063
 - [Mẹo] Đánh vua trước, rồi mới tới Nhị Vương Tử
 
-### Bất Tế Cốc
+### Bất Tế Cốc @shrine:2004
 - [Vật phẩm] Nhất Khối Huyết Nhục — triệu hồi Sa Đại Lang
 - [Boss] Sa Đại Lang — sau hang, chuột nhỏ triệu hồi @card:203002
 - [Vật phẩm] Phi Long Lân Phiến — phá tường đỏ, nhà rồng 0 @item:4011
@@ -142,13 +142,13 @@
 - [Vật phẩm] Tam Đông Trùng — bình xanh trong hang cạnh miếu
 - [Tinh phách] Tật Bức — hang dơi @soul:8067
 
-### Bìa Rừng
+### Bìa Rừng @shrine:1002
 - [Ẩn] Về Chương 1, dùng Long Lân leo thác ngoài rừng
 - [Boss] Xích Nhiêm Long — sau thác nước, nhà rồng 1 @card:103007
 - [Vật phẩm] Bác Sơn Lô — bảo vật rơi từ Xích Nhiêm Long @equip:16028
 - [Mẹo] Bất Cầu Nhân mua ở miếu Chương 1 sau Chương 2
 
-### Tàng Phong Sơn Ao
+### Tàng Phong Sơn Ao @shrine:2011
 - [Nhiệm vụ] Phật Mục Châu: mắt phật 1
 - [Nhiệm vụ] Mắt phật 2 & 3
 - [Nhiệm vụ] Mắt phật 4 — trong hang bên trái
@@ -165,7 +165,7 @@
 - [Vật phẩm] Iron Pellet Soak — mua của Thạch Trung Nhân
 - [Vật phẩm] Trâm Kim Hoa — mua 12,800 Linh Uẩn sau nhiệm vụ @equip:16006
 
-### Chẩm Thạch Bình
+### Chẩm Thạch Bình @shrine:2009
 - [Ẩn] Gặp heo say rượu — map ẩn 1
 - [Thiền] Điểm Thiền 2 — sau lưng heo, cạnh cây lớn @meditation:2005
 - [Tinh phách] Cốt Tủng Nhiên — nhím cầm khiên cạnh cầu thang đỏ @soul:8065
@@ -181,7 +181,7 @@
 - [Boss] Tiểu Ly Long — hang rồng, nhà rồng 2 @card:203006
 - [Vật phẩm] Ngọc Bội Xà Cừ — bảo vật rơi từ Tiểu Ly Long @equip:16005
 
-### Toái Thạch Đài
+### Toái Thạch Đài @shrine:2008
 - [Tinh phách] Thử Tư Không @soul:8014
 - [Thiền] Điểm Thiền 3 — đi dọc nhà cũ, gần đấu trường @meditation:2001
 - [Nhiệm vụ] Theo dốc cát xuống Hoàng Phong Trận
@@ -193,7 +193,7 @@
 - [Vật phẩm] Lạc Già Hương Đằng 1 — sau Bách Mục Chân Nhân
 - [Nhiệm vụ] Lắc trống 1 — Phong Hổ 2, cạnh bàn thờ trái
 
-### Tự Môn
+### Tự Môn @shrine:2005
 - [Thiền] Điểm Thiền 4 — rẽ trái trước đỉnh cầu thang @meditation:2004
 - [Boss] Hổ Tiên Phong — đầu bậc thang, đấu trường chùa @card:203004
 - [Mẹo] Né hoàn hảo rồi phản công, chiêu rất nhanh
@@ -210,13 +210,13 @@
 - [Vật phẩm] Tiger Relic Soak — bình trên bệ trong hầm
 - [Vật phẩm] Longevity Decoction — mua của Tuất Cẩu 2,700 Linh Uẩn
 
-### Định Phong Kiều
+### Định Phong Kiều @shrine:2006
 - [Tinh phách] Thử Cấm Vệ — ba con trên cổng @soul:8064
 - [Vật phẩm] Lạc Già Hương Đằng 2 — sau cổng
 - [Ẩn] Thùng vàng nhà góc trái — Tỉnh Tửu Thạch, map ẩn 2
 - [Ẩn] Giao Tỉnh Tửu Thạch cho heo — map ẩn 3
 
-### Định Phong Trang
+### Định Phong Trang @shrine:2007
 - [Boss] Hổ Trành — trên cầu hẹp, sau bàn thờ @card:202003
 - [Tinh phách] Hổ Trành @soul:8017
 - [Vật phẩm] Lục Lạc Cũ — rơi sau Hổ Tràng, nhiệm vụ Phong Hổ 0
@@ -224,19 +224,19 @@
 - [Mẹo] Bình Xá Lợi: né hoàn hảo hồi thể lực
 - [Nhiệm vụ] Lắc trống 2 — làng, chỗ Can Thi ngồi, Phong Hổ 3
 
-### Cửa Thôn (quay lại)
+### Cửa Thôn (quay lại) @shrine:2002
 - [Nhiệm vụ] Lắc trống 3 — giếng góc Sa Môn Thôn, Phong Hổ cuối
 - [Boss] Phong Hổ — đáy giếng @card:203003
 - [Tinh phách] Phong Hổ @soul:8062
 - [Vật phẩm] Ngũ Quỷ Hồ Lô — rương sau lưng Phong Hổ @item:18012
 - [Mẹo] Ngũ Quỷ Hồ Lô: hồi giảm nửa, tăng sức tấn công
 
-### Chẩm Thạch Bình (quay lại)
+### Chẩm Thạch Bình (quay lại) @shrine:2009
 - [Ẩn] Hoàng Bào Viên Ngoại — em của heo, xuất hiện sau Ngọc Liên Hoa @card:200001
 - [Vật phẩm] Snout Mask — thưởng sau Hoàng Bào Viên Ngoại
 - [Ẩn] Vào Tư Cáp Lý Quốc qua cổng lớn, theo heo
 
-### Sa Môn Giới
+### Sa Môn Giới @shrine:2503
 - [Boss] Hổ Tiên Phong — bản bí mật, map ẩn 6 @card:203007
 - [Vật phẩm] Hổ Đầu Bài @equip:16004
 - [Boss] Phụ Bản — cuối map ẩn
@@ -257,7 +257,7 @@
 
 ## Chương 3 - Dạ Sinh Bạch Lộ
 
-### Phi Sương Đạo
+### Phi Sương Đạo @shrine:3002
 - [Cốt truyện] Bắt đầu chương ở Tuyết Sơn Kính, xuống dốc về Phi Sương Đạo
 - [Thiền] Thổ Địa Miếu Phi Sương Đạo — chọn căn khí, nâng cấp tửu liệu
 - [Boss] Xích Khào Mã Hầu — lần 1, bỏ chạy khi mất nửa máu
@@ -271,7 +271,7 @@
 - [Mẹo] Dẫn riêng Tuần Sơn Quỷ ra đánh, đừng đánh gộp với đám băng phong
 - [Cốt truyện] Thổ Địa hóa Nhân Diện Hiêu dẫn tới Chiếu Giám Hồ
 
-### Chiếu Giám Hồ
+### Chiếu Giám Hồ @shrine:3003 @shrine:3004
 - [Thiền] Chiếu Giám Hồ - Cây tuyết — đài ngắm cảnh bên trái hồ — nghỉ trước khi xuống hồ @meditation:3001
 - [Vật phẩm] Khốn Long Tu — dưới gốc cây bên kia hồ @item:2304
 - [Phép] Định Thân Pháp — Khốn Long Tu kéo dài thời gian
@@ -286,7 +286,7 @@
 - [NPC] Tiểu Trương Thái Tử — nói chuyện lần 1, tù 1
 - [Mẹo] Trạng thái mắt đỏ mất máu nhưng tăng sát thương, dùng săn Chưởng Đăng Ngục Sứ
 
-### Tầng Dưới
+### Tầng Dưới @shrine:3005 @shrine:3027
 - [Vật phẩm] Lân Côn - Cang Kim — rèn tại miếu tầng dưới @equip:15014
 - [Vật phẩm] Trân ngoạn Tế Từ Trà Vu — hộp xanh gần cầu thang, hồi khí lực
 - [Nhiệm vụ] Lồng đèn 1 & 2 — Chưởng Đăng Ngục Sứ
@@ -300,7 +300,7 @@
 - [Tinh phách] Dạ Xoa Nô — tầng 2, gần phòng niêm phong tím @soul:8075
 - [Mẹo] Kéo Dạ Xoa Nô bằng Định Phong Châu, hấp thụ không cần mở niêm
 
-### Tầng Trên
+### Tầng Trên @shrine:3006
 - [Nhiệm vụ] Lồng đèn 5, 6 & 7
 - [Nhiệm vụ] Lồng đèn 8
 - [Tinh phách] Cô Nam — hang cạnh cầu @soul:8042
@@ -312,7 +312,7 @@
 - [NPC] Tiểu Trương Thái Tử — giao Thần Hồn Tứ Tướng, tù 4
 - [Mẹo] Hạ Liên Nhãn trước để mở niêm phong tím, nhiều hòm quý
 
-### Luân Tàng
+### Luân Tàng @shrine:3007
 - [Cốt truyện] Lên tầng 4/5, đi theo vòng tròn tới miếu Luân Tàng
 - [Tinh phách] Chuẩn Cư Sĩ — tầng 4/5, quạt có thể đóng băng
 - [Ẩn] Tầng ẩn — phá phong ấn tím
@@ -327,7 +327,7 @@
 - [Vật phẩm] Lạc Già Hương Đằng 1 — ao gần miếu
 - [Thiền] Nơi ngồi thiền — gần miếu
 
-### Trùng Hàn Đạo
+### Trùng Hàn Đạo @shrine:3011
 - [Cốt truyện] Theo đom đóm tới miếu, nhặt Thái Ất Tử Kim Đan
 - [Mẹo] Nhặt Thái Ất Tử Kim Đan trước khi đánh quái xúc tu sau rào gỗ
 - [Thiền] Dưới cây — sau khi hạ băng phong nhân
@@ -335,7 +335,7 @@
 - [Ẩn] Phù Đồ Tháp — tường băng sau cầu, Nhị Lang Thần
 - [Mẹo] Phù Đồ Tháp cần Cấm Tự Pháp và các boss ẩn; để làm cuối
 
-### An Thân Tự
+### An Thân Tự @shrine:3012
 - [Boss] Xích Khào Mã Hầu — lần 2, cứu Hồ Lô Tiên Nhân
 - [Phép] An Thân Pháp — Đại Tiên truyền @item:5102
 - [Boss] Chuẩn Cư Sĩ — vòng quanh An Thân Tự, khó, quạt đóng băng @card:301008
@@ -349,7 +349,7 @@
 ### Khổ Hải
 - [Cốt truyện] Cắt cảnh, theo Quy Tướng tới Quy Đảo
 
-### Quy Đảo
+### Quy Đảo @shrine:3008 @shrine:3013
 - [Vật phẩm] Bích Ngẫu Kim Đan — chén vàng ven đường
 - [Vật phẩm] Giao Lê, Thụ Trân Châu — dọc đường lên đỉnh đảo
 - [Mẹo] Câu cá cạnh miếu lấy Phi Long Lân Phiến trước
@@ -360,7 +360,7 @@
 - [Vật phẩm] Tế Kim Tuyến — rơi sau khi hạ Thanh Bối Long @item:3953
 - [Vật phẩm] Phi Long Bảo Trượng — rèn từ Dao Sơn Trảo
 
-### Khổ Hải Bắc Ngạn
+### Khổ Hải Bắc Ngạn @shrine:3009 @shrine:3014
 - [Nhiệm vụ] Cứu Thúy Lạp Võ Sư lần 1 ở miếu nhỏ
 - [Mẹo] Làm nhiệm vụ Bắc Ngạn khi còn Bát Giới, trước khi lên đình
 - [Boss] Vô Lượng Bức — chạm sọ Xà Tướng, Đầu Mục @card:302003
@@ -385,7 +385,7 @@
 - [Vật phẩm] Ô nhóm trân ngoạn thứ 3 — mở sau khi thách đấu Dần Hổ
 - [Phép] Ô Xuyên — biến thành Dần Hổ, đánh một lần là có @item:5014
 
-### Giới Ngữ Lang
+### Giới Ngữ Lang @shrine:3015
 - [Vật phẩm] Tụ Trân Phục Hổ Hoàn — đan phương, chén vàng gần miếu @item:1168
 - [Thiền] Giới Ngữ Lang - Phật tượng — cạnh tượng Phật bên trái, trước miếu @meditation:3003
 - [Boss] Xích Phát Quỷ — hạ xong lộ ra đình @card:301003
@@ -393,7 +393,7 @@
 - [Cốt truyện] Lễ bốn tượng Tứ Phương Phật, Bát Giới rời đội
 - [Mẹo] Làm hết nhiệm vụ cần Bát Giới trước khi lễ Phật
 
-### Nhất Niệm Bích
+### Nhất Niệm Bích @shrine:3016
 - [Cốt truyện] Bát Giới hẹn gặp ở đỉnh, nhảy xuống hố vào Tiểu Tây Thiên
 - [Vật phẩm] Nhiên Hồ Lô — rương quan tài trong hang, chống lạnh @item:18017
 - [Vật phẩm] Tưởng Uẩn — Ngũ Uẩn 3, trên đầu Phật @item:3965
@@ -405,14 +405,14 @@
 - [Mẹo] Dùng Biến Xích Triều trước khi nó mất nửa máu
 - [Thiền] Nhất Niệm Bích - Đường đá — ngay sau lưng Bất Bạch @meditation:3004
 
-### Khoái Hoạt Lâm
+### Khoái Hoạt Lâm @shrine:3019
 - [Nhiệm vụ] Tiểu Hồ Ly — tương tác xác cáo ở sơn môn
 - [Mẹo] Khoan giao nhiệm vụ cáo, thám hiểm hết khu vực đã
 - [Ẩn] Đường hầm bí mật cạnh miếu — dẫn tới Lãng Lý Cá Lãng
 - [Boss] Lãng Lý Cá Lãng — ẩn sau hang, chuỗi ếch 3 @card:302015
 - [Vật phẩm] Nòng Nọc
 
-### Vô Ưu Giản
+### Vô Ưu Giản @shrine:3021
 - [Nhiệm vụ] Đến miếu Vô Ưu Giản
 - [Boss] Bất Năng — leo bậc thang, rẽ trái @card:302007
 - [Tinh phách] Bất Năng — hấp thụ sau khi hạ @soul:8026
@@ -421,7 +421,7 @@
 - [Tinh phách] Nha Hương Khách — gần thác nước @soul:8077
 - [Mẹo] Dùng Thân Ngoại Thân và Định Thân bao vây Nha Hương Khách
 
-### Tội Nghiệp Tháp Lâm
+### Tội Nghiệp Tháp Lâm @shrine:3023
 - [Nhiệm vụ] Đến miếu Tội Nghiệp Tháp Lâm
 - [Nhiệm vụ] Cứu Thúy Lạp Võ Sư lần 2 — dùng An Thân Pháp
 - [Mẹo] Đổi An Thân Pháp ở miếu trước khi đi cứu
@@ -432,7 +432,7 @@
 - [Vật phẩm] Thú Dữ Phật — trân ngoạn, quái cạnh miếu, cày được @equip:16032
 - [Nhiệm vụ] Cứu thanh niên — trái dưa 1, Thúy Lạp Võ Sư lần 2
 
-### Qua Điền
+### Qua Điền @shrine:3020
 - [Nhiệm vụ] Vẽ vòng lửa — trái dưa 2
 - [Boss] Thúy Lạp Võ Sư — lần 3 @card:302012
 - [Mẹo] Dùng Tị Hỏa Châu và Biến Xích Triều chống Kim Luân
@@ -440,7 +440,7 @@
 - [Phép] Cấm Tự Pháp — Tiểu Di Lặc truyền, trái dưa cuối @item:5103
 - [Mẹo] Cấm Tự Pháp đổi pháp lực sang công, khí lực sang bạo kích
 
-### Trường Sinh Đại Đạo
+### Trường Sinh Đại Đạo @shrine:3022
 - [Nhiệm vụ] Đến miếu Trường Sinh Đại Đạo
 - [Vật phẩm] Tam Đông Trùng 2 — vại ở cổng núi thứ hai
 - [Vật phẩm] Lạc Già Hương Đằng 3 — cuối đường
@@ -462,7 +462,7 @@
 - [Nhiệm vụ] Thử Đô Úy đã chết — chuột cuối
 - [Nhiệm vụ] Thử Đô Úy chưa chết — nhánh khác
 
-### Tự Môn
+### Tự Môn @shrine:3024
 - [Thiền] Miếu Tự Môn — kích hoạt trước khi vào chùa
 - [Boss] Hải Thượng Tăng — xúc tu từ giếng @card:301002
 - [Mẹo] Lao tới trước, đánh đầu nó từ trên giếng
@@ -512,7 +512,7 @@
 - [Vật phẩm] Tinh Hoa Thang Đan Phương — mua ở Tuất Cẩu
 - [Vật phẩm] Bổ Thang Đan Phương — mua ở Tuất Cẩu
 
-### Lan Hỉ Thôn
+### Lan Hỉ Thôn @shrine:4001
 - [Cốt truyện] Thiên Mệnh Nhân cùng Bát Giới tới Bàn Ti Lĩnh
 - [Vật phẩm] Cổ Động Tầm Tiên Đồ — mua ở cửa hàng @item:1804
 - [Boss] Nhị Tỷ — Chu Gia Đại Viện, Đầu Mục @card:403001
@@ -524,7 +524,7 @@
 - [Vật phẩm] Giáp Vàng — chế tạo tại miếu
 - [Tinh phách] U Đăng Quỷ — quay lại ban ngày, sau Tầng Trên @soul:8085
 
-### Tầng Trên
+### Tầng Trên @shrine:4004
 - [Vật phẩm] Thuốc Chống Chướng, Trường Thọ Thang — rương gần chỗ xuất hiện
 - [Vật phẩm] Thắt Lưng Nạm Vàng — rương lớn bên trái @equip:16018
 - [Vật phẩm] Kỷ Tử Mầm Ngâm — rương sau tường, hướng đông
@@ -534,14 +534,14 @@
 - [Tinh phách] Hạt Thái Tử — đường bên phải miếu @soul:8030
 - [Vật phẩm] Kiển Viên @item:4054
 
-### Toái Ngọc Trì
+### Toái Ngọc Trì @shrine:4007
 - [Thiền] Toái Ngọc Trì - Vách núi — bên hồ dưới miếu @meditation:4001
 - [Ẩn] Kén nhện lớn trên trần — bên phải miếu, leo lên
 - [Boss] Hắc Thủ Đạo Nhân 1 — đánh kén, hắn chạy trốn
 - [Mẹo] Tập trung đánh lưng để chặt tay lấy Hạ Độc Thủ
 - [Vật phẩm] Hạ Độc Thủ — dễ bỏ lỡ @equip:17009
 
-### Hoa Gian Kiều
+### Hoa Gian Kiều @shrine:4010
 - [Vật phẩm] Tương Phi Hồ Lô — hang trái, qua hai đèn @item:18007
 - [Vật phẩm] Tử Văn Tương Hạch — cùng hang @item:2314
 - [Vật phẩm] Gia Vị Sâm Thế Hoàn (đan phương) — cùng hang @item:1166
@@ -557,22 +557,22 @@
 - [Nhiệm vụ] Bùa 1 — mở nhiệm vụ Tử Đàn
 - [Tinh phách] Khôi Chu Sĩ @soul:8081
 
-### Tầng Giữa
+### Tầng Giữa @shrine:4009
 - [Thiền] Tầng Giữa - Gốc cây — đối diện miếu, góc xanh @meditation:4002
 - [Boss] Bách Túc Trùng — đấu trường đầy sọ @card:402001
 - [Tinh phách] Bách Túc Trùng @soul:8031
 
-### Thiên Hồng Quật
+### Thiên Hồng Quật @shrine:4013
 - [NPC] Mã Thiên Bá — Đầu Ngựa Mặt Ngựa 4, cứu khỏi kén
 
-### Tuyệt Tưởng Nhai
+### Tuyệt Tưởng Nhai @shrine:4012
 - [Nhiệm vụ] Bùa 2
 - [Boss] Hữu Thủ Trùng — Hữu Thủ Phật @card:402010
 - [Mẹo] Dùng Vân Bộ ra sau lưng khi nó phun độc
 - [Vật phẩm] Tay Phật - Phải @item:3305
 - [Vật phẩm] Thái Ất Tử Kim Đan
 
-### Đọa Long Bích
+### Đọa Long Bích @shrine:4014
 - [Vật phẩm] Lạc Già Hương Đằng 2 — mép tây, trên đường tới
 - [Nhiệm vụ] Bùa 3
 - [Tinh phách] Lỗi Tỳ Sĩ @soul:8028
@@ -582,14 +582,14 @@
 - [Phép] Kim Lam @item:5019
 - [Vật phẩm] Phi Long Bảo Trượng — chế tạo
 
-### Tầng Đáy
+### Tầng Đáy @shrine:4018
 - [Thiền] Tầng Đáy - Chỗ sâu — vách trái, qua khe hẹp @meditation:4003
 - [Boss] Ba Lý Cá Ba — chuỗi ếch 4 @card:402015
 - [Phép] Ba Ba Lãng Lãng
 - [Vật phẩm] Tay Phật - Trái @item:3304
 - [Vật phẩm] Hồ Lô Bất Tử Ban — mua Thân Hầu, đủ hai Thủ
 
-### Nhược Tiên Am
+### Nhược Tiên Am @shrine:4020
 - [Cốt truyện] Gặp Trư Bát Giới bị khống chế, bầy nhện
 - [Boss] Trư Bát Giới 1
 - [Boss] Trư Bát Giới 2 — hóa heo, cá voi, tê giác
@@ -601,33 +601,33 @@
 - [Vật phẩm] Hành Uẩn — Ngũ Uẩn 4, cuối sông @item:3966
 - [Tinh phách] Thanh Đình Tinh @soul:8079
 
-### Vạn Từ Quật
+### Vạn Từ Quật @shrine:4023
 - [Cốt truyện] Tử Chu Nhi hiện hình từ người phụ nữ
 - [Boss] Tử Chu Nhi — Nhện Tím, nhảy xuống từ miếu @card:403003
 - [Mẹo] Mang Thuốc Chống Chướng, né tơ, đứng sau lưng nó
 - [Vật phẩm] Chân Nhện
 
-### Sơn Đạo
+### Sơn Đạo @shrine:4021 @shrine:4024
 - [Vật phẩm] Lạc Già Hương Đằng 3
 - [Vật phẩm] Phong Sơn Thạch Tủy — rương @item:2315
 - [Vật phẩm] Thanh Hư Đạo Quả — cày đạo sĩ @item:2320
 - [Vật phẩm] Côn Côn - Chu Tiên — chế tạo @equip:15013
 - [Tinh phách] Xà Ti Dược @soul:8084
 
-### Hổ Xà Trùng Lâm
+### Hổ Xà Trùng Lâm @shrine:4026
 - [Thiền] Hồ Xà Trùng Lâm - Vách núi — đường phải, mép vách @meditation:4004
 - [Boss] Trùng Tổng Binh @card:402009
 - [Tinh phách] Trùng Tổng Binh @soul:8027
 - [Vật phẩm] Tam Thanh Lệnh @equip:16015
 
-### Quan Môn
+### Quan Môn @shrine:4027
 - [Thiền] Hoàng Hoa Quan - Cây tùng — sân trái @meditation:4005
 - [Tinh phách] Xà Bộ Đầu @soul:8083
 - [Vật phẩm] Trúc Điêu Đức Hạnh — cày Trùng Vũ Sĩ
 - [NPC] Viên Thủ Thành — nói chuyện
 - [Vật phẩm] Tam Đông Trùng 3 — đập bình
 
-### Kim Quang Uyển
+### Kim Quang Uyển @shrine:4028
 - [Vật phẩm] Thắt Lưng Gân Hổ — cày Xà Bộ Đầu @equip:16025
 - [Nhiệm vụ] Bùa 4 — cuối
 - [Boss] Vương Linh Quan
@@ -642,7 +642,7 @@
 - [Boss] Hắc Thủ Đạo Nhân 2 — hai giai đoạn
 - [Ẩn] Chạm bức tranh tường để vào Tử Vân Sơn
 
-### Thiên Hoa Cốc
+### Thiên Hoa Cốc @shrine:8002
 - [Ẩn] Vào map ẩn Tử Vân Sơn
 - [Tinh phách] Thanh Nhiễm Nhiễm @soul:8029
 - [Vật phẩm] Lạc Già Hương Đằng 4 — map ẩn
@@ -650,7 +650,7 @@
 - [Vật phẩm] Thiên Quan Bia
 - [Vật phẩm] Bất Lão Đằng — cày Thanh Nhiễm Nhiễm @item:2308
 
-### Nhiễu Tiên Cư
+### Nhiễu Tiên Cư @shrine:8003
 - [Ẩn] Đến miếu Nhiễu Tiên Cư — map ẩn
 - [Thiền] Tử Vân Sơn - Núi đá — Đỉnh Vách @meditation:4006
 - [Boss] Độc Địch Đại Vương — phá thùng để kích hoạt @card:803001
@@ -660,7 +660,7 @@
 - [Vật phẩm] Thải Ngọc Hồ Lô @item:18013
 - [Vật phẩm] Giáp Ngực Độc Châm — chế tạo
 
-### Lạc Hoa Trang
+### Lạc Hoa Trang @shrine:8004
 - [Ẩn] Đến miếu Lạc Hoa Trang — map ẩn
 - [Nhiệm vụ] Ma Đạo Nhân — đánh Chiến Binh Áo Vàng lấy Ngẫu Bạc
 - [Mẹo] Đánh Ma Đạo Nhân trước Hối Nguyệt, quái nhỏ sẽ biến mất
@@ -669,7 +669,7 @@
 - [Vật phẩm] Tam Đông Trùng 4
 - [Vật phẩm] Ngẫu Bạc @item:4017
 
-### Sào Vân Đỉnh
+### Sào Vân Đỉnh @shrine:8005
 - [Vật phẩm] Cửu Chuyển Hoàn Hồn Đan — đan phương @item:1115
 - [Boss] Hối Nguyệt Ma Quân — hai giai đoạn, cuối map ẩn @card:803002
 - [Vật phẩm] Tú Hoa Châm @item:19004
@@ -677,7 +677,7 @@
 - [Vật phẩm] Song Quan Huyết @item:2322
 - [Vật phẩm] Huyền Thiết Song Giác Khôi — chế tạo @item:11801
 
-### Kim Quang Uyển (lần 2)
+### Kim Quang Uyển (lần 2) @shrine:4028
 - [Cốt truyện] Tú Hoa Châm chế ngự Bách Nhãn Ma Quân
 - [Boss] Bách Nhãn Ma Quân — Yêu Vương, cuối chương @card:403007
 - [Vật phẩm] Kim Quang Nhãn Mâu @item:3907
@@ -694,7 +694,7 @@
 - [Vật phẩm] Tam Đông Trùng — mua ở Thân Hầu (Chương 1), mở từ đầu chương 5
 - [Mẹo] Quay lại Thân Hầu đầu chương 5 để mua Tam Đông Trùng
 
-### Hỏa Liệu Nhất Quan
+### Hỏa Liệu Nhất Quan @shrine:5012
 - [Vật phẩm] Định Nhan Châu @equip:16016
 - [Boss] Hạo Phủ Lực Sĩ — đánh xong nói chuyện, nhận nhiệm vụ Ngũ Hành Chiến Xa @card:502013
 - [Mẹo] Hạo Phủ Lực Sĩ: thấy rìu vung thì né, tận dụng nhịp chậm
@@ -705,10 +705,10 @@
 - [Vật phẩm] Hạt giống - Hỏa Linh Thảo — sau hàng rào gỗ gần miếu @item:6005
 - [Ẩn] Map ẩn 2
 
-### Xuân Thu Trại
+### Xuân Thu Trại @shrine:5002
 - [Nhiệm vụ] Lấy quan tài, lên bậc thang, nhặt thuốc ở chòi
 
-### Hôi Tẫn Đài
+### Hôi Tẫn Đài @shrine:5003
 - [Boss] Thạch Phụ — Yaoguai Chief cốt truyện, ngay sau miếu @card:502003
 - [Tinh phách] Thạch Phụ @soul:8033
 - [Vật phẩm] Tràng Hạt Hổ Phách — hang nhỏ bên phải sau Thạch Phụ @equip:16023
@@ -719,11 +719,11 @@
 - [Boss] Hôi Đồng Chiến Xa — dưới vách núi, map ẩn 3
 - [Mẹo] Hôi Đồng Chiến Xa: tránh lửa, lùi và né ngang khi nó đập đất
 
-### Hỏa Liệu Nhị Quan
+### Hỏa Liệu Nhị Quan @shrine:5004
 - [Nhiệm vụ] Theo cáo nhỏ, chờ Ba Tiêu Phiến dập lửa
 - [Ẩn] Nói chuyện — map ẩn 4
 
-### Cốc Khẩu
+### Cốc Khẩu @shrine:5005
 - [NPC] Mã Thiên Bá — kẹt trong chiến xa @card:501021
 - [Nhiệm vụ] Kéo dây Ngũ Hành Chiến Xa thứ tư — hồ dung nham bên phải
 - [Phép] Ảm Lôi — thưởng giải cứu Mã Thiên Bá @item:5008
@@ -735,7 +735,7 @@
 - [Tinh phách] Vụ Lý Vân - Vân Lý Vụ @soul:8088
 - [Vật phẩm] Hạt giống - Hỏa Tảo — nhảy xuống phải, quanh hồ dung nham @item:6015
 
-### La Sát Cung
+### La Sát Cung @shrine:5006
 - [Boss] Địa La Sát @card:501025
 - [Vật phẩm] Tam Đông Trùng 1 — đập bình phát sáng
 - [NPC] Viên Thủ Thành — hồ lô tiên @card:100002
@@ -747,7 +747,7 @@
 - [Vật phẩm] Bạch Bối Yêu Liên — rơi từ quái thường (cầm đôi chùy) ở khu dung nham bên kia miếu La Sát Cung @equip:16037
 - [Nhiệm vụ] Nhiệm vụ mặt ngựa cuối
 
-### Thúy Vân Điện
+### Thúy Vân Điện @shrine:5011
 - [Boss] Hỏa Diệm Sơn Thổ Địa @card:503002
 - [Boss] Âm Dương Ngư — đánh cùng Thổ Địa, cảnh phòng thủ @card:503001
 - [Vật phẩm] Âm Dương Pháp Y @equip:17008
@@ -755,7 +755,7 @@
 - [Boss] Hồng Ngân Chiến Xa — map ẩn 5
 - [Tinh phách] Hưng Hồng Hiên - Hiên Hồng Hưng — quả cầu thép trên đường ra, sau map ẩn @soul:8032
 
-### Hỏa Liệu Tam Quan
+### Hỏa Liệu Tam Quan @shrine:5010
 - [Nhiệm vụ] Tránh cầu gai, theo cáo nhỏ mở Vẫn Chuyên Khanh
 - [Tinh phách] Cửu Diệp Linh Chi Tinh — nhặt nấm giữa để kích hoạt @soul:8092
 - [Mẹo] Kéo cây nấm đỏ lớn bên phải miếu để kích hoạt boss ẩn
@@ -763,7 +763,7 @@
 - [Vật phẩm] Lạc Già Hương Đằng 2
 - [Vật phẩm] Dương Toại Châu @equip:16020
 
-### Thanh Lương Pha
+### Thanh Lương Pha @shrine:5009
 - [NPC] Bình Bình @card:500001
 - [Tinh phách] Hỏa Linh Nguyên Mẫu — tương tác vòng đỏ dưới đất @soul:8039
 - [Mẹo] Mang 4 Hỏa Quáng đến điểm dung nham đỏ để triệu hồi
@@ -772,22 +772,22 @@
 - [Vật phẩm] Hỏa Diệm Châu — rơi từ Xích Kim Chiến Xa
 - [Ẩn] Nói chuyện Hạo Phủ, mở phong ấn tới Bích Thủy Động
 
-### Luyện Ma Khanh
+### Luyện Ma Khanh @shrine:7002
 - [Ẩn] Bích Thủy Động — map ẩn 7
 - [Boss] Hưng Hồng Hiên, Hiên Hồng Hưng @card:502005
 - [Mẹo] Có thể làm sau khi qua chương, quay lại bằng dịch chuyển
 
-### Sâu Trong Hang Động
+### Sâu Trong Hang Động @shrine:7003
 - [Tinh phách] Cổ Đô Đốc — trước miếu, map ẩn 8 @soul:8087
 
-### Thủy Hỏa Đạo
+### Thủy Hỏa Đạo @shrine:7004
 - [Boss] Bích Thủy Kim Tinh Thú — map ẩn 9 @card:703001
 - [Mẹo] Bích Thủy Kim Tinh Thú nhanh và hung hãn, giữ khoảng cách
 - [Vật phẩm] Thủy Hỏa Lam @equip:16021
 - [Vật phẩm] Tam Đông Trùng 2 — bình phát sáng bên trái sau khi hạ boss
 - [Boss] Ba Lãng Lãng — map ẩn cuối, chuỗi đánh ếch @card:502015
 
-### Vẫn Chuyên Khanh
+### Vẫn Chuyên Khanh @shrine:5008
 - [Boss] Toại Tiên Phong — rẽ trái sau khi quả cầu phá rào @card:502008
 - [Tinh phách] Toại Tiên Phong @soul:8037
 - [NPC] Ngưu Ma Vương — cảnh bích họa @card:500003
@@ -807,7 +807,7 @@
 - [Nhiệm vụ] Gom bộ Tề Thiên (4 món giáp từ boss) rồi nhận Như Ý Kim Cô Bổng
 - [Mẹo] 3 boss giáp đầu đánh theo thứ tự tùy ý; boss thứ 4 cần đủ 3
 
-### Thanh Chướng Đạo
+### Thanh Chướng Đạo @shrine:9800 @shrine:9801
 - [Boss] Vương Linh Quan — đánh thắng nhận Cân Đẩu Vân @card:602001
 - [Mẹo] Boss này gây bỏng, đánh mạnh; chuẩn bị kháng bỏng
 - [Phép] Cân Đẩu Vân — bay tự do khám phá bản đồ @item:5009
@@ -817,7 +817,7 @@
 - [Boss] Độc Thống Lĩnh — đánh lại 4 lần, tùy chọn @card:602006
 - [Boss] Thủy Mộc Thú — vùng nước phía tây nam, tùy chọn @card:602009
 
-### Bộ Lang Đinh
+### Bộ Lang Đinh @shrine:9806 @shrine:9809
 - [NPC] Trư Bát Giới — đang bắt bọ ngựa gần miếu
 - [Boss] Bích Tí Lang — đánh trong bụng Bát Giới @card:602003
 - [Vật phẩm] Điểm Thúy Phi Long Thiên — rơi từ Bích Tí Lang @item:10503
@@ -831,34 +831,34 @@
 - [Vật phẩm] Ngũ Uẩn Đan — luyện khi đủ ngũ uẩn @item:1169
 - [Vật phẩm] Như Ý Kim Cô Bổng — Thủy Liêm Động, khi đủ 4 món giáp @equip:15002
 
-### Vọng Tê Pha
+### Vọng Tê Pha @shrine:9803 @shrine:9807
 - [Boss] Kim Giáp Tê — đánh gãy sừng trước @card:602002
 - [Vật phẩm] Tỏa Tử Hoàng Kim Giáp — rơi từ Kim Giáp Tê @item:10502
 
-### Kiến Lộc Lâm
+### Kiến Lộc Lâm @shrine:9802 @shrine:9808
 - [Boss] Lãng Ba Ba — ếch cuối, chuỗi đánh ếch 6 @card:602008
 - [Tinh phách] Lãng Ba Ba — chuỗi đánh ếch cuối
 - [Boss] Bộ Vân Lộc — phía bắc, tùy chọn @card:602004
 - [Vật phẩm] Ngẫu Ti Bộ Vân Lý — rơi từ Bộ Vân Lộc @item:10504
 
-### Phong Hồi Lộ
+### Phong Hồi Lộ @shrine:9804
 - [Nhiệm vụ] Đánh Tề Thiên 6, vào cốt truyện cuối
 
-### Thiên Chân Đỉnh
+### Thiên Chân Đỉnh @shrine:9805
 - [Boss] Thạch Viên — vào Thạch Noãn
 - [Boss] Đại Thánh Tàn Khu — 2 giai đoạn @card:603002
 - [NPC] Lão Hầu Tử — kết thúc thường @card:600002
 - [Nhiệm vụ] Bad ending — đánh Tề Thiên cuối
 - [Nhiệm vụ] Chơi tiếp từ màn hình chính để mở good ending
 
-### Phù Đồ Tháp
+### Phù Đồ Tháp @shrine:9201 @shrine:9202
 - [Ẩn] Đến miếu Phù Đồ Tháp (Phù Đồ Giới → Trùng Hàn Đạo) — good ending 0
 - [Ẩn] Đứng giữa bức tranh cuối, Di Lặc kích hoạt cảnh
 
 ### Mai Sơn
 - [Ẩn] Mở map ẩn Mai Sơn — good ending 1
 
-### Mai Kiến Phong
+### Mai Kiến Phong @shrine:6201 @shrine:6202 @shrine:6203 @shrine:6204
 - [Ẩn] Đến miếu Mai Kiến Phong — good ending 2
 - [Boss] Nhị Lang Hiển Thánh Chân Quân — Dương Tiễn, boss ẩn, good ending 3 @card:603003
 - [Mẹo] Dùng Quạt phá khiên; chiêu vỡ khống chế, thêm giai đoạn mỗi 25% máu

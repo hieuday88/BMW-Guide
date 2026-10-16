@@ -2,7 +2,9 @@
 import ctypes
 import ctypes.wintypes as wt
 import json
+import os
 import re
+import sys
 import threading
 import time
 import tkinter as tk
@@ -11,10 +13,11 @@ from tkinter import filedialog
 
 import bmw_save
 
-HERE = Path(__file__).resolve().parent
-DATA = HERE / 'data'
-ICON = HERE / 'assets' / 'BMW.ico'
-STATE_PATH = HERE / 'bmw_state.json'
+HERE = Path(sys.executable if getattr(sys, 'frozen', False) else __file__).resolve().parent
+BUNDLE = Path(getattr(sys, '_MEIPASS', HERE))
+DATA = HERE / 'data' if (HERE / 'data').is_dir() else BUNDLE / 'data'
+ICON = BUNDLE / 'assets' / 'BMW.ico'
+STATE_PATH = Path(os.environ.get('APPDATA', HERE)) / 'BMW-Guide' / 'state.json'
 HOTKEYS = {1: 0x78, 2: 0x79}  # F9 show/hide, F10 compact/full
 MINI_COUNT = 3
 SAVE_POLL_MS = 3000
@@ -43,6 +46,15 @@ UI = {
 }
 
 
+class Heading(str):
+    """Section title that also carries its @shrine token."""
+
+    def __new__(cls, text, tokens):
+        obj = super().__new__(cls, text)
+        obj.tokens = tokens
+        return obj
+
+
 def parse(md):
     """Parses a checklist into [(chapter, [(section, [(key, tag, text, tokens)])])] with language-independent keys."""
     chapters, sections, items = [], None, None
@@ -54,7 +66,8 @@ def parse(md):
             items = None
         elif line.startswith('### ') and sections is not None:
             items = []
-            sections.append((line[4:].strip(), items))
+            head = line[4:].strip()
+            sections.append((Heading(TOKEN.sub('', head).strip(), {(c, int(i)) for c, i in TOKEN.findall(head)}), items))
         elif items is not None:
             m = re.match(r'^(?:\d+\.|-)\s+(.+)', line)
             if not m:
@@ -76,10 +89,9 @@ class Overlay:
 
     def __init__(self):
         self.state = self.load_state()
-        self.state.setdefault('done', {})
-        self.state.setdefault('undone', {})
         self.lang = self.state.get('lang', 'vi')
         self.auto = set()
+        self.shrines = set()
         self.save_file = None
         self.save_mtime = None
         self.save_status = ''
@@ -116,6 +128,7 @@ class Overlay:
 
     def save_state(self):
         self.state['pos'] = (self.root.winfo_x(), self.root.winfo_y())
+        STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
         STATE_PATH.write_text(json.dumps(self.state, ensure_ascii=False), encoding='utf-8')
 
     def round_corners(self):
@@ -261,6 +274,7 @@ class Overlay:
     def apply_progress(self, progress):
         """Marks every checklist item whose @category:id token is present in the save."""
         owned = {(cat, i) for cat, ids in progress.items() if isinstance(ids, set) for i in ids}
+        self.shrines = {i for cat, i in owned if cat == 'shrine'}
         loose = progress['item'] | progress['equip'] | progress['spell'] | progress['wine']
         owned |= {(cat, i) for cat in ('item', 'equip') for i in loose}
         self.auto = {key for _, sections in self.chapters for _, items in sections
@@ -330,7 +344,7 @@ class Overlay:
         self.scroll_target = 0.0
 
     def is_done(self, key):
-        return key in self.state['done'] or (key in self.auto and key not in self.state['undone'])
+        return key in self.auto
 
     def render(self):
         """Builds the active chapter's sections and rows once; later ticks update in place."""
@@ -350,12 +364,15 @@ class Overlay:
             head.pack(fill='x')
             arrow = tk.Label(head, bg=BG, fg=DIM, font=(FONT, 7))
             arrow.pack(side='left', padx=(2, 4))
+            smark = tk.Label(head, bg=BG, font=(FONT, 8))
+            if sec_name.tokens:
+                smark.pack(side='left')
             tk.Label(head, text=sec_name, bg=BG, fg=GOLD, font=(FONT, 9, 'bold')).pack(side='left')
             count = tk.Label(head, bg=BG, fg=DIM, font=(FONT, 7))
             count.pack(side='right', padx=4)
             rows_frame = tk.Frame(box, bg=BG)
-            sec = {'items': [it for it in items if it[1] not in TIP_TAGS], 'count': count, 'arrow': arrow,
-                   'rows': rows_frame, 'head': head, 'open': None}
+            sec = {'items': [it for it in items if it[1] not in TIP_TAGS and it[3]], 'count': count, 'arrow': arrow,
+                   'rows': rows_frame, 'head': head, 'open': None, 'smark': smark, 'shrine': sec_name.tokens}
             for w in (head, arrow, *head.winfo_children()):
                 w.bind('<Button-1>', lambda e, s=sec: self.set_open(s, not s['open']))
             for item in items:
@@ -374,7 +391,7 @@ class Overlay:
             sec['rows'].pack_forget()
 
     def add_row(self, parent, item, hide):
-        key, tag, text, _ = item
+        key, tag, text, tokens = item
         row = tk.Frame(parent, bg=BG, cursor='hand2')
         row.pack(fill='x', pady=0)
         if tag in TIP_TAGS:
@@ -382,6 +399,15 @@ class Overlay:
                      wraplength=WIDTH - 40).pack(side='left', fill='x', padx=(22, 4))
             row.configure(cursor='')
             return
+        if not tokens:
+            row.configure(cursor='')
+            tk.Label(row, text='·', bg=BG, fg=DIM, font=(FONT, 9), width=2).pack(side='left', anchor='n')
+            if tag:
+                tk.Label(row, text=tag, bg=BG, fg=DIM, font=(FONT, 7)).pack(side='left', anchor='n', pady=2)
+            tk.Label(row, text=text, bg=BG, fg=DIM, font=(FONT, 9), anchor='w', justify='left',
+                     wraplength=WIDTH - 110).pack(side='left', fill='x', anchor='n')
+            return
+        row.configure(cursor='')
         mark = tk.Label(row, bg=BG, font=(FONT, 9), width=2)
         mark.pack(side='left', anchor='n')
         tag_lbl = tk.Label(row, text=tag, bg=BG, font=(FONT, 7, 'bold')) if tag else None
@@ -392,7 +418,6 @@ class Overlay:
         widgets = [w for w in (row, mark, tag_lbl, lbl) if w]
         self.rows[key] = {'row': row, 'mark': mark, 'tag_lbl': tag_lbl, 'tag': tag, 'lbl': lbl, 'widgets': widgets, 'hover': False}
         for w in widgets:
-            w.bind('<Button-1>', lambda e, k=key: self.flip(k))
             w.bind('<Enter>', lambda e, k=key: self.hover(k, True))
             w.bind('<Leave>', lambda e, k=key: self.hover(k, False))
         if hide and self.is_done(key):
@@ -402,29 +427,13 @@ class Overlay:
         self.rows[key]['hover'] = on
         self.style_row(key)
 
-    def flip(self, key):
-        """Toggles an item; unticking an auto-ticked item stores a manual override."""
-        done, undone = self.state['done'], self.state['undone']
-        if self.is_done(key):
-            done.pop(key, None)
-            if key in self.auto:
-                undone[key] = 1
-        else:
-            done[key] = 1
-            undone.pop(key, None)
-            if self.state.get('hide') and key in self.rows:
-                self.rows[key]['row'].pack_forget()
-        self.save_state()
-        self.refresh()
-
     def style_row(self, key):
         r = self.rows[key]
         is_done = self.is_done(key)
-        is_auto = is_done and key in self.auto and key not in self.state['done']
         bg = HOVER if r['hover'] else NEXT_BG if key == self.next_id else BG
         for w in r['widgets']:
             w.configure(bg=bg)
-        r['mark'].configure(text='◆' if is_done else '◇', fg=AUTO if is_auto else DONE if is_done else GOLD)
+        r['mark'].configure(text='◆' if is_done else '◇', fg=AUTO if is_done else GOLD)
         if r['tag_lbl']:
             r['tag_lbl'].configure(fg=DONE if is_done else TAG_COLORS.get(r['tag'], DIM))
         r['lbl'].configure(fg=DONE if is_done else TEXT, font=(FONT, 9, 'overstrike') if is_done else (FONT, 9))
@@ -442,7 +451,10 @@ class Overlay:
             total += len(sec['items'])
             finished += n
             full = n == len(sec['items']) and n > 0
-            sec['count'].configure(text=f'{n}/{len(sec["items"])}', fg=GOLD if full else DIM)
+            sec['count'].configure(text=f'{n}/{len(sec["items"])}' if sec['items'] else '', fg=GOLD if full else DIM)
+            if sec['shrine']:
+                active = any(i in self.shrines for _, i in sec['shrine'])
+                sec['smark'].configure(text='⛩' if active else '·', fg=AUTO if active else DIM)
         self.stat.configure(text=f'{finished}/{total}')
         self.root.update_idletasks()
         w = self.bar.winfo_width()
@@ -461,7 +473,7 @@ class Overlay:
         tk.Label(top, text=re.sub(r'\s*-.*', '', name), bg=BG, fg=DIM, font=(FONT, 8)).pack(side='left')
         tk.Label(top, text=self.progress, bg=BG, fg=GOLD, font=(FONT, 8, 'bold')).pack(side='right')
         shown, last_sec, tips_for_first = 0, None, True
-        for sec_name, (key, tag, text, _) in self.order:
+        for sec_name, (key, tag, text, tokens) in self.order:
             if tag in TIP_TAGS:
                 if shown == 1 and tips_for_first:
                     tk.Label(self.mini, text=f'💡 {text}', bg=BG, fg=DIM, font=(FONT, 8, 'italic'), anchor='w',
@@ -469,14 +481,14 @@ class Overlay:
                 continue
             if shown == 1:
                 tips_for_first = False
-            if self.is_done(key):
+            if self.is_done(key) or not tokens:
                 continue
             if shown == MINI_COUNT:
                 break
             if sec_name != last_sec:
                 tk.Label(self.mini, text=sec_name, bg=BG, fg=GOLD, font=(FONT, 8, 'bold'), anchor='w').pack(fill='x', padx=8, pady=(3, 0))
                 last_sec = sec_name
-            row = tk.Frame(self.mini, bg=NEXT_BG if shown == 0 else BG, cursor='hand2')
+            row = tk.Frame(self.mini, bg=NEXT_BG if shown == 0 else BG)
             row.pack(fill='x', padx=4)
             parts = [tk.Label(row, text='◇', fg=GOLD, font=(FONT, 9), width=2)]
             if tag:
@@ -485,8 +497,6 @@ class Overlay:
             for w in parts:
                 w.configure(bg=row['bg'])
                 w.pack(side='left', anchor='n', pady=1 if w is parts[-1] else 0)
-            for w in (row, *parts):
-                w.bind('<Button-1>', lambda e, k=key: self.flip(k))
             shown += 1
         if not shown:
             tk.Label(self.mini, text=self.t('chapter_done'), bg=BG, fg=GOLD, font=(FONT, 9)).pack(pady=4)
