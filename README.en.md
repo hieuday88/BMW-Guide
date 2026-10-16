@@ -23,7 +23,7 @@
   - Shows chests, Luojia Fragrant Vines, Awaken Wine Worms, bosses, chiefs, spirits, meditation spots, shrines, NPCs…
   - Finished points disappear: activated shrines are hidden straight from the save. Chests, bosses, spirits and items are hidden when the save records you just opened/defeated/picked them up nearby (counted from when the app is running; earlier pickups stay visible).
   - Scroll on the map to zoom; hover a point to see its name.
-  - **Click a checklist line or area title** to jump the map there, with a red target ring, a direction line and the distance (a straight line, not terrain-aware pathing). Lines without their own point jump to the area's shrine. Click the map to follow your character again.
+  - **Click a checklist line or area title** for directions: the map stays on your character and draws a dashed line and a blue arrow toward the target, with the distance and a turn hint relative to where you face (e.g. "↗ ahead right"). Lines without their own point guide you to the area's shrine. Click the map to stop guiding.
   - The app only **reads** game memory for your position. It injects no DLL and writes nothing.
 
 ## Install

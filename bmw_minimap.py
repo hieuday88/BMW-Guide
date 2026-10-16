@@ -36,6 +36,10 @@ CATEGORY = {
 CHAPTER_LEVELS = {0: ('HFS01_PersistentLevel', 'HFS01_Old_GYCY_YKX_PersistentLevel'), 1: ('HFM02_PersistentLevel', 'HFM_DuJiaoXian_Persist'),
                   2: ('LYS_PersistentLevel',), 3: ('PSD_PersistentLevel', 'ZYS01_persistentlevel'),
                   4: ('HYS_PersistentLevel', 'BSD02_persistentlevel'), 5: ('BYS_persistentlevel',)}
+TURNS = {
+    'vi': ['↑ phía trước', '↗ trước bên phải', '→ bên phải', '↘ sau bên phải', '↓ phía sau', '↙ sau bên trái', '← bên trái', '↖ trước bên trái'],
+    'en': ['↑ ahead', '↗ ahead right', '→ right', '↘ behind right', '↓ behind', '↙ behind left', '← left', '↖ ahead left'],
+}
 LUOJIA, SANDONG = 1999, 1998
 BG, GOLD, DIM, TEXT = '#121010', '#d9a441', '#857a6a', '#e6dccb'
 PLAYER, ROUTE, TARGET = '#39ff6a', '#ffffff', '#3cc8ff'
@@ -333,6 +337,32 @@ class Minimap:
                 self.canvas.create_line(*seg, fill=ROUTE, width=3, capstyle='round', tags='dyn')
             d += 16
 
+    def guide(self, level, place, inside, ax, ay, here, cx, cy, r):
+        """Points from the player toward the selected target: route line, target ring or edge arrow, distance and turn hint."""
+        c = self.canvas
+        tlevel, tpt = self.target
+        if not here or tlevel != level:
+            self.label(cx - r + 8, cy - r + 6, f'{tpt[7]} · {self.texts("map_other")}', 'nw', 2 * r - 16)
+            return
+        tx, ty = place(tpt[2], tpt[3])
+        dist = math.dist(self.pos[:3], tpt[2:5]) / 100
+        bearing = math.atan2(ty - ay, tx - ax)
+        turn = (math.degrees(bearing) - self.pos[3] + 180) % 360 - 180
+        hint = TURNS[self.lang()][round(turn / 45) % 8]
+        if inside(tx, ty):
+            self.route(ax, ay, tx, ty)
+            pulse = 9 + 3 * math.sin(time.time() * 5)
+            c.create_oval(tx - pulse, ty - pulse, tx + pulse, ty + pulse, outline=TARGET, width=3, tags='dyn')
+        else:
+            k = (r - 16) / max(abs(math.cos(bearing)), abs(math.sin(bearing)))
+            ex, ey = cx + k * math.cos(bearing), cy + k * math.sin(bearing)
+            self.route(ax, ay, ex, ey)
+            tip = [(ex + 16 * math.cos(bearing), ey + 16 * math.sin(bearing)),
+                   (ex + 10 * math.cos(bearing + 2.4), ey + 10 * math.sin(bearing + 2.4)),
+                   (ex + 10 * math.cos(bearing - 2.4), ey + 10 * math.sin(bearing - 2.4))]
+            c.create_polygon(*[v for q in tip for v in q], fill=TARGET, outline=BG, width=2, tags='dyn')
+        self.label(cx - r + 8, cy - r + 6, f'{tpt[7]} · {dist:.0f} m · {hint}', 'nw', 2 * r - 16)
+
     def label(self, x, y, text, anchor, width=0):
         c = self.canvas
         t = c.create_text(x, y, text=text, fill=TEXT, font=('Segoe UI', 9, 'bold'), anchor=anchor, width=width, tags='dyn')
@@ -343,14 +373,9 @@ class Minimap:
     def render(self):
         """Redraws the map/points layer only when the view moves; the player, route and labels are redrawn every frame."""
         c, cx, cy, r = self.canvas, self.w / 2, self.h / 2, self.r
-        if self.target:
-            level, tpt = self.target
-            m = self.pick_map(level, tpt[2:5])
-            centre = tpt[2:4]
-        else:
-            level = self.current_level() if self.pos else None
-            m = self.pick_map(level, self.pos) if level else None
-            centre = self.pos[:2] if self.pos else None
+        level = self.current_level() if self.pos else None
+        m = self.pick_map(level, self.pos) if level else None
+        centre = self.pos[:2] if self.pos else None
         c.delete('dyn')
         if m is None:
             if self.static_key != 'empty':
@@ -401,15 +426,7 @@ class Minimap:
         here = self.pos is not None and self.pick_map(level, self.pos) is m
         ax, ay = place(self.pos[0], self.pos[1]) if here else (0, 0)
         if self.target:
-            tx, ty = place(tpt[2], tpt[3])
-            if here:
-                self.route(ax, ay, tx, ty)
-                info = f'{math.dist(self.pos[:3], tpt[2:5]) / 100:.0f} m'
-            else:
-                info = self.texts('map_other')
-            pulse = 9 + 3 * math.sin(time.time() * 5)
-            c.create_oval(tx - pulse, ty - pulse, tx + pulse, ty + pulse, outline=TARGET, width=3, tags='dyn')
-            self.label(cx - r + 8, cy - r + 6, f'{tpt[7]} · {info}', 'nw', 2 * r - 16)
+            self.guide(level, place, inside, ax, ay, here, cx, cy, r)
         if here:
             self.draw_arrow(ax, ay, cx, cy, r, inside)
         c.create_text(cx + r - 6, cy + r - 4, anchor='se', text=f'x{self.zoom}', fill=GOLD, font=('Segoe UI', 8, 'bold'), tags='dyn')
