@@ -4,6 +4,7 @@ import string
 import winreg
 from pathlib import Path
 
+CHEST_OPENED = 3
 XOR_KEY = bytes.fromhex('7b5cda913efcda37')
 SAVE_GLOB = 'ArchiveSaveFile.*.sav'
 DIR_HINTS = ('black', 'wukong', 'steam', 'epic', 'game', 'b1')
@@ -96,12 +97,12 @@ def _actors(ecs):
 
 
 def _opened(ecs):
-    """Returns actor names whose persistent interaction state is set (opened chests, activated objects)."""
+    """Returns names of chests whose persistent interaction state is 3 (opened); 1-2 only mean touched."""
     names = set()
     for level in _subs(ecs, 3):
         for buc in _subs(level, 2):
             for interact in _subs(buc, 5):
-                if (_ints(interact, 1) or [0])[0] >= 1:
+                if (_ints(interact, 1) or [0])[0] >= CHEST_OPENED:
                     names.add(_actor(_first(buc, 1).decode('utf-8', 'replace')))
     return names
 

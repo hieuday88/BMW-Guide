@@ -23,7 +23,9 @@ NPC_RADIUS = 1200
 NPC_NEAR = 3000
 NPC_MISSES = 3
 CHEST_CATS = {'baoxiang', 'cailiao'}
-PICKUP_CATS = CHEST_CATS | {'xiandan', 'luojia', 'sandongchong', 'zhenwan', 'hulu', 'jiushi', 'yaojin', 'bianhua'}
+BOSS_LOOT_RADIUS = 3000
+NEAR_LABEL = 1500
+PICKUP_CATS = CHEST_CATS |{'xiandan', 'luojia', 'sandongchong', 'zhenwan', 'hulu', 'jiushi', 'yaojin', 'bianhua'}
 ICON_SUBSAMPLE = 10
 HOVER_PX = 14
 MAP_LEVELS = {10: 'HFS01_PersistentLevel', 11: 'HFS01_Old_GYCY_YKX_PersistentLevel', 20: 'HFM02_PersistentLevel',
@@ -129,6 +131,9 @@ class Minimap:
         while True:
             try:
                 actors = self.live.loaded_actors('')
+                if not actors or self.live.position() is None:
+                    time.sleep(ACTOR_SCAN_S)
+                    continue
                 chests = [a for a in actors if 'TreasureBox' in a[0]]
                 if [c[0] for c in chests] != [c[0] for c in self.chests]:
                     self.chests = chests
@@ -225,6 +230,9 @@ class Minimap:
             if math.dist((wx, wy, wz), near[1:]) <= CHEST_RADIUS and near[0] in self.opened:
                 self.remember(pid)
                 return True
+        if cat == 'cailiao':
+            return any(p[1] in ('boss', 'toumu') and math.hypot(p[2] - wx, p[3] - wy) <= BOSS_LOOT_RADIUS
+                       and self.is_done(level, *p[:6]) for p in self.points.get(level, []))
         return False
 
     def current_level(self):
@@ -476,7 +484,7 @@ class Minimap:
                     c.create_image(sx, sy, image=icon, tags='static')
                 else:
                     c.create_oval(sx - 5, sy - 5, sx + 5, sy + 5, fill=DOT_COLORS.get(cat, DIM), outline=BG, width=2, tags='static')
-                self.shown.append((sx, sy, cat, name))
+                self.shown.append((sx, sy, cat, name, wx, wy))
             c.create_rectangle(cx - r, cy - r, cx + r, cy + r, outline=GOLD, width=2, tags='static')
         here = self.pos is not None and self.pick_map(level, self.pos) is m
         ax, ay = place(self.pos[0], self.pos[1]) if here else (0, 0)
@@ -484,9 +492,17 @@ class Minimap:
             self.guide(level, m, place, inside, ax, ay, here, cx, cy, r)
         if here:
             self.draw_arrow(ax, ay, cx, cy, r, inside)
+            near = [(math.hypot(s[4] - self.pos[0], s[5] - self.pos[1]), s) for s in self.shown]
+            near = [n for n in near if n[0] <= NEAR_LABEL]
+            for _, (sx, sy, cat, *_rest) in near:
+                if cat in self.icons:
+                    c.create_image(sx, sy, image=self.icons[cat], tags='dyn')
+            if near and not self.target:
+                d, (_, _, _, name, *_rest) = min(near, key=lambda n: n[0])
+                self.label(cx, cy + r - 8, f'📍 {name} · {d / 100:.0f} m', 's', width=2 * r - 40)
         c.create_text(cx + r - 6, cy + r - 4, anchor='se', text=f'x{self.zoom}', fill=GOLD, font=('Segoe UI', 8, 'bold'), tags='dyn')
         if self.mouse and self.shown:
-            hx, hy, cat, name = min(self.shown, key=lambda s: math.hypot(s[0] - self.mouse[0], s[1] - self.mouse[1]))
+            hx, hy, cat, name, *_rest = min(self.shown, key=lambda s: math.hypot(s[0] - self.mouse[0], s[1] - self.mouse[1]))
             if math.hypot(hx - self.mouse[0], hy - self.mouse[1]) <= HOVER_PX:
                 labels = CATEGORY[self.lang()]
                 self.label(hx, hy - 16, name if name in labels.values() else f'{labels.get(cat, "")}: {name}', 's')
