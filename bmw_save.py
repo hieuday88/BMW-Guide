@@ -80,6 +80,26 @@ def _ids(msgs, field=1):
     return {x for m in msgs for x in _ints(m, field)}
 
 
+def _actor(guid):
+    """Strips the editor GUID prefix from a persistent actor id, keeping e.g. 'BPO_TreasureBox_01_C_1'."""
+    return guid.rsplit('-', 1)[-1]
+
+
+def _actors(ecs):
+    """Returns names of activated map symbols and interacted world objects (opened chests, used shrines)."""
+    names = set()
+    for entry in _subs(_first(ecs, 2, 4), 1):
+        key = _first(entry, 1)
+        if key:
+            names.add(_actor(key.decode('utf-8', 'replace')))
+    for level in _subs(ecs, 3):
+        for buc in _subs(level, 2):
+            if _subs(buc, 5):
+                guid = _first(buc, 1)
+                names.add(_actor(guid.decode('utf-8', 'replace')))
+    return names
+
+
 def decrypt_payload(raw):
     """Unwraps the ArchiveFile container and removes the repeating XOR layer."""
     payload = _first(raw, 2)
@@ -96,10 +116,13 @@ def read_progress(path):
     return {
         'card': _ids(_subs(_first(role, COLLECTION), 1)),
         'item': _ids(_subs(bag, 2)),
+        'item_num': {(_ints(m, 1) or [0])[0]: (_ints(m, 2) or [0])[0] for m in _subs(bag, 2)},
         'equip': _ids(equips) | {x for m in equips for x in _ints(m, 5)},
         'soul': _ids(_subs(bag, 7)),
         'wine': _ids(_subs(bag, 5)),
         'shrine': _ids(_subs(_first(data, ECS, 2, 3), 2)),
+        'actors': _actors(_first(data, ECS)),
+        'map_id': (_ints(_first(data, ECS, 2, 2), 6) or [0])[0],
         'meditation': _ids(_subs(progress, 11)),
         'spell': set(_ints(progress, 3)),
         'chapter': (_ints(_first(role, CHAPTER), 1) or [0])[0],

@@ -19,6 +19,11 @@
 - **Finds your save automatically** (Steam, Epic or standalone installs). You can also pick a save file manually from ⚙.
 - **Vietnamese / English:** switch under ⚙ → Language.
 - **Compact mode (F10):** shows only the next 3 steps and their tips, taking up very little screen space.
+- **Minimap (F11):** a live map around your character with a facing arrow.
+  - Shows chests, Luojia Fragrant Vines, Awaken Wine Worms, bosses, chiefs, spirits, meditation spots, shrines, NPCs…
+  - Finished points disappear: activated shrines are hidden straight from the save. Chests, bosses, spirits and items are hidden when the save records you just opened/defeated/picked them up nearby (counted from when the app is running; earlier pickups stay visible).
+  - Scroll on the map to zoom, drag to move it.
+  - The app only **reads** game memory for your position. It injects no DLL and writes nothing.
 
 ## Install
 
@@ -40,6 +45,7 @@ Set the game to **Borderless / Windowed** while playing.
 |---|---|
 | `F9` | Show / hide the overlay |
 | `F10` | Toggle compact / full mode |
+| `F11` | Show / hide the minimap |
 | `Ctrl+Alt+B` | Launch the app (Start Menu shortcut) |
 | Mouse wheel | Scroll the list |
 | Drag the title bar | Move the window |
@@ -58,4 +64,5 @@ The `@category:id` token at the end of a line is the in-game ID used for auto-ti
 
 - The app only **reads** your save file. It never writes to it.
 - Sources include game8, PowerPyx, bmwukong.info, BWIKI and 3DM.
+- Minimap images, icons and point data come from [jaskang/wukong-minimap](https://github.com/jaskang/wukong-minimap) (Apache-2.0), see `assets/maps/NOTICE.txt`.
 - This is a personal fan project, not affiliated with Game Science.

@@ -19,6 +19,11 @@
 - **Tự tìm file save** trên máy (Steam, Epic, bản cài riêng). Bạn cũng có thể chọn bằng tay trong ⚙.
 - **Song ngữ Việt / Anh:** đổi trong ⚙ → Ngôn ngữ.
 - **Chế độ gọn (F10):** chỉ hiện 3 bước tiếp theo kèm mẹo, chiếm rất ít chỗ.
+- **Minimap (F11):** bản đồ quanh nhân vật, có mũi tên hướng nhìn, cập nhật theo thời gian thực.
+  - Hiện rương, Lạc Già Hương Đằng, Tam Đông Trùng, boss, đầu mục, tinh phách, điểm thiền, miếu, NPC…
+  - Điểm đã xong sẽ tự ẩn: miếu đã mở ẩn ngay theo save. Rương, boss, tinh phách, vật phẩm ẩn khi save ghi nhận bạn vừa mở/hạ/nhặt chúng ở gần đó (tính từ lúc bật app; những thứ lấy trước đó vẫn hiện).
+  - Lăn chuột trên map để phóng to / thu nhỏ, kéo để di chuyển.
+  - App chỉ **đọc** bộ nhớ game để lấy vị trí, không chèn DLL, không ghi gì.
 
 ## Cài đặt
 
@@ -40,6 +45,7 @@ Khi chơi, chuyển game sang **Borderless / Windowed**.
 |---|---|
 | `F9` | Ẩn / hiện overlay |
 | `F10` | Chuyển giữa chế độ gọn và đầy đủ |
+| `F11` | Ẩn / hiện minimap |
 | `Ctrl+Alt+B` | Mở app (từ shortcut Start Menu) |
 | Lăn chuột | Cuộn danh sách |
 | Kéo thanh tiêu đề | Di chuyển cửa sổ |
@@ -58,4 +64,5 @@ Mã `@loại:id` ở cuối dòng là ID trong game, dùng để tự tick. Các
 
 - App chỉ **đọc** file save, không bao giờ ghi vào.
 - Tên tiếng Việt theo bản Việt hoá của cộng đồng. Thông tin tham khảo từ game8, PowerPyx, bmwukong.info, BWIKI và 3DM.
+- Ảnh bản đồ, icon và dữ liệu điểm của minimap lấy từ [jaskang/wukong-minimap](https://github.com/jaskang/wukong-minimap) (Apache-2.0), xem `assets/maps/NOTICE.txt`.
 - Đây là dự án cá nhân của người hâm mộ, không liên quan Game Science.

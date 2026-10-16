@@ -11,6 +11,7 @@ import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog
 
+import bmw_minimap
 import bmw_save
 
 HERE = Path(sys.executable if getattr(sys, 'frozen', False) else __file__).resolve().parent
@@ -18,7 +19,7 @@ BUNDLE = Path(getattr(sys, '_MEIPASS', HERE))
 DATA = HERE / 'data' if (HERE / 'data').is_dir() else BUNDLE / 'data'
 ICON = BUNDLE / 'assets' / 'BMW.ico'
 STATE_PATH = Path(os.environ.get('APPDATA', HERE)) / 'BMW-Guide' / 'state.json'
-HOTKEYS = {1: 0x78, 2: 0x79}  # F9 show/hide, F10 compact/full
+HOTKEYS = {1: 0x78, 2: 0x79, 3: 0x7A}  # F9 show/hide, F10 compact/full, F11 minimap
 MINI_COUNT = 3
 SAVE_POLL_MS = 3000
 ALPHA = 0.9
@@ -35,11 +36,13 @@ TIP_TAGS = {'Mẹo', 'Tip'}
 TOKEN = re.compile(r'\s*@(\w+):(\d+)')
 
 UI = {
-    'vi': {'title': '悟空  F9 ẩn · F10 gọn', 'lang': 'Ngôn ngữ', 'pick': 'Chọn file save…', 'auto': 'Tự tìm save',
+    'vi': {'map': 'Bản đồ (F11)', 'map_wait': 'Đang chờ game…\nMở game ở chế độ Borderless', 'map_none': 'Chưa có bản đồ cho khu này',
+           'title': '悟空  F9 ẩn · F10 gọn · F11 map', 'lang': 'Ngôn ngữ', 'pick': 'Chọn file save…', 'auto': 'Tự tìm save',
            'reload': 'Tải lại checklist', 'quit': 'Thoát', 'hide': 'Ẩn mục đã xong', 'nosave': 'Chưa tìm thấy save — ⚙ để chọn',
            'searching': 'Đang tìm save…', 'save': 'Save', 'manual': 'chọn tay', 'autolbl': 'tự động',
            'chapter_done': 'Xong chương này ✓', 'badsave': 'Không đọc được save', 'missing': 'Thiếu file checklist'},
-    'en': {'title': '悟空  F9 hide · F10 compact', 'lang': 'Language', 'pick': 'Choose save file…', 'auto': 'Find save automatically',
+    'en': {'map': 'Minimap (F11)', 'map_wait': 'Waiting for the game…\nRun it in Borderless mode', 'map_none': 'No map for this area',
+           'title': '悟空  F9 hide · F10 compact · F11 map', 'lang': 'Language', 'pick': 'Choose save file…', 'auto': 'Find save automatically',
            'reload': 'Reload checklist', 'quit': 'Quit', 'hide': 'Hide completed', 'nosave': 'No save found — use ⚙ to pick one',
            'searching': 'Searching for save…', 'save': 'Save', 'manual': 'manual', 'autolbl': 'auto',
            'chapter_done': 'Chapter complete ✓', 'badsave': 'Could not read save', 'missing': 'Checklist file missing'},
@@ -112,6 +115,7 @@ class Overlay:
         self.build_chrome()
         self.root.after(50, self.round_corners)
         self.reload()
+        self.minimap = bmw_minimap.Minimap(self.root, BUNDLE / 'assets', self.state, self.save_state, self.t)
         self.start_hotkey_thread()
         self.start_save_search()
         self.root.after(500, self.poll_save)
@@ -199,6 +203,8 @@ class Overlay:
                                  command=lambda c=code: self.set_lang(c))
         m.add_cascade(label=self.t('lang'), menu=lang)
         m.add_separator()
+        m.add_command(label=self.t('map'), command=lambda: self.minimap.toggle())
+        m.add_separator()
         m.add_command(label=self.t('pick'), command=self.pick_save)
         m.add_command(label=self.t('auto'), command=self.use_auto_save)
         m.add_command(label=self.t('reload'), command=self.reload)
@@ -273,6 +279,8 @@ class Overlay:
 
     def apply_progress(self, progress):
         """Marks every checklist item whose @category:id token is present in the save."""
+        if hasattr(self, 'minimap'):
+            self.minimap.update_from_save(progress)
         owned = {(cat, i) for cat, ids in progress.items() if isinstance(ids, set) for i in ids}
         self.shrines = {i for cat, i in owned if cat == 'shrine'}
         loose = progress['item'] | progress['equip'] | progress['spell'] | progress['wine']
@@ -538,6 +546,8 @@ class Overlay:
         """Re-asserts topmost because borderless-fullscreen games sometimes steal it."""
         if self.visible:
             self.root.attributes('-topmost', True)
+        if hasattr(self, 'minimap'):
+            self.minimap.keep_on_top()
         self.root.after(2000, self.keep_on_top)
 
     def start_hotkey_thread(self):
@@ -556,7 +566,7 @@ class Overlay:
 
     def poll_hotkey(self):
         """Handles hotkey presses on the Tk thread, since Tk is not thread-safe."""
-        for hk_id, action in ((1, self.toggle), (2, self.toggle_compact)):
+        for hk_id, action in ((1, self.toggle), (2, self.toggle_compact), (3, lambda: self.minimap.toggle())):
             if self.hotkey_pressed[hk_id].is_set():
                 self.hotkey_pressed[hk_id].clear()
                 action()
