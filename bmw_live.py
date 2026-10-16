@@ -19,6 +19,7 @@ CONTROLLER_PAWN = 808
 CONTROLLER_ROTATION = 768
 ACTOR_ROOT = 416
 SCENE_LOCATION = 328
+CHEST_GUID_PATH = (0x208, 0x40, 0xD0)
 
 PROCESS_VM_READ = 0x0010
 PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
@@ -162,10 +163,27 @@ class LiveReader:
                     if needle not in name:
                         continue
                     root = self._ptr(actor + ACTOR_ROOT)
-                    out.append((name, *struct.unpack('<3d', self._read(root + SCENE_LOCATION, 24))))
+                    loc = struct.unpack('<3d', self._read(root + SCENE_LOCATION, 24))
+                    out.append((name, *loc, self._guid(actor)) if 'TreasureBox' in name else (name, *loc))
                 except (OSError, struct.error, UnicodeDecodeError):
                     continue
         return out
+
+    def _guid(self, actor):
+        """Reads a chest's persistent GUID string (the id the save uses), or None when the chain is unreadable."""
+        try:
+            obj = actor
+            for off in CHEST_GUID_PATH[:-1]:
+                obj = self._ptr(obj + off)
+                if not self._heap(obj):
+                    return None
+            ptr, num = struct.unpack('<Qi', self._read(obj + CHEST_GUID_PATH[-1], 12))
+            if not self._heap(ptr) or not 20 < num < 256:
+                return None
+            guid = self._read(ptr, num * 2).decode('utf-16le').rstrip('\0')
+            return guid if guid.endswith(self._fname(*struct.unpack('<ii', self._read(actor + UOBJECT_NAME, 8)))) else None
+        except (OSError, struct.error, UnicodeDecodeError):
+            return None
 
     def _heap(self, v):
         return 0x10000 < v < 0x7FFFFFFFFFFF and not (self.base <= v < self.base + 0x40000000) and not v & 7

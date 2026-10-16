@@ -226,14 +226,21 @@ class Minimap:
             if src in ('card', 'equip') or unique:
                 return gid in self.owned[src]
         if cat in PICKUP_CATS and self.chests:
-            near = min(self.chests, key=lambda c: math.dist((wx, wy, wz), c[1:]))
-            if math.dist((wx, wy, wz), near[1:]) <= CHEST_RADIUS and near[0] in self.opened:
+            near = min(self.chests, key=lambda c: math.dist((wx, wy, wz), c[1:4]))
+            if math.dist((wx, wy, wz), near[1:4]) <= CHEST_RADIUS and self.chest_opened(near):
                 self.remember(pid)
                 return True
         if cat == 'cailiao':
             return any(p[1] in ('boss', 'toumu') and math.hypot(p[2] - wx, p[3] - wy) <= BOSS_LOOT_RADIUS
                        and self.is_done(level, *p[:6]) for p in self.points.get(level, []))
         return False
+
+    def chest_opened(self, chest):
+        """Matches a loaded chest to the save by its GUID; falls back to the actor name when the GUID is unreadable."""
+        guid = chest[4]
+        if guid:
+            return guid in self.opened
+        return any(o.endswith('-' + chest[0]) for o in self.opened)
 
     def current_level(self):
         level = MAP_LEVELS.get(self.map_id)

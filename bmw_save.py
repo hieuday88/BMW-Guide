@@ -97,14 +97,19 @@ def _actors(ecs):
 
 
 def _opened(ecs):
-    """Returns names of chests whose persistent interaction state is 3 (opened); 1-2 only mean touched."""
+    """Returns full persistent GUIDs of chests whose interaction state is 3 (opened); 1-2 only mean touched."""
     names = set()
     for level in _subs(ecs, 3):
         for buc in _subs(level, 2):
             for interact in _subs(buc, 5):
                 if (_ints(interact, 1) or [0])[0] >= CHEST_OPENED:
-                    names.add(_actor(_first(buc, 1).decode('utf-8', 'replace')))
+                    names.add(_first(buc, 1).decode('utf-8', 'replace'))
     return names
+
+
+def _spirit_base(spirit_id):
+    """Maps an upgraded spirit tier id (81xx-85xx) to its base id (80xx), the one the checklist uses."""
+    return 8000 + spirit_id % 100 if 8100 <= spirit_id < 8595 else spirit_id
 
 
 def decrypt_payload(raw):
@@ -125,7 +130,7 @@ def read_progress(path):
         'item': _ids(_subs(bag, 2)),
         'item_num': {(_ints(m, 1) or [0])[0]: (_ints(m, 2) or [0])[0] for m in _subs(bag, 2)},
         'equip': _ids(equips) | {x for m in equips for x in _ints(m, 5)},
-        'soul': _ids(_subs(bag, 7)),
+        'soul': {_spirit_base(i) for i in _ids(_subs(bag, 7))},
         'wine': _ids(_subs(bag, 5)),
         'shrine': _ids(_subs(_first(data, ECS, 2, 3), 2)),
         'actors': _actors(_first(data, ECS)),
