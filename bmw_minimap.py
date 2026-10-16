@@ -8,8 +8,12 @@ import time
 import tkinter as tk
 
 import bmw_live
+import bmw_route
 
 TICK_MS = 16
+GRID_N = bmw_route.GRID
+REROUTE_CELLS = 6
+LOOKAHEAD = 1500
 SMOOTH = 0.35
 LEARN_RADIUS = 3500
 CHEST_RADIUS = 700
@@ -93,6 +97,9 @@ class Minimap:
         self.view = None
         self.mouse = None
         self.target = None
+        self.route_path = None
+        self.route_key = None
+        self.route_busy = False
         self.version = 0
         self.static_key = None
         self.shown = []
@@ -328,41 +335,80 @@ class Minimap:
         c.create_polygon(*poly(1.25), fill=BG, outline=BG, width=3, tags='dyn')
         c.create_polygon(*poly(1.0), fill=PLAYER, outline=ROUTE, width=2, tags='dyn')
 
-    def route(self, ax, ay, tx, ty):
-        """Draws a dashed route line by hand, since Tk on Windows ignores dash patterns on thick lines."""
-        length = math.hypot(tx - ax, ty - ay)
-        if length < 1:
+    def request_route(self, m):
+        """Recomputes the walking route in the background when the target changes or the player strays from it."""
+        if self.route_busy or self.pos is None:
             return
-        ux, uy = (tx - ax) / length, (ty - ay) / length
-        d = -((time.time() * 40) % 16)
-        while d < length:
-            a, b = max(d, 0), min(d + 10, length)
-            if b > a:
-                seg = (ax + ux * a, ay + uy * a, ax + ux * b, ay + uy * b)
-                self.canvas.create_line(*seg, fill=BG, width=5, capstyle='round', tags='dyn')
-                self.canvas.create_line(*seg, fill=ROUTE, width=3, capstyle='round', tags='dyn')
-            d += 16
+        (x0, y0), (x1, y1) = m['range']
+        to_cell = lambda wx, wy: (min(GRID_N - 1, max(0, int((wx - x0) / (x1 - x0) * GRID_N))),
+                                  min(GRID_N - 1, max(0, int((wy - y0) / (y1 - y0) * GRID_N))))
+        start, goal = to_cell(*self.pos[:2]), to_cell(*self.target[1][2:4])
+        key = (m['image'], self.target[1][0], self.target[0])
+        known = self.route_path if self.route_key == key else None
+        if known and math.dist(start, known['start']) < REROUTE_CELLS and time.time() - known['at'] < 30:
+            return
+        self.route_busy = True
 
-    def guide(self, level, place, inside, ax, ay, here, cx, cy, r):
-        """Points from the player toward the selected target: route line, target ring or edge arrow, distance and turn hint."""
+        def work():
+            try:
+                grid = bmw_route.load(self.map_dir, m['image'])
+                cells = bmw_route.find(grid, start, goal) if grid else None
+                if cells:
+                    pts = [(x0 + (cx + 0.5) / GRID_N * (x1 - x0), y0 + (cy + 0.5) / GRID_N * (y1 - y0))
+                           for cx, cy in bmw_route.simplify(cells)]
+                    self.route_path, self.route_key = {'pts': pts, 'start': start, 'at': time.time()}, key
+            finally:
+                self.route_busy = False
+
+        threading.Thread(target=work, daemon=True).start()
+
+    def dashed_path(self, pts):
+        """Draws a moving dashed polyline through screen points."""
+        phase = (time.time() * 40) % 16
+        for (ax, ay), (bx, by) in zip(pts, pts[1:]):
+            length = math.hypot(bx - ax, by - ay)
+            if length < 0.5:
+                continue
+            ux, uy = (bx - ax) / length, (by - ay) / length
+            d = -phase
+            while d < length:
+                a, b = max(d, 0), min(d + 10, length)
+                if b > a:
+                    seg = (ax + ux * a, ay + uy * a, ax + ux * b, ay + uy * b)
+                    self.canvas.create_line(*seg, fill=BG, width=5, capstyle='round', tags='dyn')
+                    self.canvas.create_line(*seg, fill=ROUTE, width=3, capstyle='round', tags='dyn')
+                d += 16
+            phase = (phase + length) % 16
+
+    def guide(self, level, m, place, inside, ax, ay, here, cx, cy, r):
+        """Guides the player along the walking route: dashed path, target ring or edge arrow, path distance and next turn."""
         c = self.canvas
         tlevel, tpt = self.target
         if not here or tlevel != level:
             self.label(cx - r + 8, cy - r + 6, f'{tpt[7]} · {self.texts("map_other")}', 'nw', 2 * r - 16)
             return
-        tx, ty = place(tpt[2], tpt[3])
-        dist = math.dist(self.pos[:3], tpt[2:5]) / 100
-        bearing = math.atan2(ty - ay, tx - ax)
-        turn = (math.degrees(bearing) - self.pos[3] + 180) % 360 - 180
+        self.request_route(m)
+        route = self.route_path['pts'] if self.route_path and self.route_key and self.route_key[0] == m['image'] \
+            and self.route_key[1] == tpt[0] else None
+        if route:
+            near = min(range(len(route)), key=lambda i: math.dist(route[i], self.pos[:2]))
+            world = [tuple(self.pos[:2]), *route[near + 1:], tuple(tpt[2:4])]
+        else:
+            world = [tuple(self.pos[:2]), tuple(tpt[2:4])]
+        dist = sum(math.dist(a, b) for a, b in zip(world, world[1:])) / 100
+        ahead = next((p for p in world[1:] if math.dist(p, self.pos[:2]) > LOOKAHEAD), world[-1])
+        hx, hy = place(*ahead)
+        turn = (math.degrees(math.atan2(hy - ay, hx - ax)) - self.pos[3] + 180) % 360 - 180
         hint = TURNS[self.lang()][round(turn / 45) % 8]
+        self.dashed_path([place(*p) for p in world])
+        tx, ty = place(tpt[2], tpt[3])
         if inside(tx, ty):
-            self.route(ax, ay, tx, ty)
             pulse = 9 + 3 * math.sin(time.time() * 5)
             c.create_oval(tx - pulse, ty - pulse, tx + pulse, ty + pulse, outline=TARGET, width=3, tags='dyn')
         else:
+            bearing = math.atan2(ty - cy, tx - cx)
             k = (r - 16) / max(abs(math.cos(bearing)), abs(math.sin(bearing)))
             ex, ey = cx + k * math.cos(bearing), cy + k * math.sin(bearing)
-            self.route(ax, ay, ex, ey)
             tip = [(ex + 16 * math.cos(bearing), ey + 16 * math.sin(bearing)),
                    (ex + 10 * math.cos(bearing + 2.4), ey + 10 * math.sin(bearing + 2.4)),
                    (ex + 10 * math.cos(bearing - 2.4), ey + 10 * math.sin(bearing - 2.4))]
@@ -432,7 +478,7 @@ class Minimap:
         here = self.pos is not None and self.pick_map(level, self.pos) is m
         ax, ay = place(self.pos[0], self.pos[1]) if here else (0, 0)
         if self.target:
-            self.guide(level, place, inside, ax, ay, here, cx, cy, r)
+            self.guide(level, m, place, inside, ax, ay, here, cx, cy, r)
         if here:
             self.draw_arrow(ax, ay, cx, cy, r, inside)
         c.create_text(cx + r - 6, cy + r - 4, anchor='se', text=f'x{self.zoom}', fill=GOLD, font=('Segoe UI', 8, 'bold'), tags='dyn')

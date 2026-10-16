@@ -9,7 +9,7 @@
 
 ## Tính năng
 
-- **Overlay luôn nổi trên game.** Cửa sổ trong suốt, bo góc, kéo thả được. Game cần để chế độ *Borderless / Windowed*.
+- **Overlay luôn nổi trên game, không bao giờ cướp quyền điều khiển của game.** Mặc định chuột đi xuyên qua app xuống game (🔒); nhấn phím **`** (dấu huyền, cạnh số 1) để dùng app (🖱), nhấn lần nữa để khoá lại. Game cần để chế độ *Borderless / Windowed*.
 - **Theo tiến trình game.** 6 chương xếp theo thứ tự miếu Thổ Địa, gồm boss, tinh phách, vật phẩm, phép, nhiệm vụ, khu ẩn, điểm thiền và mẹo.
 - **Tick hoàn toàn theo file save, không tick tay.** App đọc save của game và tự đánh dấu:
   - boss/quái đã gặp trong Du Ký, vật phẩm, trang bị, tinh phách, phép, điểm thiền;
@@ -23,7 +23,7 @@
   - Hiện rương, Lạc Già Hương Đằng, Tam Đông Trùng, boss, đầu mục, tinh phách, điểm thiền, miếu, NPC…
   - Điểm đã xong tự ẩn theo save: miếu đã mở, boss/đầu mục đã hạ, tinh phách và vật phẩm có tên riêng đã có, rương đã mở. Điểm rương, vật phẩm và NPC cũng tự xoá khi bạn đứng gần mà không còn gì ở đó.
   - Lăn chuột trên map để phóng to / thu nhỏ; rê chuột lên một điểm để xem tên.
-  - **Bấm vào một dòng hoặc tên khu trong checklist** để được chỉ đường: map vẫn theo nhân vật, có đường nét đứt và mũi tên xanh chỉ về mục tiêu, kèm số mét và hướng so với chỗ bạn nhìn (ví dụ "↗ trước bên phải"). Dòng không có điểm riêng sẽ chỉ tới miếu của khu. Bấm vào map để bỏ chỉ đường.
+  - **Chỉ đường theo lối đi:** bấm một dòng hoặc tên khu trong checklist (khi đã mở khoá chuột bằng phím `). Đường nét đứt đi theo thung lũng và lối vẽ trên bản đồ, không cắt thẳng qua núi, kèm quãng đường đi thật và hướng rẽ cho đoạn kế tiếp (ví dụ "→ bên phải"). Đi lệch thì đường tự tính lại. Dòng không có điểm riêng sẽ chỉ tới miếu của khu. Bấm vào map để bỏ chỉ đường.
   - App chỉ **đọc** bộ nhớ game để lấy vị trí, không chèn DLL, không ghi gì.
 
 ## Cài đặt
@@ -44,6 +44,7 @@ Khi chơi, chuyển game sang **Borderless / Windowed**.
 
 | Phím | Tác dụng |
 |---|---|
+| `` ` `` (phím dấu huyền, cạnh số 1) | Khoá / mở khoá chuột (🔒 chuột xuyên xuống game, 🖱 bấm được vào app) |
 | `F9` | Ẩn / hiện overlay |
 | `F10` | Chuyển giữa chế độ gọn và đầy đủ |
 | `F11` | Ẩn / hiện minimap |

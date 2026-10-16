@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+- The overlay never steals focus from the game; the mouse passes through it by default and the backtick key (`) toggles clicking the overlay.
+- Directions follow the roads and valleys painted on the map (A* on a cost grid built from the map images), with walking distance and a turn hint for the next stretch.
+- Chapter-2 dragon content (Red Loong, Boshen Censer, Unrequited Benevolence) is listed only in Chapter 2.
+- Every boss, chief and spirit point on the minimap has its Vietnamese name.
+- Celestial pills are guidance only; items that get used up or handed over stay ticked.
+
 ## v1.2.0
 
 ### Minimap

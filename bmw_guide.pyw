@@ -19,7 +19,8 @@ BUNDLE = Path(getattr(sys, '_MEIPASS', HERE))
 DATA = HERE / 'data' if (HERE / 'data').is_dir() else BUNDLE / 'data'
 ICON = BUNDLE / 'assets' / 'BMW.ico'
 STATE_PATH = Path(os.environ.get('APPDATA', HERE)) / 'BMW-Guide' / 'state.json'
-HOTKEYS = {1: 0x78, 2: 0x79, 3: 0x7A}  # F9 show/hide, F10 compact/full, F11 minimap
+HOTKEYS = {1: 0x78, 2: 0x79, 3: 0x7A, 4: 0xC0}  # F9 show/hide, F10 compact/full, F11 minimap, ` mouse lock
+GWL_EXSTYLE, WS_EX_TRANSPARENT, WS_EX_LAYERED, WS_EX_NOACTIVATE = -20, 0x20, 0x80000, 0x08000000
 MINI_COUNT = 3
 SAVE_POLL_MS = 3000
 ALPHA = 0.9
@@ -37,12 +38,12 @@ TOKEN = re.compile(r'\s*@(\w+):(\d+)')
 
 UI = {
     'vi': {'map': 'Bản đồ (F11)', 'map_wait': 'Đang chờ game…\nMở game ở chế độ Borderless', 'map_none': 'Chưa có bản đồ cho khu này', 'map_other': 'ở khu khác', 'map_nopos': 'Mục này chưa có vị trí trên map',
-           'title': '悟空  F9 ẩn · F10 gọn · F11 map', 'lang': 'Ngôn ngữ', 'pick': 'Chọn file save…', 'auto': 'Tự tìm save',
+           'title': '` chuột · F9 ẩn · F10 gọn · F11 map', 'lang': 'Ngôn ngữ', 'pick': 'Chọn file save…', 'auto': 'Tự tìm save',
            'reload': 'Tải lại checklist', 'quit': 'Thoát', 'hide': 'Ẩn mục đã xong', 'nosave': 'Chưa tìm thấy save — ⚙ để chọn',
            'searching': 'Đang tìm save…', 'save': 'Save', 'manual': 'chọn tay', 'autolbl': 'tự động',
            'chapter_done': 'Xong chương này ✓', 'badsave': 'Không đọc được save', 'missing': 'Thiếu file checklist'},
     'en': {'map': 'Minimap (F11)', 'map_wait': 'Waiting for the game…\nRun it in Borderless mode', 'map_none': 'No map for this area', 'map_other': 'in another area', 'map_nopos': 'No map location for this entry',
-           'title': '悟空  F9 hide · F10 compact · F11 map', 'lang': 'Language', 'pick': 'Choose save file…', 'auto': 'Find save automatically',
+           'title': '` mouse · F9 hide · F10 compact · F11 map', 'lang': 'Language', 'pick': 'Choose save file…', 'auto': 'Find save automatically',
            'reload': 'Reload checklist', 'quit': 'Quit', 'hide': 'Hide completed', 'nosave': 'No save found — use ⚙ to pick one',
            'searching': 'Searching for save…', 'save': 'Save', 'manual': 'manual', 'autolbl': 'auto',
            'chapter_done': 'Chapter complete ✓', 'badsave': 'Could not read save', 'missing': 'Checklist file missing'},
@@ -115,6 +116,7 @@ class Overlay:
         self.scroll_anim = None
         self.build_chrome()
         self.root.after(50, self.round_corners)
+        self.root.after(60, self.apply_mouse_mode)
         self.reload()
         self.minimap = bmw_minimap.Minimap(self.map_frame, BUNDLE / 'assets', self.state, self.save_state, self.t,
                                            lambda: self.lang, WIDTH)
@@ -137,6 +139,27 @@ class Overlay:
         self.state['pos'] = (self.root.winfo_x(), self.root.winfo_y())
         STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
         STATE_PATH.write_text(json.dumps(self.state, ensure_ascii=False), encoding='utf-8')
+
+    def apply_mouse_mode(self):
+        """Never lets the overlay take focus from the game; while locked, mouse input passes through to the game."""
+        try:
+            user32 = ctypes.windll.user32
+            hwnd = user32.GetParent(self.root.winfo_id())
+            style = user32.GetWindowLongPtrW(hwnd, GWL_EXSTYLE) | WS_EX_NOACTIVATE | WS_EX_LAYERED
+            if self.state.get('mouse_locked', True):
+                style |= WS_EX_TRANSPARENT
+            else:
+                style &= ~WS_EX_TRANSPARENT
+            user32.SetWindowLongPtrW(hwnd, GWL_EXSTYLE, style)
+        except (AttributeError, OSError):
+            pass
+        icon = '🔒' if self.state.get('mouse_locked', True) else '🖱'
+        self.title_lbl.configure(text=f"{icon} {self.t('title')}")
+
+    def toggle_mouse(self):
+        self.state['mouse_locked'] = not self.state.get('mouse_locked', True)
+        self.save_state()
+        self.apply_mouse_mode()
 
     def round_corners(self):
         """Asks Windows 11 DWM to round the borderless window's corners."""
@@ -350,6 +373,7 @@ class Overlay:
     def reload(self):
         """Re-reads the checklist for the current language and redraws everything."""
         self.title_lbl.configure(text=self.t('title'))
+        self.root.after(10, self.apply_mouse_mode)
         path = DATA / f'checklist.{self.lang}.md'
         try:
             self.chapters = parse(path.read_text(encoding='utf-8'))
@@ -592,6 +616,7 @@ class Overlay:
         if self.visible:
             self.root.deiconify()
             self.root.attributes('-topmost', True)
+            self.root.after(10, self.apply_mouse_mode)
         else:
             self.root.withdraw()
 
@@ -617,7 +642,7 @@ class Overlay:
 
     def poll_hotkey(self):
         """Handles hotkey presses on the Tk thread, since Tk is not thread-safe."""
-        for hk_id, action in ((1, self.toggle), (2, self.toggle_compact), (3, self.toggle_map)):
+        for hk_id, action in ((1, self.toggle), (2, self.toggle_compact), (3, self.toggle_map), (4, self.toggle_mouse)):
             if self.hotkey_pressed[hk_id].is_set():
                 self.hotkey_pressed[hk_id].clear()
                 action()

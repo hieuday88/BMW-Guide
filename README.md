@@ -10,7 +10,7 @@
 ## Features
 
 ### Checklist
-- **Always-on-top overlay.** Translucent, rounded window you can drag anywhere. Run the game in *Borderless / Windowed* mode.
+- **Always-on-top overlay that never steals the game's focus.** By default the mouse passes straight through it to the game (🔒); press **`** (backtick, left of 1) to use the overlay (🖱) and press it again to lock it. Run the game in *Borderless / Windowed* mode.
 - **Follows game progression.** All 6 chapters, ordered by Keeper's Shrine, with bosses, spirits, items, spells, quests, secret areas, meditation spots and tips.
 - **Ticks come only from your save, never by hand.** The app reads the game's save and marks Journal entries (bosses and enemies met), items, equipment, spirits, spells, meditation spots and activated shrines (⛩ next to the area name).
 - Dimmed `·` lines are guidance the save does not record (story beats, quests, consumed items) and do not count toward progress.
@@ -22,7 +22,7 @@
 - A live map around your character, built into the overlay above the checklist, at 60 fps with a green facing arrow.
 - Shows chests, Luojia Fragrant Vines, Awaken Wine Worms, bosses, chiefs, spirits, meditation spots, shrines and NPCs. Hover a point to see its name; scroll to zoom.
 - **Finished points disappear**, judged from the save: activated shrines, defeated bosses and chiefs, owned spirits and unique items, and opened chests. Chest, pickup and NPC points also disappear once you stand nearby and nothing is there.
-- **Directions:** click a checklist line or area title. The map stays on your character and draws a dashed line and a blue arrow toward the target, with the distance and a turn hint relative to where you face (e.g. "↗ ahead right"). Lines without their own point guide you to the area's shrine. Click the map to stop guiding.
+- **Directions along the paths:** click a checklist line or area title. A dashed route follows the valleys and roads painted on the map (not a straight line through mountains), with the walking distance and a turn hint for the next stretch (e.g. "→ right"). The route updates when you stray. Lines without their own point guide you to the area's shrine. Click the map to stop guiding.
 - Your position is read from game memory **read-only**. Nothing is injected and nothing is written.
 
 ## Install
@@ -43,6 +43,7 @@ Set the game to **Borderless / Windowed** while playing.
 
 | Key | Action |
 |---|---|
+| `` ` `` (backtick, key left of 1) | Lock / unlock the mouse (🔒 passes through to the game, 🖱 lets you click the overlay) |
 | `F9` | Show / hide the overlay |
 | `F10` | Toggle compact / full mode |
 | `F11` | Show / hide the minimap |
