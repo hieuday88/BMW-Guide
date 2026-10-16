@@ -291,6 +291,7 @@ class Overlay:
         self.shrines = {i for cat, i in owned if cat == 'shrine'}
         loose = progress['item'] | progress['equip'] | progress['spell'] | progress['wine']
         owned |= {(cat, i) for cat in ('item', 'equip') for i in loose}
+        owned |= self.remember_owned(owned, len(progress['card']))
         self.auto = {key for _, sections in self.chapters for _, items in sections
                      for key, _, _, tokens in items if tokens & owned}
         chapter = progress.get('chapter', 0) // 10 - 1
@@ -373,6 +374,18 @@ class Overlay:
         self.render()
         self.canvas.yview_moveto(0)
         self.scroll_target = 0.0
+
+    def remember_owned(self, owned, journal_size):
+        """Keeps items ticked after they are used up or handed over; resets when the save restarts."""
+        save_id = str(self.save_file)
+        memory = self.state.setdefault('seen', {})
+        record = memory.get(save_id, {'journal': 0, 'tokens': []})
+        if journal_size < record['journal']:
+            record = {'journal': 0, 'tokens': []}
+        seen = {tuple(t) for t in record['tokens']} | {t for t in owned if t[0] in ('item', 'equip')}
+        memory[save_id] = {'journal': journal_size, 'tokens': sorted(seen)}
+        self.save_state()
+        return seen
 
     def is_done(self, key):
         return key in self.auto

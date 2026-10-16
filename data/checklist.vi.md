@@ -33,7 +33,7 @@
 - [Mẹo] Vòng quanh cây né sóng xung kích
 - [Tinh phách] U Hồn @soul:8013
 - [Vật phẩm] Miêu Tình Bảo Xuyến — U Hồn rơi
-- [Vật phẩm] Bích Ngẫu Kim Đan — kim đan Lâm Ngoại @item:1003
+- [Vật phẩm] Bích Ngẫu Kim Đan — kim đan Lâm Ngoại
 
 ### Xích Mộc Gian @shrine:1013
 - [Ẩn] Long Trảo Lâm sau thác — quay lại sau Chương 2
@@ -93,12 +93,12 @@
 - [Phép] Tụ Hình Tán Khí @item:5201
 - [Vật phẩm] Bình Mã Não — rương cạnh đấu trường @equip:16003
 - [Vật phẩm] Tam Đông Trùng — đập chum sáng góc sân trái
-- [Vật phẩm] Thái Ất Tử Kim Đan — kim đan trong Hắc Phong Động @item:1004
+- [Vật phẩm] Thái Ất Tử Kim Đan — kim đan trong Hắc Phong Động
 
 ### Ngoài Hang @shrine:1012
 - [Boss] Lang Thích Khách @card:101009
 - [Tinh phách] Lang Thích Khách @soul:8061
-- [Vật phẩm] Cửu Chuyển Kim Đan — kim đan gần Lang Thích Khách @item:1005
+- [Vật phẩm] Cửu Chuyển Kim Đan — kim đan gần Lang Thích Khách
 
 ### Kiến Đế Phong @shrine:1008
 - [Boss] Hắc Hùng Tinh — boss cuối chương @card:103005
@@ -828,7 +828,7 @@
 - [NPC] Thông Tý Viên Hầu — âm thầm giúp, lấy ngọc cho Thức Uẩn
 - [Boss] Đại Thạch Cảm Đương — thung lũng phía tây, tùy chọn @card:603001
 - [Vật phẩm] Thức Uẩn — Uẩn thứ 5, từ Đại Thạch Cảm Đương @item:3967
-- [Vật phẩm] Ngũ Uẩn Đan — luyện khi đủ ngũ uẩn @item:1169
+- [Vật phẩm] Ngũ Uẩn Đan — luyện khi đủ ngũ uẩn
 - [Vật phẩm] Như Ý Kim Cô Bổng — Thủy Liêm Động, khi đủ 4 món giáp @equip:15002
 
 ### Vọng Tê Pha @shrine:9803 @shrine:9807

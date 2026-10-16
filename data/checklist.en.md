@@ -33,7 +33,7 @@
 - [Tip] Circle around the tree to dodge the shockwave
 - [Spirit] Wandering Wight @soul:8013
 - [Item] Cat's Eye Beads — dropped by the Wandering Wight
-- [Item] Jade Lotus Root Pill — pill found in Outside the Forest @item:1003
+- [Item] Jade Lotus Root Pill — pill found in Outside the Forest
 
 ### Red Wood Grove @shrine:1013
 - [Secret] Loong Claw Forest behind the waterfall — return after Chapter 2
@@ -93,12 +93,12 @@
 - [Spell] Cloud Step @item:5201
 - [Item] Agate Jar — chest next to the arena @equip:16003
 - [Item] Three-Winter Worm — smash the glowing jar in the left corner of the courtyard
-- [Item] Taiyi Purple Gold Pill — gold pill in Black Wind Cave @item:1004
+- [Item] Taiyi Purple Gold Pill — gold pill in Black Wind Cave
 
 ### Outside the Cave @shrine:1012
 - [Boss] Wolf Assassin @card:101009
 - [Spirit] Wolf Assassin @soul:8061
-- [Item] Nine-Turn Gold Pill — gold pill near the Wolf Assassin @item:1005
+- [Item] Nine-Turn Gold Pill — gold pill near the Wolf Assassin
 
 ### Bodhi Peak @shrine:1008
 - [Boss] Black Bear Guai — chapter final boss @card:103005
@@ -828,7 +828,7 @@
 - [NPC] Tongbi Ape — helps quietly, fetch the pearl for the Skandha of Consciousness
 - [Boss] Great Shigandang — western valley, optional @card:603001
 - [Item] Skandha of Consciousness — the 5th Skandha, from the Great Shigandang @item:3967
-- [Item] Five Skandhas Pill — crafted once you have all five Skandhas @item:1169
+- [Item] Five Skandhas Pill — crafted once you have all five Skandhas
 - [Item] Ruyi Jingu Bang — Water Curtain Cave, once you have all 4 armor pieces @equip:15002
 
 ### Rhino Watch Slope @shrine:9803 @shrine:9807
