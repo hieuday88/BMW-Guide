@@ -13,7 +13,11 @@ TICK_MS = 16
 SMOOTH = 0.35
 LEARN_RADIUS = 3500
 CHEST_RADIUS = 700
-ACTOR_SCAN_S = 5
+ACTOR_SCAN_S = 2
+NPC_PREFIXES = ('TAMER_', 'LSP_', 'Unit_', 'NPC')
+NPC_RADIUS = 1200
+NPC_NEAR = 3000
+NPC_MISSES = 3
 CHEST_CATS = {'baoxiang', 'cailiao'}
 ICON_SUBSAMPLE = 10
 HOVER_PX = 14
@@ -77,6 +81,7 @@ class Minimap:
         self.actors, self.opened = set(), set()
         self.owned = {'card': set(), 'item': set(), 'equip': set(), 'soul': set()}
         self.chests = []
+        self.npc_misses = {}
         self.map_id = 0
         self.prev = None
         self.pos = None
@@ -106,16 +111,33 @@ class Minimap:
         self.save_state()
 
     def scan_chests(self):
-        """Periodically lists loaded treasure-box actors with their world positions (background thread)."""
+        """Periodically lists loaded chests and NPC actors (background thread) and drops NPC points whose NPC has left."""
         while True:
             try:
-                chests = self.live.loaded_actors('TreasureBox')
+                actors = self.live.loaded_actors('')
+                chests = [a for a in actors if 'TreasureBox' in a[0]]
                 if [c[0] for c in chests] != [c[0] for c in self.chests]:
                     self.chests = chests
                     self.bump()
+                self.check_npcs([a for a in actors if a[0].startswith(NPC_PREFIXES)])
             except Exception:
                 pass
             time.sleep(ACTOR_SCAN_S)
+
+    def check_npcs(self, npcs):
+        """Hides an NPC point after several scans with the player close by and no NPC actor standing there."""
+        pos, level = self.pos, self.current_level()
+        if not pos or not level:
+            return
+        for i, cat, wx, wy, wz, *_ in self.points.get(level, []):
+            pid = f'{level}:{i}'
+            if cat != 'renwu' or pid in self.hidden or math.dist(pos[:2], (wx, wy)) > NPC_NEAR:
+                continue
+            present = any(math.dist((wx, wy), n[1:3]) <= NPC_RADIUS for n in npcs)
+            self.npc_misses[pid] = 0 if present else self.npc_misses.get(pid, 0) + 1
+            if self.npc_misses[pid] >= NPC_MISSES:
+                self.remember(pid)
+                self.save_state()
 
     def update_from_save(self, progress, save_id=''):
         """Refreshes finished objects from the save and learns which nearby map points the newest pickups came from."""

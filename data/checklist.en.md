@@ -6,8 +6,8 @@
 - [Story] Prologue — The Destined One begins the Great Sage's journey anew
 - [Boss] Erlang Shen — tutorial fight, infinite health
 - [Item] Coconut Wine — drink unlocked from the start of the game @item:2001
-- [Item] Medicine Gourd — starting gourd, upgraded later @item:18002
-- [Item] Red Immortal Gourd — pre-order bonus, claimed at a shrine @item:18009
+- [Item] Medicine Gourd — starting gourd, upgraded later @equip:18001
+- [Item] Red Immortal Gourd — pre-order bonus only, claimed at a shrine
 - [Item] Willow Wood Staff — starting weapon @equip:15005
 
 ### Front Hills @shrine:1003

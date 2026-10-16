@@ -6,8 +6,8 @@
 - [Cốt truyện] Mở đầu — Thiên Mệnh Nhân tái nhập hành trình Đại Thánh
 - [Boss] Nhị Lang Thần — trận hướng dẫn, máu vô hạn
 - [Vật phẩm] Rượu Dừa — rượu mở khóa từ đầu game @item:2001
-- [Vật phẩm] Dược Hồ Lô — hồ lô khởi đầu, nâng cấp sau @item:18002
-- [Vật phẩm] Tranh Tiên Hồng Hồ Lô — thưởng đặt trước, nhận ở miếu @item:18009
+- [Vật phẩm] Dược Hồ Lô — hồ lô khởi đầu, nâng cấp sau @equip:18001
+- [Vật phẩm] Tranh Tiên Hồng Hồ Lô — chỉ bản có quà đặt trước, nhận ở miếu
 - [Vật phẩm] Liễu Mộc Côn — vũ khí khởi đầu @equip:15005
 
 ### Trước Núi @shrine:1003
