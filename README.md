@@ -62,6 +62,10 @@ The data lives in `data/checklist.en.md` and `data/checklist.vi.md`. Each line l
 
 The `@category:id` token at the end of a line is the in-game ID used for auto-ticking. Categories are `card` (Journal), `item`, `equip`, `soul` (spirit), `meditation` and `shrine` (on area headings). Lines without a token are shown as guidance. Both files must keep the same line order. The exe reads a `data/` folder next to it if present, so you can edit the checklist without rebuilding.
 
+## Testing
+
+Run `python smoke_test.py` to check the checklists, assets, save decoding, routing, map lookups and a short live run of the app. It uses a temporary state folder, so your progress is untouched.
+
 ## Notes
 
 - The app only **reads** your save file and game memory. It never writes to either.

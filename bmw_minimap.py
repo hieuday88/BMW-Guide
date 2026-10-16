@@ -114,6 +114,8 @@ class Minimap:
         self.canvas.bind('<Leave>', lambda e: setattr(self, 'mouse', None))
         self.canvas.bind('<Button-1>', lambda e: (setattr(self, 'target', None), self.bump()))
         threading.Thread(target=self.scan_chests, daemon=True).start()
+        self.tick_job = None
+        self.canvas.bind('<Destroy>', lambda e: self.tick_job and self.canvas.after_cancel(self.tick_job))
         self.tick()
 
     def zoom_by(self, step):
@@ -310,7 +312,8 @@ class Minimap:
                     self.pos = self.smooth(raw)
                 self.render()
         finally:
-            self.canvas.after(TICK_MS, self.tick)
+            if self.canvas.winfo_exists():
+                self.tick_job = self.canvas.after(TICK_MS, self.tick)
 
     def bump(self):
         """Marks the static layer (map + points) as stale after the save or hidden set changes."""

@@ -63,6 +63,10 @@ Dữ liệu nằm ở `data/checklist.vi.md` và `data/checklist.en.md`, mỗi d
 
 Mã `@loại:id` ở cuối dòng là ID trong game, dùng để tự tick. Các loại: `card` (Du Ký), `item`, `equip`, `soul` (tinh phách), `meditation`, `shrine` (gắn trên tiêu đề khu). Dòng không có mã sẽ hiện dạng hướng dẫn. Hai file phải giữ cùng thứ tự dòng. Bản exe đọc thư mục `data/` cạnh file exe nếu có, nên bạn sửa được checklist mà không cần build lại.
 
+## Kiểm tra
+
+Chạy `python smoke_test.py` để kiểm tra checklist, asset, giải mã save, tìm đường, tra vị trí trên map và chạy thử app vài giây. Bài kiểm tra dùng thư mục tạm nên không đụng tới tiến độ của bạn.
+
 ## Ghi chú
 
 - App chỉ **đọc** file save, không bao giờ ghi vào.
