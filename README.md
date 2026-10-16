@@ -2,68 +2,67 @@
 
 <h1 align="center">BMW Guide</h1>
 
-<p align="center">Checklist overlay cho <b>Black Myth: Wukong</b>, tự tick theo file save.<br>
-<b>Tiếng Việt</b> · <a href="README.en.md">English</a></p>
+<p align="center">An in-game checklist and live minimap overlay for <b>Black Myth: Wukong</b> that tracks your progress straight from the save file.<br>
+<a href="README.vi.md">Tiếng Việt</a> · <b>English</b> · <a href="CHANGELOG.md">Changelog</a></p>
 
 ---
 
-## Tính năng
+## Features
 
-- **Overlay luôn nổi trên game.** Cửa sổ trong suốt, bo góc, kéo thả được. Game cần để chế độ *Borderless / Windowed*.
-- **Theo tiến trình game.** 6 chương xếp theo thứ tự miếu Thổ Địa, gồm boss, tinh phách, vật phẩm, phép, nhiệm vụ, khu ẩn, điểm thiền và mẹo.
-- **Tick hoàn toàn theo file save, không tick tay.** App đọc save của game và tự đánh dấu:
-  - boss/quái đã gặp trong Du Ký, vật phẩm, trang bị, tinh phách, phép, điểm thiền;
-  - miếu Thổ Địa đã mở (⛩ cạnh tên khu).
-  - App chỉ đọc lại khi file save thay đổi, nên gần như không tốn CPU.
-  - Dòng mờ có dấu `·` là hướng dẫn mà save không ghi lại (cốt truyện, nhiệm vụ, vật phẩm đã dùng hết…), không tính vào tiến độ.
-- **Tự tìm file save** trên máy (Steam, Epic, bản cài riêng). Bạn cũng có thể chọn bằng tay trong ⚙.
-- **Song ngữ Việt / Anh:** đổi trong ⚙ → Ngôn ngữ.
-- **Chế độ gọn (F10):** chỉ hiện 3 bước tiếp theo kèm mẹo, chiếm rất ít chỗ.
-- **Minimap (F11):** bản đồ quanh nhân vật nằm ngay trên checklist, có mũi tên hướng nhìn, cập nhật theo thời gian thực.
-  - Hiện rương, Lạc Già Hương Đằng, Tam Đông Trùng, boss, đầu mục, tinh phách, điểm thiền, miếu, NPC…
-  - Điểm đã xong sẽ tự ẩn: miếu đã mở ẩn ngay theo save. Rương, boss, tinh phách, vật phẩm ẩn khi save ghi nhận bạn vừa mở/hạ/nhặt chúng ở gần đó (tính từ lúc bật app; những thứ lấy trước đó vẫn hiện).
-  - Lăn chuột trên map để phóng to / thu nhỏ; rê chuột lên một điểm để xem tên.
-  - **Bấm vào một dòng hoặc tên khu trong checklist** để được chỉ đường: map vẫn theo nhân vật, có đường nét đứt và mũi tên xanh chỉ về mục tiêu, kèm số mét và hướng so với chỗ bạn nhìn (ví dụ "↗ trước bên phải"). Dòng không có điểm riêng sẽ chỉ tới miếu của khu. Bấm vào map để bỏ chỉ đường.
-  - App chỉ **đọc** bộ nhớ game để lấy vị trí, không chèn DLL, không ghi gì.
+### Checklist
+- **Always-on-top overlay.** Translucent, rounded window you can drag anywhere. Run the game in *Borderless / Windowed* mode.
+- **Follows game progression.** All 6 chapters, ordered by Keeper's Shrine, with bosses, spirits, items, spells, quests, secret areas, meditation spots and tips.
+- **Ticks come only from your save, never by hand.** The app reads the game's save and marks Journal entries (bosses and enemies met), items, equipment, spirits, spells, meditation spots and activated shrines (⛩ next to the area name).
+- Dimmed `·` lines are guidance the save does not record (story beats, quests, consumed items) and do not count toward progress.
+- **Finds your save automatically** (Steam, Epic or standalone installs), or pick a save file under ⚙.
+- **Vietnamese / English**, switch under ⚙ → Language.
+- **Compact mode (F10)** shows only the next 3 steps and their tips.
 
-## Cài đặt
+### Minimap (F11)
+- A live map around your character, built into the overlay above the checklist, at 60 fps with a green facing arrow.
+- Shows chests, Luojia Fragrant Vines, Awaken Wine Worms, bosses, chiefs, spirits, meditation spots, shrines and NPCs. Hover a point to see its name; scroll to zoom.
+- **Finished points disappear**, judged from the save: activated shrines, defeated bosses and chiefs, owned spirits and unique items, and opened chests. Chest, pickup and NPC points also disappear once you stand nearby and nothing is there.
+- **Directions:** click a checklist line or area title. The map stays on your character and draws a dashed line and a blue arrow toward the target, with the distance and a turn hint relative to where you face (e.g. "↗ ahead right"). Lines without their own point guide you to the area's shrine. Click the map to stop guiding.
+- Your position is read from game memory **read-only**. Nothing is injected and nothing is written.
 
-**Cách nhanh:** tải `BMW_Guide.exe` ở mục [Releases](https://github.com/hieuday88/BMW-Guide/releases) rồi bấm đúp để chạy. Không cần cài gì thêm.
+## Install
 
-**Chạy từ mã nguồn:**
-1. Cài [Python 3.10+](https://www.python.org/downloads/) (nhớ chọn *Add to PATH*). App không cần thư viện ngoài.
-2. Tải repo này về: **Code → Download ZIP**, rồi giải nén.
-3. Chạy file tạo shortcut. Lệnh này tạo shortcut **BMW Guide** trên Desktop và Start Menu, với phím tắt **Ctrl+Alt+B**:
+**Quick:** download `BMW_Guide.exe` from [Releases](https://github.com/hieuday88/BMW-Guide/releases) and double-click it. Nothing else to install. Windows SmartScreen may warn because the exe is unsigned.
+
+**From source:**
+1. Install [Python 3.10+](https://www.python.org/downloads/) and tick *Add to PATH*. No extra packages are needed.
+2. Download this repo (**Code → Download ZIP**) and extract it.
+3. Run the shortcut installer. It creates a **BMW Guide** shortcut on the Desktop and in the Start Menu, with the hotkey **Ctrl+Alt+B**:
    ```powershell
    powershell -ExecutionPolicy Bypass -File install_shortcut.ps1
    ```
 
-Khi chơi, chuyển game sang **Borderless / Windowed**.
+Set the game to **Borderless / Windowed** while playing.
 
-## Phím tắt
+## Hotkeys
 
-| Phím | Tác dụng |
+| Key | Action |
 |---|---|
-| `F9` | Ẩn / hiện overlay |
-| `F10` | Chuyển giữa chế độ gọn và đầy đủ |
-| `F11` | Ẩn / hiện minimap |
-| `Ctrl+Alt+B` | Mở app (từ shortcut Start Menu) |
-| Lăn chuột | Cuộn danh sách |
-| Kéo thanh tiêu đề | Di chuyển cửa sổ |
+| `F9` | Show / hide the overlay |
+| `F10` | Toggle compact / full mode |
+| `F11` | Show / hide the minimap |
+| `Ctrl+Alt+B` | Launch the app (Start Menu shortcut) |
+| Mouse wheel | Scroll the list, or zoom when over the map |
+| Drag the title bar | Move the window |
 
-## Sửa checklist
+## Editing the checklist
 
-Dữ liệu nằm ở `data/checklist.vi.md` và `data/checklist.en.md`, mỗi dòng có dạng:
+The data lives in `data/checklist.en.md` and `data/checklist.vi.md`. Each line looks like this:
 
 ```
-- [Boss] Cổ Hộ Viện — boss đầu, thưởng Định Thân Pháp @card:102004
+- [Boss] Bullguard — first boss, grants Immobilize @card:102004
 ```
 
-Mã `@loại:id` ở cuối dòng là ID trong game, dùng để tự tick. Các loại: `card` (Du Ký), `item`, `equip`, `soul` (tinh phách), `meditation`, `shrine` (gắn trên tiêu đề khu). Dòng không có mã sẽ hiện dạng hướng dẫn. Hai file phải giữ cùng thứ tự dòng. Bản exe đọc thư mục `data/` cạnh file exe nếu có, nên bạn sửa được checklist mà không cần build lại.
+The `@category:id` token at the end of a line is the in-game ID used for auto-ticking. Categories are `card` (Journal), `item`, `equip`, `soul` (spirit), `meditation` and `shrine` (on area headings). Lines without a token are shown as guidance. Both files must keep the same line order. The exe reads a `data/` folder next to it if present, so you can edit the checklist without rebuilding.
 
-## Ghi chú
+## Notes
 
-- App chỉ **đọc** file save, không bao giờ ghi vào.
-- Tên tiếng Việt theo bản Việt hoá của cộng đồng. Thông tin tham khảo từ game8, PowerPyx, bmwukong.info, BWIKI và 3DM.
-- Ảnh bản đồ, icon và dữ liệu điểm của minimap lấy từ [jaskang/wukong-minimap](https://github.com/jaskang/wukong-minimap) (Apache-2.0), xem `assets/maps/NOTICE.txt`.
-- Đây là dự án cá nhân của người hâm mộ, không liên quan Game Science.
+- The app only **reads** your save file and game memory. It never writes to either.
+- Vietnamese names follow the community Vietnamese translation. Sources include game8, PowerPyx, bmwukong.info, BWIKI and 3DM.
+- Minimap images, icons and point data come from [jaskang/wukong-minimap](https://github.com/jaskang/wukong-minimap) (Apache-2.0), see `assets/maps/NOTICE.txt`.
+- This is a personal fan project, not affiliated with Game Science.
