@@ -315,7 +315,7 @@
 
 ### Luân Tàng @shrine:3007
 - [Cốt truyện] Lên tầng 4/5, đi theo vòng tròn tới miếu Luân Tàng
-- [Tinh phách] Chuẩn Cư Sĩ — tầng 4/5, quạt có thể đóng băng
+- [Mẹo] Chuẩn Cư Sĩ ở tầng 4/5 có quạt đóng băng; tinh phách của nó lấy ở An Thân Tự
 - [Ẩn] Tầng ẩn — phá phong ấn tím
 - [Tinh phách] Giới Đao Tăng — tinh anh trong tầng ẩn @soul:8073
 - [Vật phẩm] Tam Đông Trùng 1 — vại ở tầng ẩn
@@ -542,7 +542,6 @@
 - [Vật phẩm] Huyết Kỷ Tử — rương sau tường, hướng đông @item:2319
 - [Vật phẩm] Noãn Trung Cốt — trân ngoạn, đập kén đường nam @equip:16036
 - [Tinh phách] Trùng Giáo Úy @soul:8078
-- [Tinh phách] Lợi Trảo Kiển — đường bên phải miếu
 - [Tinh phách] Hạt Thái Tử — đường bên phải miếu @soul:8030
 - [Vật phẩm] Kiển Viên @item:4054
 
@@ -878,7 +877,6 @@
 ### Kiến Lộc Lâm @shrine:9802 @shrine:9808
 - [Boss] Lãng Ba Ba — ếch cuối, chuỗi đánh ếch 6 @card:602008
 - [Vật phẩm] Tiên Bào Thạch Phiến — trân ngoạn, rơi từ Lãng Ba Ba: góc sau bên phải hồ dưới @equip:16026
-- [Tinh phách] Lãng Ba Ba — chuỗi đánh ếch cuối
 - [Boss] Bộ Vân Lộc — phía bắc, tùy chọn @card:602004
 - [Vật phẩm] Ngẫu Ti Bộ Vân Lý — rơi từ Bộ Vân Lộc @item:10504
 

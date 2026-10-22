@@ -315,7 +315,7 @@
 
 ### Mani Wheel @shrine:3007
 - [Story] Climb to floor 4/5, follow the circular path to the Mani Wheel shrine
-- [Spirit] Quasi Recluse — floor 4/5, his fan can freeze you
+- [Tip] The Quasi Recluse on floors 4/5 can freeze you with its fan; its spirit is collected at Warding Temple
 - [Secret] Hidden floor — break the purple seal
 - [Spirit] Blade-Opening Monk — elite on the hidden floor @soul:8073
 - [Item] Three-Winter Worm 1 — jar on the hidden floor
@@ -542,7 +542,6 @@
 - [Item] Goji Shoots Soak — chest behind the wall, to the east @item:2319
 - [Item] Spine in the Sack — curio, smash the cocoon on the south path @equip:16036
 - [Spirit] Beetle Captain @soul:8078
-- [Spirit] Sharp-Claw Cocoon — path to the right of the shrine
 - [Spirit] Scorpion Prince — path to the right of the shrine @soul:8030
 - [Item] Cocoon Sphere @item:4054
 
@@ -878,7 +877,6 @@
 ### Deer Sight Forest @shrine:9802 @shrine:9808
 - [Boss] Lang-Baw-Baw — the last frog, frog fight chain 6 @card:602008
 - [Item] Celestial Birthstone Fragment — curio, dropped by Lang-Baw-Baw: back-right corner of the lower lake @equip:16026
-- [Spirit] Lang-Baw-Baw — final frog fight chain
 - [Boss] Cloudtreading Deer — to the north, optional @card:602004
 - [Item] Lotus Silk Cloudtreaders — dropped by the Cloudtreading Deer @item:10504
 
