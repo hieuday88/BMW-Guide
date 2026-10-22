@@ -661,7 +661,7 @@ class FullMap:
             pts = [v for d, t in shape for v in (ax + d * math.cos(a + t), ay + d * math.sin(a + t))]
             c.create_polygon(*pts, fill=PLAYER, outline=ROUTE, width=2, tags='dyn')
         c.create_text(self.size - 14, 10, text='✕', fill=GOLD, font=('Segoe UI', 16, 'bold'), anchor='ne', tags='dyn')
-        c.create_text(12, self.size - 10, text=f'F12 · x{self.factor():.2g}', fill=GOLD, font=('Segoe UI', 9, 'bold'),
+        c.create_text(12, self.size - 10, text=f'F8 · x{self.factor():.2g}', fill=GOLD, font=('Segoe UI', 9, 'bold'),
                       anchor='sw', tags='dyn')
         hit = self.hovered()
         if hit:

@@ -20,7 +20,7 @@ BUNDLE = Path(getattr(sys, '_MEIPASS', HERE))
 DATA = HERE / 'data' if (HERE / 'data').is_dir() else BUNDLE / 'data'
 ICON = BUNDLE / 'assets' / 'BMW.ico'
 STATE_PATH = Path(os.environ.get('APPDATA', HERE)) / 'BMW-Guide' / 'state.json'
-HOTKEYS = {1: 0x78, 2: 0x79, 3: 0x7A, 4: 0xC0, 5: 0x7B}  # F9 show/hide, F10 compact/full, F11 minimap, ` mouse lock, F12 full map
+HOTKEYS = {1: 0x78, 2: 0x79, 3: 0x7A, 4: 0xC0, 5: 0x77}  # F9 show/hide, F10 compact/full, F11 minimap, ` mouse lock, F8 full map
 GWL_EXSTYLE, WS_EX_TRANSPARENT, WS_EX_LAYERED, WS_EX_NOACTIVATE = -20, 0x20, 0x80000, 0x08000000
 MINI_COUNT = 3
 SAVE_POLL_MS = 3000
@@ -39,13 +39,13 @@ STORY_TAGS = {'Cốt truyện', 'Story'}
 TOKEN = re.compile(r'\s*@(\w+):(\d+)')
 
 UI = {
-    'vi': {'map': 'Bản đồ (F11)', 'map_wait': 'Đang chờ game…\nMở game ở chế độ Borderless', 'map_none': 'Chưa có bản đồ cho khu này', 'map_other': 'ở khu khác', 'tray_toggle': 'Ẩn / hiện (F9)', 'tray_mouse': 'Khoá / mở chuột (`)', 'tray_full': 'Toàn bản đồ (F12)', 'map_nopos': 'Mục này chưa có vị trí trên map',
-           'title': '` chuột · F9 ẩn · F10 gọn · F11/F12 map', 'lang': 'Ngôn ngữ', 'pick': 'Chọn file save…', 'auto': 'Tự tìm save',
+    'vi': {'map': 'Bản đồ (F11)', 'map_wait': 'Đang chờ game…\nMở game ở chế độ Borderless', 'map_none': 'Chưa có bản đồ cho khu này', 'map_other': 'ở khu khác', 'tray_toggle': 'Ẩn / hiện (F9)', 'tray_mouse': 'Khoá / mở chuột (`)', 'tray_full': 'Toàn bản đồ (F8)', 'map_nopos': 'Mục này chưa có vị trí trên map',
+           'title': '` chuột · F8 bản đồ · F9 ẩn · F10 gọn', 'lang': 'Ngôn ngữ', 'pick': 'Chọn file save…', 'auto': 'Tự tìm save',
            'reload': 'Tải lại checklist', 'quit': 'Thoát', 'hide': 'Ẩn mục đã xong', 'nosave': 'Chưa tìm thấy save — ⚙ để chọn',
            'searching': 'Đang tìm save…', 'save': 'Save', 'manual': 'chọn tay', 'autolbl': 'tự động',
            'chapter_done': 'Xong chương này ✓', 'badsave': 'Không đọc được save', 'missing': 'Thiếu file checklist'},
-    'en': {'map': 'Minimap (F11)', 'map_wait': 'Waiting for the game…\nRun it in Borderless mode', 'map_none': 'No map for this area', 'map_other': 'in another area', 'tray_toggle': 'Show / hide (F9)', 'tray_mouse': 'Lock / unlock mouse (`)', 'tray_full': 'Full map (F12)', 'map_nopos': 'No map location for this entry',
-           'title': '` mouse · F9 hide · F10 compact · F11/F12 map', 'lang': 'Language', 'pick': 'Choose save file…', 'auto': 'Find save automatically',
+    'en': {'map': 'Minimap (F11)', 'map_wait': 'Waiting for the game…\nRun it in Borderless mode', 'map_none': 'No map for this area', 'map_other': 'in another area', 'tray_toggle': 'Show / hide (F9)', 'tray_mouse': 'Lock / unlock mouse (`)', 'tray_full': 'Full map (F8)', 'map_nopos': 'No map location for this entry',
+           'title': '` mouse · F8 map · F9 hide · F10 compact', 'lang': 'Language', 'pick': 'Choose save file…', 'auto': 'Find save automatically',
            'reload': 'Reload checklist', 'quit': 'Quit', 'hide': 'Hide completed', 'nosave': 'No save found — use ⚙ to pick one',
            'searching': 'Searching for save…', 'save': 'Save', 'manual': 'manual', 'autolbl': 'auto',
            'chapter_done': 'Chapter complete ✓', 'badsave': 'Could not read save', 'missing': 'Checklist file missing'},

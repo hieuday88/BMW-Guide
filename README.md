@@ -27,11 +27,11 @@
 - **Directions along the paths:** click a checklist line or area title. A dashed route follows the valleys and roads painted on the map (not a straight line through mountains), with the walking distance and a turn hint for the next stretch (e.g. "→ right"). The route updates when you stray. Click an area title to go to its shrine; lines without a map point show a notice instead of a route. Click empty map to stop guiding.
 - Your position is read from game memory **read-only**. Nothing is injected and nothing is written.
 
-### Full map (F12)
+### Full map (F8)
 - Opens a large map of the whole current area on top of the game, with every unfinished point and your live position.
 - Scroll to zoom, drag to pan, hover a point to see its name.
 - Click a point to get directions to it; the checklist jumps to that point's line and highlights it.
-- Press F12 again or click ✕ to close.
+- Press F8 again or click ✕ to close.
 
 ## Install
 
@@ -55,7 +55,7 @@ Set the game to **Borderless / Windowed** while playing.
 | `F9` | Show / hide the overlay |
 | `F10` | Toggle compact / full mode |
 | `F11` | Show / hide the minimap |
-| `F12` | Open / close the full map |
+| `F8` | Open / close the full map |
 | `Ctrl+Alt+B` | Launch the app (Start Menu shortcut) |
 | Mouse wheel | Scroll the list, or zoom when over the map |
 | Drag the title bar | Move the window |
