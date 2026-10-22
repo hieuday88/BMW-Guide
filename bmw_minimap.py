@@ -535,3 +535,204 @@ class Minimap:
             if math.hypot(hx - self.mouse[0], hy - self.mouse[1]) <= HOVER_PX:
                 labels = CATEGORY[self.lang()]
                 self.label(hx, hy - 16, name if name in labels.values() else f'{labels.get(cat, "")}: {name}', 's')
+
+
+class FullMap:
+    """Large pan/zoom view of the whole current map, sharing points, progress and routes with the minimap."""
+
+    STEPS = ((4, 1), (3, 1), (2, 1), (1, 1), (1, 2))
+    REFRESH_MS = 100
+
+    def __init__(self, root, minimap, on_close, on_pick):
+        self.mini, self.on_close, self.on_pick = minimap, on_close, on_pick
+        screen = min(root.winfo_screenwidth(), root.winfo_screenheight())
+        self.size = size = int(screen * 0.8)
+        self.win = tk.Toplevel(root, bg=BG)
+        self.win.overrideredirect(True)
+        self.win.attributes('-topmost', True)
+        self.win.geometry(f'{size}x{size}+{(root.winfo_screenwidth() - size) // 2}+{(root.winfo_screenheight() - size) // 2}')
+        self.canvas = tk.Canvas(self.win, width=size, height=size, bg=BG, highlightthickness=1, highlightbackground=GOLD)
+        self.canvas.pack()
+        self.map = None
+        self.step = 1
+        self.centre = None
+        self.drag = None
+        self.mouse = None
+        self.shown = []
+        self.scaled = {}
+        self.static_key = None
+        c = self.canvas
+        c.bind('<ButtonPress-1>', self.press)
+        c.bind('<B1-Motion>', self.motion_drag)
+        c.bind('<ButtonRelease-1>', self.release)
+        c.bind('<Motion>', lambda e: setattr(self, 'mouse', (e.x, e.y)))
+        c.bind('<Leave>', lambda e: setattr(self, 'mouse', None))
+        c.bind('<MouseWheel>', lambda e: self.zoom_at(1 if e.delta > 0 else -1, e.x, e.y))
+        self.job = None
+        self.refresh()
+
+    def factor(self):
+        sub, zoom = self.STEPS[self.step]
+        return zoom / sub
+
+    def map_px(self):
+        return self.mini.image(self.map['image']).width()
+
+    def to_px(self, wx, wy):
+        (x0, y0), (x1, y1) = self.map['range']
+        size = self.map_px()
+        return (wx - x0) / (x1 - x0) * size, (wy - y0) / (y1 - y0) * size
+
+    def to_screen(self, px, py):
+        f = self.factor()
+        return self.size / 2 + (px - self.centre[0]) * f, self.size / 2 + (py - self.centre[1]) * f
+
+    def scaled_image(self):
+        """Returns the map image scaled for the current step; zoomed-in steps only render the visible window."""
+        sub, zoom = self.STEPS[self.step]
+        img = self.mini.image(self.map['image'])
+        if zoom == 1:
+            key = (self.map['image'], sub)
+            if key not in self.scaled:
+                self.scaled = {k: v for k, v in self.scaled.items() if k[0] == self.map['image']}
+                self.scaled[key] = img.subsample(sub) if sub > 1 else img
+            return self.scaled[key], 0, 0
+        size = self.map_px()
+        half = self.size // (2 * zoom) + 2
+        left = int(max(0, min(size - 2 * half, self.centre[0] - half)))
+        top = int(max(0, min(size - 2 * half, self.centre[1] - half)))
+        view = tk.PhotoImage()
+        view.tk.call(view, 'copy', img, '-from', left, top, left + 2 * half, top + 2 * half, '-zoom', zoom)
+        self.scaled['zoomed'] = view
+        return view, left, top
+
+    def draw_static(self):
+        """Draws the map image and every unfinished point of the shown level."""
+        c, m = self.canvas, self.map
+        c.delete('static')
+        image, left, top = self.scaled_image()
+        x, y = self.to_screen(left, top)
+        c.create_image(x, y, image=image, anchor='nw', tags='static')
+        self.shown = []
+        for i, cat, wx, wy, wz, pkey, cn, name in self.mini.points.get(m['level'], []):
+            if not self.mini.in_range(m['range'], (wx, wy)) or self.mini.is_done(m['level'], i, cat, wx, wy, wz, pkey):
+                continue
+            sx, sy = self.to_screen(*self.to_px(wx, wy))
+            if not (-20 < sx < self.size + 20 and -20 < sy < self.size + 20):
+                continue
+            icon = self.mini.icons.get(cat)
+            if icon:
+                c.create_image(sx, sy, image=icon, tags='static')
+            else:
+                c.create_oval(sx - 5, sy - 5, sx + 5, sy + 5, fill=DOT_COLORS.get(cat, DIM), outline=BG, width=2, tags='static')
+            self.shown.append((sx, sy, cat, name, i))
+
+    def draw_dynamic(self):
+        """Redraws the route, target ring, player arrow, close button and hover label."""
+        c, mini = self.canvas, self.mini
+        c.delete('dyn')
+        if mini.target and mini.target[0] == self.map['level']:
+            tx, ty = self.to_screen(*self.to_px(*mini.target[1][2:4]))
+            route = mini.route_path['pts'] if mini.route_path and mini.route_key and mini.route_key[0] == self.map['image'] \
+                and mini.route_key[1] == mini.target[1][0] else None
+            if route:
+                pts = [v for p in route for v in self.to_screen(*self.to_px(*p))]
+                if len(pts) >= 4:
+                    c.create_line(*pts, fill=ROUTE, width=3, dash=(8, 6), tags='dyn')
+            c.create_oval(tx - 14, ty - 14, tx + 14, ty + 14, outline=TARGET, width=3, tags='dyn')
+        if mini.pos and mini.pick_map(self.map['level'], mini.pos) is self.map:
+            ax, ay = self.to_screen(*self.to_px(*mini.pos[:2]))
+            a = math.radians(mini.pos[3])
+            shape = [(18, 0), (11, 2.45), (5, math.pi), (11, -2.45)]
+            pts = [v for d, t in shape for v in (ax + d * math.cos(a + t), ay + d * math.sin(a + t))]
+            c.create_polygon(*pts, fill=PLAYER, outline=ROUTE, width=2, tags='dyn')
+        c.create_text(self.size - 14, 10, text='✕', fill=GOLD, font=('Segoe UI', 16, 'bold'), anchor='ne', tags='dyn')
+        c.create_text(12, self.size - 10, text=f'F12 · x{self.factor():.2g}', fill=GOLD, font=('Segoe UI', 9, 'bold'),
+                      anchor='sw', tags='dyn')
+        hit = self.hovered()
+        if hit:
+            hx, hy, cat, name, _ = hit
+            labels = CATEGORY[mini.lang()]
+            text = name if name in labels.values() else f'{labels.get(cat, "")}: {name}'
+            t = c.create_text(hx, hy - 18, text=text, fill=TEXT, font=('Segoe UI', 10, 'bold'), anchor='s', tags='dyn')
+            bx = c.bbox(t)
+            c.create_rectangle(bx[0] - 6, bx[1] - 3, bx[2] + 6, bx[3] + 3, fill=BG, outline=GOLD, tags='dyn')
+            c.tag_raise(t)
+
+    def hovered(self):
+        if not self.mouse or not self.shown:
+            return None
+        best = min(self.shown, key=lambda s: math.hypot(s[0] - self.mouse[0], s[1] - self.mouse[1]))
+        return best if math.hypot(best[0] - self.mouse[0], best[1] - self.mouse[1]) <= HOVER_PX else None
+
+    def refresh(self):
+        """Follows the player's current map, redrawing points only when the view or progress changes."""
+        try:
+            mini = self.mini
+            level = mini.current_level() if mini.pos else None
+            current = mini.pick_map(level, mini.pos) if level else None
+            if current is not None and current is not self.map:
+                self.map = current
+                self.centre = self.to_px(*mini.pos[:2])
+                self.static_key = None
+                fits = [i for i, (sub, zoom) in enumerate(self.STEPS) if self.map_px() * zoom / sub <= self.size]
+                self.step = max(fits) if fits else 0
+            if self.map is None:
+                self.canvas.delete('all')
+                self.canvas.create_text(self.size / 2, self.size / 2, text=mini.texts('map_wait'), fill=DIM,
+                                        justify='center', font=('Segoe UI', 11))
+            else:
+                key = (self.map['image'], self.step, self.centre, mini.version)
+                if key != self.static_key and self.drag is None:
+                    self.static_key = key
+                    self.draw_static()
+                self.draw_dynamic()
+        finally:
+            if self.win.winfo_exists():
+                self.job = self.win.after(self.REFRESH_MS, self.refresh)
+
+    def zoom_at(self, step, x, y):
+        new = max(0, min(len(self.STEPS) - 1, self.step + step))
+        if new == self.step or self.map is None:
+            return
+        f = self.factor()
+        px, py = self.centre[0] + (x - self.size / 2) / f, self.centre[1] + (y - self.size / 2) / f
+        self.step = new
+        f = self.factor()
+        self.centre = (px - (x - self.size / 2) / f, py - (y - self.size / 2) / f)
+
+    def press(self, e):
+        if e.x > self.size - 40 and e.y < 40:
+            self.close()
+            return
+        self.drag = (e.x, e.y, e.x, e.y)
+
+    def motion_drag(self, e):
+        if self.drag:
+            self.canvas.move('static', e.x - self.drag[2], e.y - self.drag[3])
+            self.drag = (self.drag[0], self.drag[1], e.x, e.y)
+
+    def release(self, e):
+        """Ends a drag by moving the view, or treats a click on a point as picking it as the route target."""
+        if not self.drag or self.map is None:
+            self.drag = None
+            return
+        x0, y0 = self.drag[:2]
+        self.drag = None
+        if math.hypot(e.x - x0, e.y - y0) < 5:
+            self.static_key = None
+            hit = self.hovered()
+            if hit:
+                pt = next(p for p in self.mini.points[self.map['level']] if p[0] == hit[4])
+                self.mini.target = (self.map['level'], pt)
+                self.mini.bump()
+                self.on_pick(self.map['level'], pt)
+            return
+        f = self.factor()
+        self.centre = (self.centre[0] - (e.x - x0) / f, self.centre[1] - (e.y - y0) / f)
+
+    def close(self):
+        if self.job:
+            self.win.after_cancel(self.job)
+        self.win.destroy()
+        self.on_close()

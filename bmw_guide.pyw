@@ -20,7 +20,7 @@ BUNDLE = Path(getattr(sys, '_MEIPASS', HERE))
 DATA = HERE / 'data' if (HERE / 'data').is_dir() else BUNDLE / 'data'
 ICON = BUNDLE / 'assets' / 'BMW.ico'
 STATE_PATH = Path(os.environ.get('APPDATA', HERE)) / 'BMW-Guide' / 'state.json'
-HOTKEYS = {1: 0x78, 2: 0x79, 3: 0x7A, 4: 0xC0}  # F9 show/hide, F10 compact/full, F11 minimap, ` mouse lock
+HOTKEYS = {1: 0x78, 2: 0x79, 3: 0x7A, 4: 0xC0, 5: 0x7B}  # F9 show/hide, F10 compact/full, F11 minimap, ` mouse lock, F12 full map
 GWL_EXSTYLE, WS_EX_TRANSPARENT, WS_EX_LAYERED, WS_EX_NOACTIVATE = -20, 0x20, 0x80000, 0x08000000
 MINI_COUNT = 3
 SAVE_POLL_MS = 3000
@@ -35,16 +35,17 @@ TAG_COLORS = {'Boss': '#e0664f', 'Tinh phách': '#a58be6', 'Spirit': '#a58be6', 
               'Secret': '#d97fb8', 'NPC': '#c9c0ae', 'Thiền': '#6fc7b8', 'Meditation': '#6fc7b8',
               'Cốt truyện': '#f2e6c9', 'Story': '#f2e6c9'}
 TIP_TAGS = {'Mẹo', 'Tip'}
+STORY_TAGS = {'Cốt truyện', 'Story'}
 TOKEN = re.compile(r'\s*@(\w+):(\d+)')
 
 UI = {
-    'vi': {'map': 'Bản đồ (F11)', 'map_wait': 'Đang chờ game…\nMở game ở chế độ Borderless', 'map_none': 'Chưa có bản đồ cho khu này', 'map_other': 'ở khu khác', 'tray_toggle': 'Ẩn / hiện (F9)', 'tray_mouse': 'Khoá / mở chuột (`)', 'map_nopos': 'Mục này chưa có vị trí trên map',
-           'title': '` chuột · F9 ẩn · F10 gọn · F11 map', 'lang': 'Ngôn ngữ', 'pick': 'Chọn file save…', 'auto': 'Tự tìm save',
+    'vi': {'map': 'Bản đồ (F11)', 'map_wait': 'Đang chờ game…\nMở game ở chế độ Borderless', 'map_none': 'Chưa có bản đồ cho khu này', 'map_other': 'ở khu khác', 'tray_toggle': 'Ẩn / hiện (F9)', 'tray_mouse': 'Khoá / mở chuột (`)', 'tray_full': 'Toàn bản đồ (F12)', 'map_nopos': 'Mục này chưa có vị trí trên map',
+           'title': '` chuột · F9 ẩn · F10 gọn · F11/F12 map', 'lang': 'Ngôn ngữ', 'pick': 'Chọn file save…', 'auto': 'Tự tìm save',
            'reload': 'Tải lại checklist', 'quit': 'Thoát', 'hide': 'Ẩn mục đã xong', 'nosave': 'Chưa tìm thấy save — ⚙ để chọn',
            'searching': 'Đang tìm save…', 'save': 'Save', 'manual': 'chọn tay', 'autolbl': 'tự động',
            'chapter_done': 'Xong chương này ✓', 'badsave': 'Không đọc được save', 'missing': 'Thiếu file checklist'},
-    'en': {'map': 'Minimap (F11)', 'map_wait': 'Waiting for the game…\nRun it in Borderless mode', 'map_none': 'No map for this area', 'map_other': 'in another area', 'tray_toggle': 'Show / hide (F9)', 'tray_mouse': 'Lock / unlock mouse (`)', 'map_nopos': 'No map location for this entry',
-           'title': '` mouse · F9 hide · F10 compact · F11 map', 'lang': 'Language', 'pick': 'Choose save file…', 'auto': 'Find save automatically',
+    'en': {'map': 'Minimap (F11)', 'map_wait': 'Waiting for the game…\nRun it in Borderless mode', 'map_none': 'No map for this area', 'map_other': 'in another area', 'tray_toggle': 'Show / hide (F9)', 'tray_mouse': 'Lock / unlock mouse (`)', 'tray_full': 'Full map (F12)', 'map_nopos': 'No map location for this entry',
+           'title': '` mouse · F9 hide · F10 compact · F11/F12 map', 'lang': 'Language', 'pick': 'Choose save file…', 'auto': 'Find save automatically',
            'reload': 'Reload checklist', 'quit': 'Quit', 'hide': 'Hide completed', 'nosave': 'No save found — use ⚙ to pick one',
            'searching': 'Searching for save…', 'save': 'Save', 'manual': 'manual', 'autolbl': 'auto',
            'chapter_done': 'Chapter complete ✓', 'badsave': 'Could not read save', 'missing': 'Checklist file missing'},
@@ -440,6 +441,7 @@ class Overlay:
         name, sections = self.chapters[self.state['ch']]
         self.chapter_lbl.configure(text=re.sub(r'^\D*\d+\s*-?\s*', '', name) or name)
         self.rows, self.sections, self.order = {}, [], []
+        self.row_frames, self.row_section = {}, {}
         for sec_name, items in sections:
             box = tk.Frame(self.body, bg=BG)
             box.pack(fill='x', padx=4, pady=(4, 0))
@@ -463,6 +465,7 @@ class Overlay:
             for item in items:
                 self.add_row(rows_frame, item, hide, sec_name)
                 self.order.append((sec_name, item))
+                self.row_section[item[0]] = sec
             self.sections.append(sec)
             self.set_open(sec, any(not self.is_done(it[0]) for it in sec['items']) or not sec['items'])
         self.refresh()
@@ -479,17 +482,19 @@ class Overlay:
         key, tag, text, tokens = item
         row = tk.Frame(parent, bg=BG, cursor='hand2')
         row.pack(fill='x', pady=0)
+        self.row_frames[key] = row
         if tag in TIP_TAGS:
             tk.Label(row, text=f'💡 {text}', bg=BG, fg=DIM, font=(FONT, 8, 'italic'), anchor='w', justify='left',
                      wraplength=WIDTH - 40).pack(side='left', fill='x', padx=(22, 4))
             row.configure(cursor='')
             return
         if not tokens:
-            parts = [tk.Label(row, text='·', bg=BG, fg=DIM, font=(FONT, 9), width=2)]
+            story = tag in STORY_TAGS
+            parts = [tk.Label(row, text='➤' if story else '·', bg=BG, fg=GOLD if story else DIM, font=(FONT, 9), width=2)]
             if tag:
-                parts.append(tk.Label(row, text=tag, bg=BG, fg=DIM, font=(FONT, 7)))
-            parts.append(tk.Label(row, text=text, bg=BG, fg=DIM, font=(FONT, 9), anchor='w', justify='left',
-                                  wraplength=WIDTH - 110))
+                parts.append(tk.Label(row, text=tag, bg=BG, fg=GOLD if story else DIM, font=(FONT, 7, 'bold' if story else 'normal')))
+            parts.append(tk.Label(row, text=text, bg=BG, fg=TEXT if story else DIM, font=(FONT, 9, 'bold' if story else 'normal'),
+                                  anchor='w', justify='left', wraplength=WIDTH - 110))
             for w in parts:
                 w.pack(side='left', anchor='n', fill='x' if w is parts[-1] else None, pady=2 if w is parts[1] and tag else 0)
             for w in (row, *parts):
@@ -522,6 +527,77 @@ class Overlay:
             return
         self.save_lbl.configure(text=f" {self.t('map_nopos')}")
         self.root.after(2500, lambda: self.save_lbl.configure(text=f' {self.save_status}'))
+
+    def toggle_full_map(self):
+        """Opens or closes the large full-map window; it unlocks the mouse so points can be clicked."""
+        if getattr(self, 'full_map', None):
+            self.full_map.close()
+            return
+        self.full_map = bmw_minimap.FullMap(self.root, self.minimap, self.full_map_closed, self.show_point_line)
+        if self.state.get('mouse_locked', True):
+            self.toggle_mouse()
+
+    def full_map_closed(self):
+        self.full_map = None
+
+    def show_point_line(self, level, pt):
+        """Scrolls the checklist to the line that matches a map point picked on the full map."""
+        match = self.line_for_point(level, pt)
+        if match is None:
+            return
+        chapter, key = match
+        if chapter != self.state['ch']:
+            self.select(chapter)
+        sec = self.row_section.get(key)
+        if sec and not sec['open']:
+            self.set_open(sec, True)
+        row = self.row_frames.get(key)
+        if row is None:
+            return
+        self.root.update_idletasks()
+        total = max(self.body.winfo_height(), 1)
+        offset = row.winfo_rooty() - self.body.winfo_rooty()
+        top = min(max((offset - 40) / total, 0), 1)
+        self.canvas.yview_moveto(top)
+        self.scroll_target = self.canvas.yview()[0]
+        self.flash_row(row, 6)
+
+    def flash_row(self, row, times):
+        """Blinks a checklist row so the line picked from the map is easy to spot."""
+        if not row.winfo_exists():
+            return
+        colour = NEXT_BG if times % 2 == 0 else BG
+        for w in (row, *row.winfo_children()):
+            w.configure(bg=colour)
+        if times:
+            self.root.after(250, lambda: self.flash_row(row, times - 1))
+        else:
+            self.refresh()
+
+    def line_for_point(self, level, pt):
+        """Finds (chapter, line key) for a map point by game id first, then by its name appearing in the line."""
+        ref = self.minimap.point_ids.get(f'{level}:{pt[0]}')
+        wanted = set()
+        if ref:
+            src, gid = ref[0], ref[1]
+            wanted = {('soul', gid), ('item', gid)} if src == 'item' else {(src, gid)}
+            if src in ('item', 'equip'):
+                wanted |= {('item', gid), ('equip', gid)}
+        name = bmw_minimap._norm(re.sub(r'\s*×\d+$', '', pt[7]))
+        own = [ch for ch, levels in bmw_minimap.CHAPTER_LEVELS.items() if level in levels]
+        order = own + [i for i in range(len(self.chapters)) if i not in own]
+        for by_name in (False, True):
+            for ci in order:
+                for _, items in self.chapters[ci][1]:
+                    for key, tag, text, tokens in items:
+                        if tag in TIP_TAGS:
+                            continue
+                        if not by_name and tokens & wanted:
+                            return ci, key
+                        if by_name and len(name) >= 4 and name in bmw_minimap._norm(text) and \
+                                (ci in own or not own) and name not in bmw_minimap.GENERIC_NAMES:
+                            return ci, key
+        return None
 
     def hover(self, key, on):
         self.rows[key]['hover'] = on
@@ -657,17 +733,19 @@ class Overlay:
 
     def poll_hotkey(self):
         """Handles hotkey presses on the Tk thread, since Tk is not thread-safe."""
-        for hk_id, action in ((1, self.toggle), (2, self.toggle_compact), (3, self.toggle_map), (4, self.toggle_mouse)):
+        for hk_id, action in ((1, self.toggle), (2, self.toggle_compact), (3, self.toggle_map), (4, self.toggle_mouse),
+                              (5, self.toggle_full_map)):
             if self.hotkey_pressed[hk_id].is_set():
                 self.hotkey_pressed[hk_id].clear()
                 action()
-        actions = {'toggle': self.toggle, 'mouse': self.toggle_mouse, 'map': self.toggle_map, 'quit': self.quit}
+        actions = {'toggle': self.toggle, 'mouse': self.toggle_mouse, 'map': self.toggle_map, 'full': self.toggle_full_map,
+                   'quit': self.quit}
         while hasattr(self, 'tray') and not self.tray.events.empty():
             actions[self.tray.events.get()]()
         self.root.after(50, self.poll_hotkey)
 
     def tray_menu(self):
-        return [(self.t('tray_toggle'), 'toggle'), (self.t('tray_mouse'), 'mouse'), (self.t('map'), 'map'),
+        return [(self.t('tray_toggle'), 'toggle'), (self.t('tray_mouse'), 'mouse'), (self.t('map'), 'map'), (self.t('tray_full'), 'full'),
                 (None, None), (self.t('quit'), 'quit')]
 
     def quit(self):
