@@ -127,7 +127,7 @@
 - [Mẹo] Đánh vua trước, rồi mới tới Nhị Vương Tử
 
 ### Bất Tế Cốc @shrine:2004
-- [Vật phẩm] Huyết Nhục — triệu hồi Sa Đại Lang @item:4014
+- [Vật phẩm] Huyết Nhục — triệu hồi Sa Đại Lang @item:4014 @card:203002
 - [Boss] Sa Đại Lang — sau hang, chuột nhỏ triệu hồi @card:203002
 - [Vật phẩm] Phi Long Lân Phiến — phá tường đỏ, nhà rồng 0 @item:4011
 - [Mẹo] Lân Phiến mở 3 boss rồng ẩn; nhớ giữ trong túi
@@ -196,7 +196,7 @@
 - [Phép] Đồng Đầu Thiết Tí @item:5202
 - [Mẹo] Cần Đồng Đầu Thiết Tý để đánh Hoàng Phong Đại Thánh
 - [NPC] Vô Đầu Tăng — chạm tượng trong đấu trường, xuống hầm @card:200003
-- [Vật phẩm] Hạt giống - Cam Thảo — bên phải đường, trái miếu @item:6012
+- [Vật phẩm] Hạt giống - Cam Thảo — bên phải đường, trái miếu, rơi ngẫu nhiên khi hái @item:6012
 - [Vật phẩm] Ngọc Liên Hoa — mua ở miếu, cho heo ăn (map ẩn 4)
 
 ### Ngọa Hổ Tự @shrine:2012 @shrine:2016 @shrine:2017
@@ -236,12 +236,12 @@
 - [Boss] Hổ Tiên Phong — bản bí mật, map ẩn 6 @card:203007
 - [Vật phẩm] Hổ Đầu Bài @equip:16004
 - [Boss] Phó Bạng — cuối map ẩn @card:213001
-- [Vật phẩm] Côn Côn - Thông Thiên — chỉ NG+, cần 4 Thông Thiên Giác (Phó Bạng, Hạt Lang, xong chương 4, Phó Bạng NG+) @equip:15018
+- [Mẹo] NG+: Côn Côn - Thông Thiên — chỉ NG+, cần 4 Thông Thiên Giác (Phó Bạng, Hạt Lang, xong chương 4, Phó Bạng NG+)
 - [Vật phẩm] Thanh Sơn Cốt — ngâm rượu, hái ngẫu nhiên từ cây Cam Thảo ở sa mạc Tư Cáp Lý @item:2327
 - [Vật phẩm] Định Phong Châu — phần thưởng Phó Bạng @item:19002
 - [Mẹo] Định Phong Châu phá chiêu tàng hình của Hoàng Phong Đại Thánh
 - [Thiền] Điểm Thiền 5 — mép vách nhìn thung lũng Phật @meditation:2006
-- [Vật phẩm] Hạt giống - Cam Thảo — hoa tím quanh sa mạc @item:6012
+- [Vật phẩm] Hạt giống - Cam Thảo — hoa tím quanh sa mạc, rơi ngẫu nhiên khi hái @item:6012
 
 ### Hoàng Phong Trận (cuối chương)
 - [Thiền] Điểm Thiền 6 — qua cổng miếu lớn dưới thung lũng @meditation:2003
@@ -512,7 +512,7 @@
 ## Chương 4 - Khúc Độ Tử Uyên
 
 ### Mở đầu
-- [Vật phẩm] Thanh Điền Hồ Lô — chỉ NG+, mua ở Thân Hầu @equip:18011
+- [Mẹo] NG+: Thanh Điền Hồ Lô — chỉ NG+, mua ở Thân Hầu
 - [NPC] Thìn Long — gặp ở đầu chương
 - [NPC] Thân Hầu — bán vật phẩm nâng cấp
 - [Vật phẩm] Lạc Già Hương Đằng — mua ở Thân Hầu
@@ -811,7 +811,7 @@
 
 ### Thủy Hỏa Đạo @shrine:7004
 - [Boss] Bích Thủy Kim Tinh Thú — map ẩn 9 @card:703001
-- [Vật phẩm] Hỗn Thiết Côn — chỉ NG+, nâng từ Nghiệp Hỏa Trượng bằng sừng sắt Ngưu Ma Vương @equip:15016
+- [Mẹo] NG+: Hỗn Thiết Côn — chỉ NG+, nâng từ Nghiệp Hỏa Trượng bằng sừng sắt Ngưu Ma Vương
 - [Vật phẩm] Thú Côn - Kim Tình — nâng từ Thú Côn - Điêu Thử sau khi hạ Bích Thủy Kim Tinh Thú @equip:15019
 - [Mẹo] Bích Thủy Kim Tinh Thú nhanh và hung hãn, giữ khoảng cách
 - [Vật phẩm] Thủy Hỏa Lam @equip:16021
@@ -836,7 +836,7 @@
 ## Chương 6 - Vị Cánh
 
 ### Mở đầu
-- [Vật phẩm] Tịnh Bình Liễu Diệp — ngâm rượu, chỉ NG+, mua ở Thân Hầu @item:2301
+- [Mẹo] NG+: Tịnh Bình Liễu Diệp — ngâm rượu, chỉ NG+, mua ở Thân Hầu
 - [Vật phẩm] Bách Hoa Nhuy — ngâm rượu, mua ở Thân Hầu @item:2302
 - [Vật phẩm] Thiên Nhật Túy — rượu, mua ở Thân Hầu @item:2020
 - [Nhiệm vụ] Lưu ý: mở khóa 2 ending (kết thúc thường và kết thúc thật)

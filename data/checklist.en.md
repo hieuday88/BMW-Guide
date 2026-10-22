@@ -127,7 +127,7 @@
 - [Tip] Fight the king first, then the Second Prince
 
 ### Valley of Despair @shrine:2004
-- [Item] Lump of Flesh — summons the First Prince of Sand @item:4014
+- [Item] Lump of Flesh — summons the First Prince of Sand @item:4014 @card:203002
 - [Boss] First Prince of Flowing Sands — beyond the cave, summoned by the small rat @card:203002
 - [Item] Loong Scales — break the red wall, Loong house 0 @item:4011
 - [Tip] The Loong Scales open 3 hidden Loong bosses; keep them in your bag
@@ -196,7 +196,7 @@
 - [Spell] Rock Solid @item:5202
 - [Tip] You need Rock Solid to fight the Yellow Wind Sage
 - [NPC] Headless Monk — touch the statue in the arena, go down to the cellar @card:200003
-- [Item] Licorice Seed — right of the road, left of the shrine @item:6012
+- [Item] Licorice Seed — right of the road, left of the shrine, random drop when harvesting @item:6012
 - [Item] Lotus Jade — bought at the shrine, feed it to the pig (hidden map 4)
 
 ### Crouching Tiger Temple @shrine:2012 @shrine:2016 @shrine:2017
@@ -236,12 +236,12 @@
 - [Boss] Tiger Vanguard — secret version, hidden map 6 @card:203007
 - [Item] Tiger Head Plaque @equip:16004
 - [Boss] Fuban — end of the hidden map @card:213001
-- [Item] Adept-Spine Shooting Fuban Staff — New Game+ only, needs 4 Sky-Piercing Horns (Fuban, the Scorpionlord, finishing Chapter 4, Fuban in NG+) @equip:15018
+- [Tip] NG+: Adept-Spine Shooting Fuban Staff — New Game+ only, needs 4 Sky-Piercing Horns (Fuban, the Scorpionlord, finishing Chapter 4, Fuban in NG+)
 - [Item] Goat Skull — soak, random harvest from licorice in the Sahali desert @item:2327
 - [Item] Wind-Fixing Pearl — reward from Fuban @item:19002
 - [Tip] The Wind-Fixing Pearl counters the Yellow Wind Sage's invisibility move
 - [Meditation] Meditation Spot 5 — cliff edge overlooking the Buddha valley @meditation:2006
-- [Item] Licorice Seed — purple flowers around the desert @item:6012
+- [Item] Licorice Seed — purple flowers around the desert, random drop when harvesting @item:6012
 
 ### Yellow Wind Formation (end of chapter)
 - [Meditation] Meditation Spot 6 — through the large temple gate below the valley @meditation:2003
@@ -512,7 +512,7 @@
 ## Chapter 4 - Rosy Cheeks, Gray Hair
 
 ### Prologue
-- [Item] Qing-Tian Gourd — New Game+ only, buy from Shen Monkey @equip:18011
+- [Tip] NG+: Qing-Tian Gourd — New Game+ only, buy from Shen Monkey
 - [NPC] Chen Loong — met at the start of the chapter
 - [NPC] Shen Monkey — sells upgrade items
 - [Item] Luojia Fragrant Vine — buy from Shen Monkey
@@ -811,7 +811,7 @@
 
 ### Corridor of Fire and Ice @shrine:7004
 - [Boss] Bishui Golden-Eyed Beast — hidden area 9 @card:703001
-- [Item] Dark Iron Staff — New Game+ only, upgrade the Staff of Blazing Karma with the Bull King's Iron Horn @equip:15016
+- [Tip] NG+: Dark Iron Staff — New Game+ only, upgrade the Staff of Blazing Karma with the Bull King's Iron Horn
 - [Item] Bishui Beast Staff — upgrade the Rat Sage Staff after the Bishui Golden-Eyed Beast @equip:15019
 - [Tip] The Bishui Golden-Eyed Beast is fast and aggressive, keep your distance
 - [Item] Daoist's Basket of Fire and Water @equip:16021
@@ -836,7 +836,7 @@
 ## Chapter 6 - Unfinished
 
 ### Prologue
-- [Item] Guanyin's Willow Leaf — soak, New Game+ only, buy from Shen Monkey @item:2301
+- [Tip] NG+: Guanyin's Willow Leaf — soak, New Game+ only, buy from Shen Monkey
 - [Item] Flower Primes — soak, buy from Shen Monkey @item:2302
 - [Item] A Thousand Days Inebriation — drink, buy from Shen Monkey @item:2020
 - [Quest] Note: two endings can be unlocked (the normal ending and the true ending)
