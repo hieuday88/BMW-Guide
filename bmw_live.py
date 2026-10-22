@@ -5,9 +5,10 @@ import ctypes.wintypes as wt
 import math
 import struct
 import threading
+import time
 
 EXE = 'b1-Win64-Shipping.exe'
-KNOWN_GWORLD_RVAS = (0x1D5DDCA0, 492713840)  # repack build, Steam build (Dumper-7 dump from jaskang/wukong-minimap)
+KNOWN_GWORLD_RVAS = (0x1D5E05F0, 0x1D5DDCA0, 492713840)  # repack GWorld, repack transient world pointer, Steam build
 KNOWN_GNAMES_RVAS = (0x1D3DCB40, 0x1D3DFCC0)
 WORLD_LEVELS = 328
 LEVEL_ACTORS = 0x98
@@ -21,6 +22,7 @@ ACTOR_ROOT = 416
 SCENE_LOCATION = 328
 CHEST_GUID_PATH = (0x208, 0x40, 0xD0)
 
+KNOWN_RECHECK_S = 2.0
 PROCESS_VM_READ = 0x0010
 PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
 TH32CS_SNAPPROCESS, TH32CS_SNAPMODULE = 0x2, 0x8
@@ -85,6 +87,7 @@ class LiveReader:
         self.gnames = None
         self.scanning = False
         self.names = {}
+        self.recheck_at = 0.0
 
     def _attach(self):
         pid = _find_pid()
@@ -255,6 +258,14 @@ class LiveReader:
     def _ptr(self, addr):
         return struct.unpack('<Q', self._read(addr, 8))[0]
 
+    def _prefer_known_gworld(self):
+        """Switches from a scanned world pointer (possibly a stale loading-screen world) to the engine's GWorld once it is valid."""
+        known = [self.base + rva for rva in KNOWN_GWORLD_RVAS]
+        if self.gworld in known or time.monotonic() < self.recheck_at:
+            return
+        self.recheck_at = time.monotonic() + KNOWN_RECHECK_S
+        self.gworld = next((addr for addr in known if self._chain(addr)), self.gworld)
+
     def position(self):
         if self.handle is None and not self._attach():
             return None
@@ -262,6 +273,7 @@ class LiveReader:
             if not self.scanning:
                 self.handle = None
             return None
+        self._prefer_known_gworld()
         try:
             found = self._chain(self.gworld)
             if not found:
@@ -279,7 +291,6 @@ class LiveReader:
 
 
 if __name__ == '__main__':
-    import time
     r = LiveReader()
     for _ in range(5):
         print(r.position())
