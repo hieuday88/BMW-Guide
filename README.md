@@ -24,7 +24,7 @@
 - A live map around your character, built into the overlay above the checklist, at 60 fps with a green facing arrow.
 - Shows chests, Luojia Fragrant Vines, Awaken Wine Worms, bosses, chiefs, spirits, meditation spots, shrines and NPCs. Hover a point to see its name; scroll to zoom.
 - **Finished points disappear**, judged from the save: activated shrines, defeated bosses and chiefs, owned spirits and unique items, and opened chests. Chest, pickup and NPC points also disappear once you stand nearby and nothing is there.
-- **Directions along the paths:** click a checklist line or area title. A dashed route follows the valleys and roads painted on the map (not a straight line through mountains), with the walking distance and a turn hint for the next stretch (e.g. "→ right"). The route updates when you stray. Lines without their own point guide you to the area's shrine. Click the map to stop guiding.
+- **Directions along the paths:** click a checklist line or area title. A dashed route follows the valleys and roads painted on the map (not a straight line through mountains), with the walking distance and a turn hint for the next stretch (e.g. "→ right"). The route updates when you stray. Click an area title to go to its shrine; lines without a map point show a notice instead of a route. Click empty map to stop guiding.
 - Your position is read from game memory **read-only**. Nothing is injected and nothing is written.
 
 ### Full map (F12)

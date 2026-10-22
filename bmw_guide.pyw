@@ -518,10 +518,8 @@ class Overlay:
             row.pack_forget()
 
     def focus_on(self, tokens, text, shrine=False, area=None):
-        """Jumps the minimap to where a checklist line can be found, falling back to its area's shrine."""
+        """Guides the minimap to where a checklist line can be found; lines without a map point only show a notice."""
         found = self.minimap.locate(self.state['ch'], tokens, str(text), shrine)
-        if not found and area is not None:
-            found = self.minimap.locate(self.state['ch'], area.tokens, str(area), True)
         if self.minimap.focus(found):
             if not self.state.get('map_visible', True):
                 self.toggle_map()

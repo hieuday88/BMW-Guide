@@ -24,7 +24,7 @@
   - Hiện rương, Lạc Già Hương Đằng, Tam Đông Trùng, boss, đầu mục, tinh phách, điểm thiền, miếu, NPC…
   - Điểm đã xong tự ẩn theo save: miếu đã mở, boss/đầu mục đã hạ, tinh phách và vật phẩm có tên riêng đã có, rương đã mở. Điểm rương, vật phẩm và NPC cũng tự xoá khi bạn đứng gần mà không còn gì ở đó.
   - Lăn chuột trên map để phóng to / thu nhỏ; rê chuột lên một điểm để xem tên.
-  - **Chỉ đường theo lối đi:** bấm một dòng hoặc tên khu trong checklist (khi đã mở khoá chuột bằng phím `). Đường nét đứt đi theo thung lũng và lối vẽ trên bản đồ, không cắt thẳng qua núi, kèm quãng đường đi thật và hướng rẽ cho đoạn kế tiếp (ví dụ "→ bên phải"). Đi lệch thì đường tự tính lại. Dòng không có điểm riêng sẽ chỉ tới miếu của khu. Bấm vào map để bỏ chỉ đường.
+  - **Chỉ đường theo lối đi:** bấm một dòng hoặc tên khu trong checklist (khi đã mở khoá chuột bằng phím `). Đường nét đứt đi theo thung lũng và lối vẽ trên bản đồ, không cắt thẳng qua núi, kèm quãng đường đi thật và hướng rẽ cho đoạn kế tiếp (ví dụ "→ bên phải"). Đi lệch thì đường tự tính lại. Bấm tên khu để tới miếu của khu; dòng không có điểm trên map chỉ hiện thông báo, không vẽ đường. Bấm chỗ trống trên map để bỏ chỉ đường.
   - App chỉ **đọc** bộ nhớ game để lấy vị trí, không chèn DLL, không ghi gì.
 - **Toàn bản đồ (F12):** mở bản đồ lớn của cả khu hiện tại nổi trên game, có mọi điểm chưa xong và vị trí của bạn theo thời gian thực.
   - Lăn chuột để phóng to / thu nhỏ, kéo để di chuyển, rê chuột lên điểm để xem tên.
