@@ -10,6 +10,7 @@
 ## Features
 
 ### Checklist
+- **Main story steps stand out** with a gold ➤ so you never lose the main path.
 - **Always-on-top overlay that never steals the game's focus.** By default the mouse passes straight through it to the game (🔒); press **`** (backtick, left of 1) to use the overlay (🖱) and press it again to lock it. Run the game in *Borderless / Windowed* mode.
 - **Follows game progression.** All 6 chapters, ordered by Keeper's Shrine, with bosses, spirits, items, spells, quests, secret areas, meditation spots and tips.
 - **Ticks come only from your save, never by hand.** The app reads the game's save and marks Journal entries (bosses and enemies met), items, equipment, spirits, spells, meditation spots and activated shrines (⛩ next to the area name).
@@ -25,6 +26,12 @@
 - **Finished points disappear**, judged from the save: activated shrines, defeated bosses and chiefs, owned spirits and unique items, and opened chests. Chest, pickup and NPC points also disappear once you stand nearby and nothing is there.
 - **Directions along the paths:** click a checklist line or area title. A dashed route follows the valleys and roads painted on the map (not a straight line through mountains), with the walking distance and a turn hint for the next stretch (e.g. "→ right"). The route updates when you stray. Lines without their own point guide you to the area's shrine. Click the map to stop guiding.
 - Your position is read from game memory **read-only**. Nothing is injected and nothing is written.
+
+### Full map (F12)
+- Opens a large map of the whole current area on top of the game, with every unfinished point and your live position.
+- Scroll to zoom, drag to pan, hover a point to see its name.
+- Click a point to get directions to it; the checklist jumps to that point's line and highlights it.
+- Press F12 again or click ✕ to close.
 
 ## Install
 
@@ -48,6 +55,7 @@ Set the game to **Borderless / Windowed** while playing.
 | `F9` | Show / hide the overlay |
 | `F10` | Toggle compact / full mode |
 | `F11` | Show / hide the minimap |
+| `F12` | Open / close the full map |
 | `Ctrl+Alt+B` | Launch the app (Start Menu shortcut) |
 | Mouse wheel | Scroll the list, or zoom when over the map |
 | Drag the title bar | Move the window |
