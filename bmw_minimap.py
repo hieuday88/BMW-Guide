@@ -21,10 +21,12 @@ ACTOR_SCAN_S = 2
 NPC_PREFIXES = ('TAMER_', 'LSP_', 'Unit_', 'NPC')
 NPC_RADIUS = 1200
 NPC_NEAR = 3000
+NPC_VISIT = 500
 NPC_MISSES = 3
 CHEST_CATS = {'baoxiang', 'cailiao'}
 BOSS_LOOT_RADIUS = 3000
 NEAR_LABEL = 1500
+GENERIC_NAMES = {'ruong', 'diem thien', 'kim dan', 'ruong quan tai', 'nam ruong'}
 PICKUP_CATS = CHEST_CATS |{'xiandan', 'luojia', 'sandongchong', 'zhenwan', 'hulu', 'jiushi', 'yaojin', 'bianhua'}
 ICON_SUBSAMPLE = 10
 HOVER_PX = 14
@@ -148,13 +150,19 @@ class Minimap:
             time.sleep(ACTOR_SCAN_S)
 
     def check_absent(self, rules):
-        """Hides NPC/chest/pickup points after several scans with the player close by and nothing standing there."""
+        """Hides NPC points the player walked up to, and NPC/chest/pickup points found empty over several close-by scans."""
         pos, level = self.pos, self.current_level()
         if not pos or not level or not (pos[0] or pos[1]):
             return
         for i, cat, wx, wy, wz, *_ in self.points.get(level, []):
             pid = f'{level}:{i}'
-            if cat not in rules or pid in self.hidden or math.dist(pos[:2], (wx, wy)) > NPC_NEAR:
+            if pid in self.hidden:
+                continue
+            if cat == 'renwu' and math.dist(pos[:2], (wx, wy)) <= NPC_VISIT:
+                self.remember(pid)
+                self.save_state()
+                continue
+            if cat not in rules or math.dist(pos[:2], (wx, wy)) > NPC_NEAR:
                 continue
             actors, radius = rules[cat]
             present = any(math.dist((wx, wy), n[1:3]) <= radius for n in actors)
@@ -289,12 +297,26 @@ class Minimap:
                 by_name = bool(name) and _norm(pt[7]) == name and (pt[1] == 'teleport') == shrine
                 if by_id or by_name:
                     found.append((level, pt))
-        return found
+        return found or self.mentioned(own, _norm(text), shrine)
+
+    def mentioned(self, levels, text, shrine):
+        """Falls back to map points of the chapter whose name appears in the line text, preferring the earliest mention."""
+        hits = []
+        for level in levels:
+            for pt in self.points.get(level, []):
+                name = _norm(re.sub(r'\s*×\d+$', '', pt[7]))
+                if len(name) >= 4 and name not in GENERIC_NAMES and (pt[1] == 'teleport') == shrine:
+                    at = text.find(name)
+                    if at >= 0:
+                        hits.append((at, -len(name), level, pt))
+        if not hits:
+            return []
+        first = min(hits)[:2]
+        return [(level, pt) for at, size, level, pt in hits if (at, size) == first]
 
     def focus(self, found):
         """Centres the map on the best candidate (nearest unfinished point) and draws a route line to it."""
         if not found:
-            self.target = None
             return False
 
         def rank(entry):

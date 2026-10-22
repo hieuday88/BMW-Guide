@@ -162,6 +162,18 @@ class Overlay:
         self.state['mouse_locked'] = not self.state.get('mouse_locked', True)
         self.save_state()
         self.apply_mouse_mode()
+        if not self.state['mouse_locked']:
+            self.move_cursor_here()
+
+    def move_cursor_here(self):
+        """Puts the mouse cursor in the middle of the overlay so it can be used right after unlocking."""
+        try:
+            user32 = ctypes.windll.user32
+            rect = wt.RECT()
+            user32.GetWindowRect(user32.GetParent(self.root.winfo_id()), ctypes.byref(rect))
+            user32.SetCursorPos((rect.left + rect.right) // 2, (rect.top + rect.bottom) // 2)
+        except (AttributeError, OSError):
+            pass
 
     def round_corners(self):
         """Asks Windows 11 DWM to round the borderless window's corners."""
@@ -315,7 +327,7 @@ class Overlay:
             self.minimap.update_from_save(progress, str(self.save_file))
         owned = {(cat, i) for cat, ids in progress.items() if isinstance(ids, set) for i in ids}
         self.shrines = {i for cat, i in owned if cat == 'shrine'}
-        loose = progress['item'] | progress['equip'] | progress['spell'] | progress['wine']
+        loose = progress['item'] | progress['equip'] | progress['spell'] | progress['wine'] | progress['relic']
         owned |= {(cat, i) for cat in ('item', 'equip') for i in loose}
         owned |= self.remember_owned(owned, len(progress['card']))
         self.auto = {key for _, sections in self.chapters for _, items in sections

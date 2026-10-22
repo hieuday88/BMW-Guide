@@ -119,7 +119,7 @@ def decrypt_payload(raw):
 
 
 def read_progress(path):
-    """Returns {'card','item','equip','soul','wine','shrine','meditation','spell': set[int], 'chapter': int}."""
+    """Returns {'card','item','equip','soul','wine','shrine','meditation','spell','relic': set[int], 'chapter': int}."""
     data = decrypt_payload(Path(path).read_bytes())
     role = _first(data, 1, 1)
     bag = _first(role, BAG)
@@ -138,6 +138,7 @@ def read_progress(path):
         'map_id': (_ints(_first(data, ECS, 2, 2), 6) or [0])[0],
         'meditation': _ids(_subs(progress, 11)),
         'spell': set(_ints(progress, 3)),
+        'relic': _ids(_subs(progress, 8)),
         'chapter': (_ints(_first(role, CHAPTER), 1) or [0])[0],
     }
 
