@@ -122,6 +122,7 @@ class Overlay:
         self.reload()
         self.minimap = bmw_minimap.Minimap(self.map_frame, BUNDLE / 'assets', self.state, self.save_state, self.t,
                                            lambda: self.lang, WIDTH)
+        self.minimap.on_pick = self.show_point_line
         self.apply_mode()
         self.start_hotkey_thread()
         self.tray = bmw_tray.Tray(ICON, 'BMW Guide', self.tray_menu())

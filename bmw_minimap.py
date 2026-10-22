@@ -116,11 +116,25 @@ class Minimap:
         self.canvas.pack()
         self.canvas.bind('<Motion>', lambda e: setattr(self, 'mouse', (e.x, e.y)))
         self.canvas.bind('<Leave>', lambda e: setattr(self, 'mouse', None))
-        self.canvas.bind('<Button-1>', lambda e: (setattr(self, 'target', None), self.bump()))
+        self.on_pick = None
+        self.canvas.bind('<Button-1>', self.click)
         threading.Thread(target=self.scan_chests, daemon=True).start()
         self.tick_job = None
         self.canvas.bind('<Destroy>', lambda e: self.tick_job and self.canvas.after_cancel(self.tick_job))
         self.tick()
+
+    def click(self, e):
+        """Guides to the clicked map point and shows its checklist line; clicking empty map stops guiding."""
+        level = self.current_level() if self.pos else None
+        hit = min(self.shown, key=lambda s: math.hypot(s[0] - e.x, s[1] - e.y)) if self.shown else None
+        if level and hit and math.hypot(hit[0] - e.x, hit[1] - e.y) <= HOVER_PX:
+            pt = next(p for p in self.points[level] if p[0] == hit[6])
+            self.target = (level, pt)
+            if self.on_pick:
+                self.on_pick(level, pt)
+        else:
+            self.target = None
+        self.bump()
 
     def zoom_by(self, step):
         self.zoom = min(4, max(1, self.zoom + step))
@@ -513,7 +527,7 @@ class Minimap:
                     c.create_image(sx, sy, image=icon, tags='static')
                 else:
                     c.create_oval(sx - 5, sy - 5, sx + 5, sy + 5, fill=DOT_COLORS.get(cat, DIM), outline=BG, width=2, tags='static')
-                self.shown.append((sx, sy, cat, name, wx, wy))
+                self.shown.append((sx, sy, cat, name, wx, wy, i))
             c.create_rectangle(cx - r, cy - r, cx + r, cy + r, outline=GOLD, width=2, tags='static')
         here = self.pos is not None and self.pick_map(level, self.pos) is m
         ax, ay = place(self.pos[0], self.pos[1]) if here else (0, 0)
