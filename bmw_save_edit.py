@@ -177,17 +177,44 @@ def verify(before, after, quantities, additions):
         raise SaveFormatError('verification failed: material additions differ')
 
 
+def rebase(old, new, quantities, additions):
+    """Moves edits made on an older read of the save onto a newer one, matching bag rows by group and item id."""
+    by_key = {(r['group'], r['id']): r['index'] for r in new['rows']}
+    moved = {}
+    for index, qty in quantities.items():
+        row = next(r for r in old['rows'] if r['index'] == index)
+        key = (row['group'], row['id'])
+        if key in by_key:
+            moved[by_key[key]] = qty
+        elif row['group'] == ITEMS and row['id'] in SAFE_MATERIALS and qty:
+            additions = {**additions, row['id']: qty}
+    owned = {r['id']: r['index'] for r in new['rows'] if r['group'] == ITEMS}
+    kept = {}
+    for item_id, qty in additions.items():
+        if item_id in owned:
+            moved[owned[item_id]] = qty
+        else:
+            kept[item_id] = qty
+    return moved, kept
+
+
 def game_running():
     return bmw_live._find_pid() is not None
 
 
 def write(path, save, quantities, additions):
-    """Backs up the save, writes the edited copy atomically and returns the backup path."""
+    """Backs up the save, writes the edited copy atomically and returns the backup path.
+
+    If the game rewrote the save after it was opened, the edits are re-applied to the newest file.
+    """
     if game_running():
         raise RuntimeError('game is running')
     path = Path(path)
-    if path.read_bytes() != save['raw']:
-        raise RuntimeError('save changed on disk since it was opened')
+    current = path.read_bytes()
+    if current != save['raw']:
+        fresh = read(current)
+        quantities, additions = rebase(save, fresh, quantities, additions)
+        save = fresh
     out = build(save, quantities, additions)
     backup = path.with_name(f'{path.name}.bak-{time.strftime("%Y%m%d-%H%M%S")}')
     backup.write_bytes(save['raw'])
