@@ -665,8 +665,8 @@
 ### Nhiễu Tiên Cư @shrine:8003
 - [Ẩn] Đến miếu Nhiễu Tiên Cư — map ẩn
 - [Thiền] Tử Vân Sơn - Núi đá — Đỉnh Vách @meditation:4006
-- [Boss] Độc Địch Đại Vương — phá thùng để kích hoạt @card:803001
-- [Mẹo] Hạ Độc Địch Đại Vương trước Hối Nguyệt Ma Quân; hạ Hối Nguyệt rồi thì Độc Địch biến mất, phải đợi NG+
+- [Boss] Độc Địch Đại Vương — bọ cạp ngồi uống rượu trên mái nhà bên phải miếu, đập vò rượu cạnh nó để kích hoạt @card:803001
+- [Mẹo] Hạ Độc Địch Đại Vương TRƯỚC khi vào trận Hối Nguyệt Ma Quân; vào trận Hối Nguyệt rồi (kể cả thua) Độc Địch có thể biến mất — thử dịch chuyển ra khu khác rồi quay lại, không được thì đợi NG+
 - [Vật phẩm] Thông Thiên Giác @item:3925
 - [Vật phẩm] Đảo Mã Độc Câu @item:2313
 - [Vật phẩm] Thải Ngọc Hồ Lô @item:18013
