@@ -119,14 +119,17 @@ def decrypt_payload(raw):
 
 
 def read_progress(path):
-    """Returns {'card','item','equip','soul','wine','shrine','meditation','spell','relic': set[int], 'chapter': int}."""
+    """Returns {'card','item','equip','soul','wine','shrine','meditation','spell','relic': set[int], 'chapter': int}.
+
+    'card' holds only Journal entries with a defeat record; the game adds an entry as soon as a fight starts.
+    """
     data = decrypt_payload(Path(path).read_bytes())
     role = _first(data, 1, 1)
     bag = _first(role, BAG)
     progress = _first(role, ACTOR, 2)
     equips = _subs(bag, 3)
     return {
-        'card': _ids(_subs(_first(role, COLLECTION), 1)),
+        'card': _ids([e for e in _subs(_first(role, COLLECTION), 1) if _subs(e, 5)]),
         'item': _ids(_subs(bag, 2)),
         'item_num': {(_ints(m, 1) or [0])[0]: (_ints(m, 2) or [0])[0] for m in _subs(bag, 2)},
         'equip': _ids(equips) | {x for m in equips for x in _ints(m, 5)},
