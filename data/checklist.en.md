@@ -666,7 +666,7 @@
 - [Secret] Reach the Bounds of Deity's Abode shrine — hidden map
 - [Meditation] Purple Cloud Mountain - Rocky Mountain — Cliff Top @meditation:4006
 - [Boss] The Scorpionlord — break the barrels to trigger him @card:803001
-- [Tip] Defeat the Scorpionlord before The Duskveil
+- [Tip] Defeat the Scorpionlord before The Duskveil; once the Duskveil is beaten he is gone until New Game+
 - [Item] Sky-Piercing Horn @item:3925
 - [Item] Deathstinger Soak @item:2313
 - [Item] Stained Jade Gourd @item:18013

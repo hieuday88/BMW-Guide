@@ -236,7 +236,7 @@
 - [Boss] Hổ Tiên Phong — bản bí mật, map ẩn 6 @card:203007
 - [Vật phẩm] Hổ Đầu Bài @equip:16004
 - [Boss] Phó Bạng — cuối map ẩn @card:213001
-- [Mẹo] NG+: Côn Côn - Thông Thiên — chỉ NG+, cần 4 Thông Thiên Giác (Phó Bạng, Hạt Lang, xong chương 4, Phó Bạng NG+)
+- [Mẹo] NG+: Côn Côn - Thông Thiên — chỉ NG+, cần 4 Thông Thiên Giác (Phó Bạng, Độc Địch Đại Vương, xong chương 4, Phó Bạng NG+)
 - [Vật phẩm] Thanh Sơn Cốt — ngâm rượu, hái ngẫu nhiên từ cây Cam Thảo ở sa mạc Tư Cáp Lý @item:2327
 - [Vật phẩm] Định Phong Châu — phần thưởng Phó Bạng @item:19002
 - [Mẹo] Định Phong Châu phá chiêu tàng hình của Hoàng Phong Đại Thánh
@@ -666,7 +666,7 @@
 - [Ẩn] Đến miếu Nhiễu Tiên Cư — map ẩn
 - [Thiền] Tử Vân Sơn - Núi đá — Đỉnh Vách @meditation:4006
 - [Boss] Độc Địch Đại Vương — phá thùng để kích hoạt @card:803001
-- [Mẹo] Hạ Độc Địch Đại Vương trước Hối Nguyệt Ma Quân
+- [Mẹo] Hạ Độc Địch Đại Vương trước Hối Nguyệt Ma Quân; hạ Hối Nguyệt rồi thì Độc Địch biến mất, phải đợi NG+
 - [Vật phẩm] Thông Thiên Giác @item:3925
 - [Vật phẩm] Đảo Mã Độc Câu @item:2313
 - [Vật phẩm] Thải Ngọc Hồ Lô @item:18013
