@@ -12,6 +12,7 @@ from pathlib import Path
 from tkinter import filedialog
 
 import bmw_minimap
+import bmw_save_edit
 import bmw_save
 import bmw_tray
 
@@ -40,12 +41,12 @@ TOKEN = re.compile(r'\s*@(\w+):(\d+)')
 
 UI = {
     'vi': {'map': 'Bản đồ (F11)', 'map_wait': 'Đang chờ game…\nMở game ở chế độ Borderless', 'map_none': 'Chưa có bản đồ cho khu này', 'map_other': 'ở khu khác', 'tray_toggle': 'Ẩn / hiện (F9)', 'tray_mouse': 'Khoá / mở chuột (`)', 'tray_full': 'Toàn bản đồ (F8)', 'map_nopos': 'Mục này chưa có vị trí trên map',
-           'title': '` chuột · F8 bản đồ · F9 ẩn · F10 gọn', 'lang': 'Ngôn ngữ', 'pick': 'Chọn file save…', 'auto': 'Tự tìm save',
+           'title': '` chuột · F8 bản đồ · F9 ẩn · F10 gọn', 'lang': 'Ngôn ngữ', 'pick': 'Chọn file save…', 'edit': 'Sửa save (vật phẩm, Linh Uẩn)…', 'edit_none': 'Chưa tìm thấy file save', 'auto': 'Tự tìm save',
            'reload': 'Tải lại checklist', 'quit': 'Thoát', 'hide': 'Ẩn mục đã xong', 'nosave': 'Chưa tìm thấy save — ⚙ để chọn',
            'searching': 'Đang tìm save…', 'save': 'Save', 'manual': 'chọn tay', 'autolbl': 'tự động',
            'chapter_done': 'Xong chương này ✓', 'badsave': 'Không đọc được save', 'missing': 'Thiếu file checklist'},
     'en': {'map': 'Minimap (F11)', 'map_wait': 'Waiting for the game…\nRun it in Borderless mode', 'map_none': 'No map for this area', 'map_other': 'in another area', 'tray_toggle': 'Show / hide (F9)', 'tray_mouse': 'Lock / unlock mouse (`)', 'tray_full': 'Full map (F8)', 'map_nopos': 'No map location for this entry',
-           'title': '` mouse · F8 map · F9 hide · F10 compact', 'lang': 'Language', 'pick': 'Choose save file…', 'auto': 'Find save automatically',
+           'title': '` mouse · F8 map · F9 hide · F10 compact', 'lang': 'Language', 'pick': 'Choose save file…', 'edit': 'Edit save (items, Will)…', 'edit_none': 'No save file found', 'auto': 'Find save automatically',
            'reload': 'Reload checklist', 'quit': 'Quit', 'hide': 'Hide completed', 'nosave': 'No save found — use ⚙ to pick one',
            'searching': 'Searching for save…', 'save': 'Save', 'manual': 'manual', 'autolbl': 'auto',
            'chapter_done': 'Chapter complete ✓', 'badsave': 'Could not read save', 'missing': 'Checklist file missing'},
@@ -253,9 +254,24 @@ class Overlay:
         m.add_command(label=self.t('pick'), command=self.pick_save)
         m.add_command(label=self.t('auto'), command=self.use_auto_save)
         m.add_command(label=self.t('reload'), command=self.reload)
+        m.add_command(label=self.t('edit'), command=self.open_editor)
         m.add_separator()
         m.add_command(label=self.t('quit'), command=self.quit)
         m.tk_popup(self.root.winfo_pointerx(), self.root.winfo_pointery())
+
+    def open_editor(self):
+        """Opens the save editor for the save the checklist is reading."""
+        path, _ = self.current_save()
+        if path is None:
+            self.save_lbl.configure(text=f" {self.t('edit_none')}")
+            return
+        names = json.loads((DATA / 'item_names.vi.json').read_text(encoding='utf-8'))
+        colors = {'bg': BG, 'panel': PANEL, 'text': TEXT, 'dim': DIM, 'gold': GOLD}
+        try:
+            bmw_save_edit.EditorWindow(self.root, path, names, self.lang, colors, lambda: self.poll_save(False))
+        except (bmw_save_edit.SaveFormatError, OSError) as err:
+            from tkinter import messagebox
+            messagebox.showerror(self.t('edit'), str(err), parent=self.root)
 
     def set_lang(self, code):
         self.lang = self.state['lang'] = code

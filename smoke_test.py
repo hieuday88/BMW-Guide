@@ -18,6 +18,7 @@ os.environ['APPDATA'] = tempfile.mkdtemp(prefix='bmw-smoke-')  # keep the real s
 import bmw_minimap  # noqa: E402
 import bmw_route  # noqa: E402
 import bmw_save  # noqa: E402
+import bmw_save_edit  # noqa: E402
 
 failures = []
 
@@ -75,6 +76,27 @@ def test_save():
     check('save decodes with all fields', keys <= set(progress), f'{saves[0].name} in {time.time() - t:.2f}s')
     check('save has journal and shrines', bool(progress['card']) and bool(progress['shrine']),
           f"{len(progress['card'])} journal, {len(progress['shrine'])} shrines")
+
+
+def test_save_edit():
+    """Edits a copy of the save and checks that only the requested values changed."""
+    saves = bmw_save.find_saves()
+    if not saves:
+        return
+    save = bmw_save_edit.read(saves[0].read_bytes())
+    will = next(r for r in save['rows'] if r['group'] == bmw_save_edit.CURRENCY and r['id'] == bmw_save_edit.WILL_ID)
+    owned = {r['id'] for r in save['rows'] if r['group'] == bmw_save_edit.ITEMS}
+    extra = {m: 3 for m in bmw_save_edit.SAFE_MATERIALS if m not in owned}
+    extra = dict(list(extra.items())[:1])
+    out = bmw_save_edit.read(bmw_save_edit.build(save, {will['index']: will['qty'] + 7}, extra))
+    new_will = next(r['qty'] for r in out['rows'] if r['index'] == will['index'])
+    check('save edit round-trips with a valid checksum', new_will == will['qty'] + 7, f'{len(out["rows"])} bag rows')
+    try:
+        bmw_save_edit.build(save, {will['index']: bmw_save_edit.MAX_WILL + 1}, {})
+        rejected = False
+    except bmw_save_edit.SaveFormatError:
+        rejected = True
+    check('save edit rejects out-of-range values', rejected)
 
 
 def test_routes(maps):
@@ -137,6 +159,7 @@ if __name__ == '__main__':
     vi = test_checklists(app)
     maps = test_assets()
     test_save()
+    test_save_edit()
     test_routes(maps)
     test_locate(vi)
     test_app_run(app)
