@@ -32,6 +32,11 @@
   - Bấm F8 lần nữa hoặc ✕ để đóng.
 - **Nhiệm vụ chính nổi bật:** các bước cốt truyện có mũi tên ➤ vàng, chữ đậm, để không lạc mạch chính.
 
+- **Sửa save (⚙ → Sửa save):** đổi số lượng mọi vật phẩm trong túi và Linh Uẩn, thêm các nguyên liệu chế tạo thường gặp mà bạn chưa có.
+  - Phải tắt hẳn game trước: game đang chạy thì app không cho ghi.
+  - Mỗi lần ghi đều giữ bản sao `.bak` kèm giờ, tính lại checksum của save và đọc lại file để chắc chỉ những gì bạn đổi được ghi vào.
+  - Không sửa cờ nhiệm vụ, cấp độ hay phép, vì sửa những thứ đó có thể làm hỏng mạch truyện.
+
 ## Cài đặt
 
 **Cách nhanh:** tải `BMW_Guide.exe` ở mục [Releases](https://github.com/hieuday88/BMW-Guide/releases) rồi bấm đúp để chạy. Không cần cài gì thêm.
@@ -75,7 +80,7 @@ Chạy `python smoke_test.py` để kiểm tra checklist, asset, giải mã save
 
 ## Ghi chú
 
-- App chỉ **đọc** file save, không bao giờ ghi vào.
+- App chỉ **đọc** bộ nhớ game. App chỉ ghi vào file save khi bạn dùng chức năng sửa save, và luôn sao lưu trước khi ghi.
 - Tên tiếng Việt theo bản Việt hoá của cộng đồng. Thông tin tham khảo từ game8, PowerPyx, bmwukong.info, BWIKI và 3DM.
 - Ảnh bản đồ, icon và dữ liệu điểm của minimap lấy từ [jaskang/wukong-minimap](https://github.com/jaskang/wukong-minimap) (Apache-2.0), xem `assets/maps/NOTICE.txt`.
 - Đây là dự án cá nhân của người hâm mộ, không liên quan Game Science.

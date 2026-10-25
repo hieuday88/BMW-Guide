@@ -33,6 +33,12 @@
 - Click a point to get directions to it; the checklist jumps to that point's line and highlights it.
 - Press F8 again or click ✕ to close.
 
+### Save editor (⚙ → Edit save)
+- Change the quantity of anything in your bag and your Will, and add the common crafting materials you do not have yet.
+- Close the game completely first: the editor refuses to write while the game is running.
+- Every write keeps a timestamped `.bak` copy of the old save, recomputes the save checksum and reads the file back to verify that only your changes were applied.
+- Quest flags, levels and spells are not editable, because changing them can break story progress.
+
 ## Install
 
 **Quick:** download `BMW_Guide.exe` from [Releases](https://github.com/hieuday88/BMW-Guide/releases) and double-click it. Nothing else to install. Windows SmartScreen may warn because the exe is unsigned.
@@ -76,7 +82,7 @@ Run `python smoke_test.py` to check the checklists, assets, save decoding, routi
 
 ## Notes
 
-- The app only **reads** your save file and game memory. It never writes to either.
+- The app only **reads** game memory. It writes to your save only when you use the save editor, always after making a backup.
 - Vietnamese names follow the community Vietnamese translation. Sources include game8, PowerPyx, bmwukong.info, BWIKI and 3DM.
 - Minimap images, icons and point data come from [jaskang/wukong-minimap](https://github.com/jaskang/wukong-minimap) (Apache-2.0), see `assets/maps/NOTICE.txt`.
 - This is a personal fan project, not affiliated with Game Science.
